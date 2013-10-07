@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">JalinSuara</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="email">E-mail:</string>
+    <string name="katasandi">Kata Sandi:</string>
+    <string name="jalin_suara">Jalin Suara</string>
+    <string name="new_line">\n</string>
+    <string name="provinsi_prompt">Pilih Provinsi</string>
+    <string name="kabupaten_prompt">Pilih Kabupaten</string>
+    <string name="kecamatan_prompt">Pilih Kecamatan</string>
+    <string name="socmed_prompt">Berbagi di Media Sosial</string>
+    <string name="tdksara">Cerita ini tidak mengandung unsur SARA</string>
+    <string name="tanggungjawab">Saya bertanggung jawab akan isi cerita ini</string>
+     <string-array name="daftar_provinsi">
+        <item>DKI Jakarta</item>
+        <item>Aceh</item>
+        <item>Bali</item>
+        <item>Banten</item>
+        <item>Bengkulu</item>
+        <item>Daerah Istimewa Yogyakarta</item>
+        <item>Gorontalo</item>
+        <item>Jambi</item>
+        <item>Jawa Barat</item>
+        <item>Jawa Tengah</item>
+        <item>Jawa Timur</item>
+        <item>Kalimantan Barat</item>
+        <item>Kalimantan Selatan</item>
+        <item>Kalimantan Tengah</item>
+        <item>Kalimantan Timur</item>
+        <item>Kalimantan Utara</item>
+        <item>Kepulauan Bangka Belitung</item>
+        <item>Kepulauan Riau</item>
+        <item>Lampung</item>
+        <item>Maluku</item>
+        <item>Maluku Utara</item>
+        <item>Nusa Tenggara Barat</item>
+        <item>Nusa Tenggara Timur</item>
+        <item>Papua</item>
+        <item>Papua Barat</item>
+        <item>Riau</item>
+        <item>Sulawesi Barat</item>
+        <item>Sulawesi Selatan</item>
+        <item>Sulawesi Tengah</item>
+        <item>Sulawesi Tenggara</item>
+        <item>Sulawesi Utara</item>
+        <item>Sumatera Barat</item>
+        <item>Sumatera Selatan</item>
+        <item>Sumatera Utara</item>
+    </string-array>
+</resources>

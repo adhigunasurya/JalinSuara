@@ -1,0 +1,49 @@
+<com.example.jalinsuara.DashboardLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:background="#f8f9fe" >
+    <!--  News Feed Button -->
+    <Button
+        android:id="@+id/btn_news"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/newspaper"
+        android:text="Berita Terpopuler" />
+     
+    <!--  Friends Button -->
+    <Button
+        android:id="@+id/btn_map"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/map"
+        android:text="Lihat Peta" />
+     
+    <!--  Messages Button -->
+    <Button
+        android:id="@+id/btn_subproyek"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/subproyek"
+        android:text="Lihat Subproyek" />
+     
+    <!--  Places Button -->
+    <Button
+        android:id="@+id/btn_tulisbaru"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/tulisbaru"
+        android:text="Tulis Berita" />
+ 
+    <!--  Events Button -->
+    <Button
+        android:id="@+id/btn_profile"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/profile"
+        android:text="Lihat Profil" />
+ 
+    <!--  Photos Button -->
+    <Button
+        android:id="@+id/btn_search"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/search"
+        android:text="Cari" />
+ 
+</com.example.jalinsuara.DashboardLayout>

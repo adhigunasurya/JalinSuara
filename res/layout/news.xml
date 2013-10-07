@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="#FFFFFF">
+    
+    <LinearLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" 
+    android:background="#FFFFFF"
+    android:weightSum = "2">
+     <!-- Button Terkini -->
+     <Button android:id="@+id/btn_terkini"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="10dip"
+             android:text="Terkini"
+             android:textColor = "#000000"
+             android:layout_weight = "1"/>
+    
+     <!-- Button Terpopuler -->
+     <Button android:id="@+id/btn_populer"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="10dip"
+             android:text="Terpopuler"
+             android:textColor = "#000000"
+             android:layout_weight = "1"
+             />
+
+    </LinearLayout>
+    <!-- Judul -->
+    <LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" 
+	    android:background="#FFFFFF">  
+	    <TextView android:layout_width="fill_parent"
+	         android:layout_height="wrap_content"
+	         android:textColor="#372c24"
+	         android:text="Geliat Usaha Kerajinan Bambu Desa Munthuk"
+	         android:textSize="15sp"
+	         android:singleLine="true"/>
+    </LinearLayout>
+    
+    <!-- Berita Pertama -->
+    
+	 <LinearLayout
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" 
+	    android:background="#FFFFFF">  
+	     <Button
+	        android:id="@+id/btn_artikel1"
+	        style="@style/DashboardButton"
+	        android:drawableTop="@drawable/proyek_pnpm1"
+	        android:layout_gravity = "center_horizontal"
+		/>
+	     
+	  </LinearLayout>
+	  
+	  <LinearLayout 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" 
+	    android:background="#FFFFFF">  
+	    <TextView android:layout_width="fill_parent"
+	         android:layout_height="wrap_content"
+	         android:textColor="#372c24"
+	         android:text="Gempa Bantul yang terjadi pada tahun 2006 silam tak saja meluluhlantakkan rumah dan merenggut nyawa warga. Usaha kecil di kawasan ini pun ikut seret. Usaha mayoritas warga Bantul terhenti sejenak. Termasuk aktivitas usaha para pengrajin bambu di Desa Munthuk, Kecamatan Dlingo, Kabupaten Bantul, Yogyakarta. Cukup lama pengrajin bambu tidak bisa berproduksi. Semangat berkarya sempat surut. Sisa reruntuhan bangunan masih terlihat di mana-mana. Tenda-tenda penampungan berdiri kokoh. Sehari-hari warga menghabiskan waktu di tenda penampungan dengan harap-harap cemas semoga gempa susulan tak lagi menerjang. Hasrat untuk membuat kerajinan bambu surut bersama duka gempa Bantul.Sebelum gempa, rumah-rumah di Desa Munthuk diwarnai aktivitas pengrajin bambu. Mereka bekerja sambil bersenda gurau dan keceriaan menghiasi wajah setiap anggota keluarga yang turut membantu. ....Read More"
+	         android:textSize="12sp"
+	         />
+    
+    	</LinearLayout>
+	 
+	  
+     <!-- Button Tampilkan Peta -->
+	 
+	  <RelativeLayout android:id="@+id/RelativeLayout01"
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content">
+        <Button android:id="@+id/btn_tampilpeta" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="Tampilkan Peta"
+            android:textColor = "#000000"
+            android:layout_centerInParent="true"></Button>
+    </RelativeLayout>
+</LinearLayout>
+
+</ScrollView>

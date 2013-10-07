@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff" >
+
+        <!-- Header  Starts -->
+        <!-- Add Logo and Header later on -->
+        <!-- Header Ends -->
+        <!-- Footer Start -->
+        <!-- Add footer later on -->
+        <!-- Footer Ends -->
+
+        <!-- Write New Post Form -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dip" >
+
+            <!-- Judul -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Judul"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/new_judul"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dip"
+                android:layout_marginTop="5dip"
+                android:singleLine="true" 
+                android:inputType="text" 
+                android:hint = "Judul Artikel"
+                android:textSize="12sp"/>
+            <!-- Budget -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Budget (dalam Rupiah)"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/new_budget"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dip"
+                android:layout_marginTop="5dip"
+                android:singleLine="true"
+                android:inputType="text" 
+                android:hint = "Budget Proyek PNPM"
+                android:textSize="12sp" />
+            <!-- Manfaat -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Jumlah Penerima Manfaat (dalam jiwa))"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/new_manfaat"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:singleLine="true" 
+                android:inputType="text" 
+                android:hint = "Penerima Manfaat Proyek PNPM"
+                android:textSize="12sp"/>
+
+            <!-- Isi Berita (multiline) -->
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Isi Berita"
+                android:textColor="#372c24" />
+
+            <EditText
+                android:id="@+id/new_isi"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:inputType="textMultiLine"
+                android:lines="6"
+                android:maxLines="20"  
+                android:minLines="4"
+                android:scrollbars="vertical"
+                android:hint = "Isi Berita PNPM"
+                android:textSize="12sp" />
+            <!-- Button Tambahkan Gambar -->
+
+            <Button
+                android:id="@+id/btn_gambar"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dip"
+                android:text="Sisipkan Gambar Pada Berita"
+                android:textColor = "#000000"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dip" >
+
+               <Spinner
+                    android:id="@+id/spinner_provinsi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.06"
+                    android:entries="@array/daftar_provinsi"
+                    android:prompt="@string/provinsi_prompt"/>
+
+                <Spinner
+                    android:id="@+id/spinner_kabupaten"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.06"
+                    android:entries="@array/daftar_provinsi"
+                    android:prompt="@string/kabupaten_prompt" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dip" >
+
+                <Spinner
+                    android:id="@+id/spinner_kecamatan"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.06"
+                    android:entries="@array/daftar_provinsi"
+                    android:prompt="@string/kecamatan_prompt" />
+
+                <Spinner
+                    android:id="@+id/spinner_socmed"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.06"
+                    android:entries="@array/daftar_provinsi"
+                    android:prompt="@string/socmed_prompt" />
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/tdksara"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tdksara" />
+
+            <CheckBox
+                android:id="@+id/tanggungjawab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tanggungjawab" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dip"
+                android:weightSum = "2" >
+            
+            <Button android:id="@+id/btnsubmit"
+                android:layout_width = "wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="Publikasikan Cerita"
+                android:textColor = "#000000"
+                android:textSize = "13sp"/>
+             
+            <Button android:id="@+id/btnsavedraft"
+                android:layout_width = "wrap_content"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="Simpan Sebagai Draft"
+                android:textColor = "#000000"
+                android:textSize = "13sp"/>
+             
+      		
+             </LinearLayout>
+        </LinearLayout>
+        <!-- End of write new post page -->
+    </RelativeLayout>
+
+</ScrollView>
