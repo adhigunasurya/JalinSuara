@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.params.ConnManagerParams;
@@ -99,6 +100,8 @@ public class NetworkUtils {
 	 * @param password
 	 *            The server account password
 	 * @return String The authentication token returned by the server (or null)
+	 * @throws IOException
+	 * @throws ClientProtocolException
 	 */
 	public static ArrayList<News> getPosts() {
 		final HttpResponse resp;
@@ -145,11 +148,10 @@ public class NetworkUtils {
 				Log.e(TAG, "Error: " + resp.getStatusLine());
 				return null;
 			}
-
-		} catch (final IOException e) {
-			e.printStackTrace();
-
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
+
 		return null;
 	}
 

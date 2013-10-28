@@ -46,22 +46,32 @@ public class NewsListFragment extends BaseListFragment {
 
 	private class LoadPosts extends AsyncTask<Integer, Integer, Integer> {
 
+		private final static int E_OK = 1;
+		private final static int E_ERROR = 2;
+
 		@Override
 		protected Integer doInBackground(Integer... params) {
 			JalinSuaraSingleton.getInstance().setNewsList(
 					NetworkUtils.getPosts());
 			mAdapter = new NewsAdapter(getSherlockActivity(),
 					JalinSuaraSingleton.getInstance().getNewsList());
-			return null;
+
+			return E_OK;
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
-			if (JalinSuaraSingleton.getInstance().getNewsList() != null) {
-				setListAdapter(mAdapter);
+			setListAdapter(mAdapter);
+			if (result == E_OK) {
+
 				resetStatus();
 				setStatusShowContent();
+
+			} else {
+
+				resetStatus();
+				setStatusError(getString(R.string.error));
 			}
 		}
 
