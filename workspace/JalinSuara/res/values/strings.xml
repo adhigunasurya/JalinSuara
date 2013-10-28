@@ -10,6 +10,7 @@
     <string name="loading">Sedang menunggu</string>
     <string name="error">Maaf, terdapat kesalahan</string>
     <string name="email">Email</string>
+    <string name="empty">Tidak ada data</string>
     <string name="password">Kata kunci</string>
     <string name="news">Berita</string>
     <string name="maps">Peta</string>

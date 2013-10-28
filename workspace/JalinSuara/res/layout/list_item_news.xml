@@ -5,10 +5,10 @@
 
     <ImageView
         android:id="@+id/list_item_news_imageview"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_width="220dp"
+        android:layout_height="130dp"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"
+        android:layout_marginRight="6dp"
         android:contentDescription="Image description"
         android:src="@drawable/ic_stub" />
 

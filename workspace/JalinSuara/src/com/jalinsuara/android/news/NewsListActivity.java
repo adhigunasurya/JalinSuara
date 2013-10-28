@@ -20,6 +20,9 @@ public class NewsListActivity extends BaseFragmentActivity implements
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_news_list);
 
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		
 		resetStatus();
 		setStatusProgress(getResources().getString(R.string.loading), false);
 
