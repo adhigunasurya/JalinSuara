@@ -47,7 +47,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jalinsuara.android.auth.SignUpActivityivity"
+            android:name="com.jalinsuara.android.auth.SignUpActivity"
             android:label="@string/title_register" >
         </activity>
 
