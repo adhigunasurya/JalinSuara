@@ -18,12 +18,13 @@ com.jalinsuara.android
 
 Convention
 
-field's prefix = m
-resource file name prefix
-	activity_<name>.xml
-	fragment_<name>.xml
-	layout_<name>.xml
-	list_item_<name>.xml
+Java 
+	field's prefix = m
+	resource file name prefix
+		activity_<name>.xml
+		fragment_<name>.xml
+		layout_<name>.xml
+		list_item_<name>.xml
 	
 resource id prefix = file name prefix + <name> + <View type>
 	e.g.
@@ -39,6 +40,8 @@ Use BaseActivity, BaseFragment, or etc when creating new class
 Use resetStatus() and setStatus...() for showing and dismissing progress bar in activity or fragment.
 
 Use JalinSuaraSingleton for accessing data across activity.
+
+Use getString(string res id) for showing text.
 
 
 
