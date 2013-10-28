@@ -1,0 +1,34 @@
+<com.jalinsuara.android.view.DashboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#f8f9fe" >
+
+    <!-- News Feed Button -->
+
+    <Button
+        android:id="@+id/fragment_dashboard_news_button"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/ic_stub"
+        android:text="@string/news" />
+
+    <!-- Friends Button -->
+
+    <Button
+        android:id="@+id/fragment_dashboard_maps_button"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/ic_stub"
+        android:text="@string/maps" />
+
+    <Button
+        android:id="@+id/fragment_dashboard_sub_projects_button"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/ic_stub"
+        android:text="@string/sub_projects" />
+
+    <Button
+        android:id="@+id/fragment_dashboard_share_news_button"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/ic_stub"
+        android:text="@string/share_news" />
+
+</com.jalinsuara.android.view.DashboardLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">JalinSuara</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_search">Cari</string>
+    <string name="action_profile">Profil</string>
+    <string name="action_about">Tentang Aplikasi</string>
+    <string name="loading">Sedang menunggu</string>
+    <string name="error">Maaf, terdapat kesalahan</string>
+    <string name="email">Email</string>
+    <string name="password">Kata kunci</string>
+    <string name="news">Berita</string>
+    <string name="maps">Peta</string>
+    <string name="loren_ipsum">Loren ipsum dolores</string>
+    <string name="sub_projects">Sub Proyek</string>
+    <string name="share_news">Mulai berbagi</string>
+    <string name="login">Login</string>
+    <string name="drawer_open">Buka</string>
+    <string name="drawer_close">Tutup</string>
+    <string name="title_dashboard">Halaman Utama</string>
+    <string name="title_login">Login</string>
+    <string name="title_register">Daftar</string>
+    <string name="title_about">Tentang Aplikasi</string>
+    <string name="title_news_list">Daftar Cerita</string>
+    <string name="title_news">Cerita</string>
+    <string name="title_share_news">Berbagi Cerita</string>
+    <string name="title_maps">Peta</string>
+    <string name="title_profile">Profil</string>
+    <string name="register">Belum punya akun? silakan daftar disini..</string>
+    <string name="propinsi_prompt">Pilih Propinsi</string>
+    <string name="kecamatan_prompt">Pilih Kecamatan</string>
+    <string name="kabupaten_prompt">Pilih Kabupaten</string>
+    <string name="jejaring_prompt">Pilih Jejaring Sosial</string>
+
+    <string-array name="propinsi_arrays">
+        <item>Propinsi</item>
+        <item>Riau</item>
+        <item>Jambi</item>
+        <item>Sumatra Barat</item>
+        <item>Bengkulu</item>
+        <item>Singapore</item>
+        <item>Sumatera Selatan</item>
+        <item>Lampung</item>
+    </string-array>
+    <string-array name="kabupaten_arrays">
+        <item>Kabupaten</item>
+        <item>Riau</item>
+        <item>Jambi</item>
+        <item>Sumatra Barat</item>
+        <item>Bengkulu</item>
+        <item>Singapore</item>
+        <item>Sumatera Selatan</item>
+        <item>Lampung</item>
+    </string-array>
+    <string-array name="kecamatan_arrays">
+        <item>Kecamatan</item>
+        <item>Riau</item>
+        <item>Jambi</item>
+        <item>Sumatra Barat</item>
+        <item>Bengkulu</item>
+        <item>Singapore</item>
+        <item>Sumatera Selatan</item>
+        <item>Lampung</item>
+    </string-array>
+    <string-array name="jejaring_arrays">
+        <item>Jejaring Sosial</item>
+        <item>Riau</item>
+        <item>Jambi</item>
+        <item>Sumatra Barat</item>
+        <item>Bengkulu</item>
+        <item>Singapore</item>
+        <item>Sumatera Selatan</item>
+        <item>Lampung</item>
+    </string-array>
+
+</resources>

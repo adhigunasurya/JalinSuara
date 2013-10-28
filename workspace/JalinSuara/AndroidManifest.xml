@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.jalinsuara.android"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="16" />
+
+    <application
+        android:name="com.jalinsuara.android.JalinSuara"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppBaseTheme" >
+        <activity
+            android:name="com.jalinsuara.android.MainActivity"
+            android:label="@string/app_name" >
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+        <!-- auth -->
+
+        <activity
+            android:name="com.jalinsuara.android.auth.LoginActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.jalinsuara.android.auth.SignUpActivityivity"
+            android:label="@string/title_register" >
+        </activity>
+
+        <!-- news -->
+        <activity
+            android:name="com.jalinsuara.android.news.ShareNewsActivity"
+            android:label="@string/title_share_news" >
+        </activity>
+        <activity
+            android:name="com.jalinsuara.android.news.NewsActivity"
+            android:label="@string/title_news" >
+        </activity>
+        <activity
+            android:name="com.jalinsuara.android.news.NewsListActivity"
+            android:label="@string/title_news_list" >
+        </activity>
+
+        <!-- home -->
+        <activity
+            android:name="com.jalinsuara.android.home.DashboardActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <!-- profile -->
+        <activity
+            android:name="com.jalinsuara.android.profile.ProfileActivity"
+            android:label="@string/title_profile" >
+        </activity>
+    </application>
+
+</manifest>
