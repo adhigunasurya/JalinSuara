@@ -18,7 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import org.xmlpull.v1.XmlPullParser;
 
-abstract public class SearchActivity extends ListActivity{
+ abstract public class SearchActivity extends ListActivity{
 	abstract ListAdapter makeMeAnAdapter(Intent intent);
 	 
 	private static final int LOCAL_SEARCH_ID = Menu.FIRST+1;
@@ -29,8 +29,8 @@ abstract public class SearchActivity extends ListActivity{
 	@Override
 	public void onCreate(Bundle icicle) {
 	    super.onCreate(icicle);
-	    setContentView(R.layout.search);
-	    selection=(TextView)findViewById(R.id.searchAutoCompleteTextView);
+	    setContentView(R.layout.search2);
+	    selection=(TextView)findViewById(R.id.selection);
 	     
 	    try {
 	        XmlPullParser xpp=getResources().getXml(R.layout.word);
