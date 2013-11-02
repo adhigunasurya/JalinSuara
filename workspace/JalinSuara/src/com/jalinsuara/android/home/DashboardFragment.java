@@ -17,6 +17,7 @@ public class DashboardFragment extends BaseFragment {
 	private Button mMapsButton;
 	private Button mShareNewsButton;
 	private Button mSubProjectsButton;
+	private Button mSearchButton;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -31,7 +32,8 @@ public class DashboardFragment extends BaseFragment {
 				R.id.fragment_dashboard_share_news_button);
 		mSubProjectsButton = (Button) getView().findViewById(
 				R.id.fragment_dashboard_sub_projects_button);		
-
+		mSearchButton = (Button) getView().findViewById(
+				R.id.fragment_dashboard_search_button);
 		mNewsButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -58,6 +60,13 @@ public class DashboardFragment extends BaseFragment {
 			@Override
 			public void onClick(View v) {
 				navigateToShareNews();
+			}
+		});
+		
+		mSearchButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v){
+				
 			}
 		});
 

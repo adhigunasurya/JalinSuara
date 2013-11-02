@@ -30,5 +30,11 @@
         style="@style/DashboardButton"
         android:drawableTop="@drawable/ic_stub"
         android:text="@string/share_news" />
+    
+    <Button
+        android:id="@+id/fragment_dashboard_search_button"
+        style="@style/DashboardButton"
+        android:drawableTop="@drawable/ic_stub"
+        android:text="@string/search" />
 
 </com.jalinsuara.android.view.DashboardLayout>
