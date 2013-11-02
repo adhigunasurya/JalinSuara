@@ -85,21 +85,21 @@
             android:name="com.jalinsuara.android.profile.ProfileActivity"
             android:label="@string/title_profile" >
         </activity>
-        <activity android:label="Search Demo" android:name="com.jalinsuara.android.profile.SearchInterfaceDemo">
+        <activity android:label="Search Demo" android:name="com.jalinsuara.android.SearchInterfaceDemo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <meta-data android:name="android.app.default_searchable"  android:value="com.jalinsuara.android.SearchInterface" />
         </activity>
-        <activity android:label="Search" android:launchMode="singleTop" android:name=".SearchInterface">
+        <activity android:label="Search" android:launchMode="singleTop" android:name="com.jalinsuara.android.SearchInterface">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <meta-data android:name="android.app.searchable" android:resource="@layout/searchable" />
         </activity>
-        <provider android:authorities="com.jalinsuara.android.profile.SearchInterfaceDemo.SearchSuggestionProvider" android:name=".SearchSuggestionProvider" />
+        <provider android:authorities="com.jalinsuara.android.SearchInterfaceDemo.SearchSuggestionProvider" android:name="com.jalinsuara.android.SearchSuggestionProvider" />
     </application>
 
 </manifest>
