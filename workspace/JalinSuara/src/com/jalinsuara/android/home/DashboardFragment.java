@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.SearchActivity;
 import com.jalinsuara.android.news.NewsListActivity;
 import com.jalinsuara.android.news.ShareNewsActivity;
 
@@ -66,7 +67,7 @@ public class DashboardFragment extends BaseFragment {
 		mSearchButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
-				Intent intent = new Intent(getBaseContext(), SearchActivity.class);
+				navigateToSearch();
 			}
 		});
 
@@ -94,6 +95,11 @@ public class DashboardFragment extends BaseFragment {
 	protected void navigateToShareNews() {
 		Intent intent = new Intent(getSherlockActivity(),
 				ShareNewsActivity.class);
+		startActivity(intent);
+	}
+	
+	protected void navigateToSearch(){
+		Intent intent = new Intent(getActivity(), SearchActivity.class);
 		startActivity(intent);
 	}
 
