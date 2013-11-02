@@ -77,4 +77,9 @@
         <item>Lampung</item>
     </string-array>
 
+        <string name="app_name">Search Demo</string>
+        <string name="Label">My Search</string>
+        <string name="Hint">Search</string>
+        <string name="global">Search any word</string>
+	
 </resources>

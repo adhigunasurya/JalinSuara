@@ -33,11 +33,20 @@
           android:padding="10dip">
           <!-- android:layout_below="@id/header" -->
           <!-- Search bar -->
-          <TextView android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#372c24"
-                android:text="Masukkan kata kunci pencarian"
-                android:textSize="17sp"/>
+
+          <TextView
+              android:id="@+id/searchAutoCompleteTextView"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:text="Masukkan kata kunci pencarian"
+              android:textColor="#372c24"
+              android:textSize="17sp" />
+
+          <ListView
+        		android:id="@+id/list"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:drawSelectorOnTop="false"/>
           <EditText android:id="@+id/search"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -64,7 +73,7 @@
                 android:gravity="center"
                 android:textSize="20sp"
                 android:textColor="#025f7c"/>
- 
+ 			
         </LinearLayout>
         <!-- Registration Form Ends -->
   </RelativeLayout>
