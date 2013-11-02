@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<words  xmlns:android="http://schemas.android.com/apk/res/android">
+    <word android:value="new" />
+    <word android:value="old" />
+    <word android:value="color" />
+    <word android:value="parasia" />
+    <word android:value="bhopal" />
+    <word android:value="chhindwara" />
+    <word android:value="chand" />
+    <word android:value="jabalpur" />
+    <word android:value="bareli" />
+    <word android:value="jaipur" />
+    <word android:value="jodhpur" />
+    <word android:value="delhi" />
+    <word android:value="Hamidiya" />
+    <word android:value="itarasi" />
+    <word android:value="baitul" />
+    <word android:value="shikhar" />
+    <word android:value="lalbaag" />
+    <word android:value="nagpur" />
+    <word android:value="ratnagiri" />
+</words>

@@ -66,7 +66,7 @@ public class DashboardFragment extends BaseFragment {
 		mSearchButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
-				
+				Intent intent = new Intent(getBaseContext(), SearchActivity.class);
 			}
 		});
 
