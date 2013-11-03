@@ -4,11 +4,14 @@ import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -22,6 +25,12 @@ public class DashboardActivity extends BaseFragmentActivity {
 	public final static int DIALOG_ABOUT = 1;
 
 	private SlidingPaneLayout mSlidingLayout;
+
+	private TextView mFbJalinSuara;
+
+	private TextView mFbPsf;
+
+	private TextView mTwitterPnpm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +50,43 @@ public class DashboardActivity extends BaseFragmentActivity {
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.content_frame, new DashboardFragment()).commit();
 
+		mFbJalinSuara = (TextView) findViewById(
+				R.id.link_fb_jalin_suara);
+		mFbPsf = (TextView) findViewById(R.id.link_fb_psf);
+		mTwitterPnpm = (TextView) findViewById(
+				R.id.link_twitter_pnpm_support);
+
+		mFbJalinSuara.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse(getString(R.string.link_fb_jalin_suara)));
+				startActivity(browserIntent);
+
+			}
+		});
+		mFbPsf.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse(getString(R.string.link_fb_psf)));
+				startActivity(browserIntent);
+
+			}
+		});
+		mTwitterPnpm.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse(getString(R.string.link_twitter_pnpm_support)));
+				startActivity(browserIntent);
+
+			}
+		});
+
 	}
 
 	@Override
@@ -51,7 +97,7 @@ public class DashboardActivity extends BaseFragmentActivity {
 		if (item.getItemId() == android.R.id.home && !mSlidingLayout.isOpen()) {
 			mSlidingLayout.smoothSlideOpen();
 			return true;
-		}else{
+		} else {
 			mSlidingLayout.smoothSlideClosed();
 		}
 

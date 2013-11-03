@@ -21,9 +21,7 @@ public class DashboardFragment extends BaseFragment {
 	private Button mMapsButton;
 	private Button mShareNewsButton;
 	private Button mSubProjectsButton;
-	private TextView mFbJalinSuara;
-	private TextView mFbPsf;
-	private TextView mTwitterPnpm;
+	
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -67,42 +65,7 @@ public class DashboardFragment extends BaseFragment {
 			}
 		});
 
-		mFbJalinSuara = (TextView) getView().findViewById(
-				R.id.link_fb_jalin_suara);
-		mFbPsf = (TextView) getView().findViewById(R.id.link_fb_jalin_suara);
-		mTwitterPnpm = (TextView) getView().findViewById(
-				R.id.link_fb_jalin_suara);
-
-		mFbJalinSuara.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
-						.parse(getString(R.string.link_fb_jalin_suara)));
-				startActivity(browserIntent);
-
-			}
-		});
-		mFbPsf.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
-						.parse(getString(R.string.link_fb_psf)));
-				startActivity(browserIntent);
-
-			}
-		});
-		mTwitterPnpm.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
-						.parse(getString(R.string.link_twitter_pnpm_support)));
-				startActivity(browserIntent);
-
-			}
-		});
+		
 
 		resetStatus();
 		setStatusShowContent();
