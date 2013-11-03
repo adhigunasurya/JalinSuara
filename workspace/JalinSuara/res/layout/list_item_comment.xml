@@ -24,21 +24,28 @@
         android:text="User Name"
         android:textColor="#372c24"
         android:textSize="16sp" />
+	<LinearLayout
+        android:id="@+id/list_item_comment_extra_information_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_comment_user_name_textview"
+        android:layout_toRightOf="@id/list_item_comment_user_imageview"
+        android:orientation="horizontal" >
 
-    <View
-        android:id="@+id/blank_space"
-        android:layout_width="1dp"
-        android:layout_height="8dp"
-        android:layout_below="@id/list_item_comment_user_name_textview" >
-    </View>
+        <TextView
+            android:id="@+id/list_item_comment_user_date_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp" />
+    </LinearLayout>
 
-    <TextView
+	<TextView
         android:id="@+id/list_item_comment_body_textview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignWithParentIfMissing="true"
-        android:layout_below="@id/blank_space"
+        android:layout_below="@id/list_item_comment_extra_information_layout"
         android:layout_toRightOf="@id/list_item_comment_user_imageview"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -46,5 +53,6 @@
         android:text="Loren ipsum..Loren ipsum..Loren ipsum..Loren ipsum..Loren ipsum.."
         android:textColor="#372c24"
         android:textSize="14sp" />
+
 
 </RelativeLayout>
