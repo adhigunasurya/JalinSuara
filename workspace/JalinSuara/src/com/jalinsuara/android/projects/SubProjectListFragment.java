@@ -9,6 +9,7 @@ import com.jalinsuara.android.BaseListFragment;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.NetworkUtils;
+
 import com.jalinsuara.android.projects.model.SubProject;
 public class SubProjectListFragment extends BaseListFragment{
 	private SubProjectAdapter mAdapter;
@@ -29,7 +30,7 @@ public class SubProjectListFragment extends BaseListFragment{
 		resetStatus();
 		setStatusProgress(getResources().getString(R.string.loading), false);
 
-		LoadPosts task = new LoadPosts();
+		LoadProject task = new LoadProject();
 		task.execute();
 
 	}
@@ -41,15 +42,15 @@ public class SubProjectListFragment extends BaseListFragment{
 		mListener.onSubProjectItemClickListener(subproject, position);
 	}
 	
-	private class LoadPosts extends AsyncTask<Integer, Integer, Integer> {
+	private class LoadProject extends AsyncTask<Integer, Integer, Integer> {
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;
 
 		@Override
 		protected Integer doInBackground(Integer... params) {
-			JalinSuaraSingleton.getInstance().setNewsList(
-					NetworkUtils.getPosts());
+			JalinSuaraSingleton.getInstance().setSubProjectList(
+					NetworkUtils.getSubProject());
 			if (getSherlockActivity() != null) {
 				mAdapter = new SubProjectAdapter(getSherlockActivity(),
 						JalinSuaraSingleton.getInstance().getSubProjectList());

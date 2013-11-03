@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
@@ -46,11 +47,22 @@ public class SubProjectAdapter extends BaseAdapter {
 			LayoutInflater inflater = (LayoutInflater) parent.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			convertView = inflater.inflate(R.layout.list_item_news, null);
+			convertView = inflater.inflate(R.layout.list_item_sub_project, null);
 
 		}
-
-//		TextView titleTextview = ((TextView) convertView
+		TextView no = ((TextView) convertView
+				.findViewById(R.id.list_item_sub_project_no_textview));
+		TextView namaPropinsi = ((TextView) convertView
+				.findViewById(R.id.list_item_sub_project_propinsi_textview));
+		TextView namaKecamatan = ((TextView) convertView
+				.findViewById(R.id.list_item_sub_project_kecamatan_textview));
+		TextView deskripsiProyek = ((TextView) convertView
+				.findViewById(R.id.list_item_sub_project_title_textview));
+		
+		namaPropinsi.setText("jawa");
+		namaKecamatan.setText("bekasi");
+		deskripsiProyek.setText(object.getName());
+		//		TextView titleTextview = ((TextView) convertView
 //				.findViewById(R.id.list_item_news_title_textview));
 //		TextView descriptionTextview = ((TextView) convertView
 //				.findViewById(R.id.list_item_news_content_textview));
