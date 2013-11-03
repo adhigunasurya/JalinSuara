@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jalinsuara.android.projects.model.SubProject;
 
 /**
  * Base Activity used in the entire application
@@ -283,4 +284,6 @@ public abstract class BaseFragmentActivity extends SherlockFragmentActivity {
 	public synchronized void setStatusState(int statusState) {
 		mStatusState = statusState;
 	}
+
+
 }
