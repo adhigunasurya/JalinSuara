@@ -22,7 +22,6 @@
     <string name="loren_ipsum">Loren ipsum dolores</string>
     <string name="sub_projects">Sub Proyek</string>
     <string name="share_news">Mulai berbagi</string>
-    <string name="search">Search</string>
     <string name="login">Login</string>
     <string name="drawer_open">Buka</string>
     <string name="drawer_close">Tutup</string>
@@ -82,9 +81,5 @@
         <item>Lampung</item>
     </string-array>
 
-        <string name="app_name">Search Demo</string>
-        <string name="Label">My Search</string>
-        <string name="Hint">Search</string>
-        <string name="global">Search any word</string>
-	
+  
 </resources>
