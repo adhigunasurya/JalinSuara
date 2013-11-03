@@ -70,7 +70,7 @@ public class SearchResultAdapter extends BaseAdapter {
 			}
 		}
 
-		convertView.setTag(object.getId());
+		convertView.setTag(object);
 		if (object.isNews()) {
 			TextView titleTextview = ((TextView) convertView
 					.findViewById(R.id.list_item_news_title_textview));

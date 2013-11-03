@@ -17,12 +17,12 @@
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:dividerHeight="2dp" />
 
     <TextView
         android:id="@android:id/empty"
         style="@style/EmptyTextListView"
-        android:text="@string/empty" />
+        android:text="@string/empty" android:layout_gravity="center" />
 
 </LinearLayout>
