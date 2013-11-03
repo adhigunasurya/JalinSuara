@@ -31,7 +31,7 @@ public class WebServiceTest extends TestCase {
 		
 		if (list!=null){
 			for (SubProject subproject : list){
-				Log.i(TAG, subproject.toString());	
+				Log.i("---------", subproject.toString());	
 			}
 			
 		}

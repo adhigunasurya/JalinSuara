@@ -262,7 +262,7 @@ public class NetworkUtils {
 
 	public static ArrayList<SubProject> getSubProject() {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/posts.json";
+		String uri = BASE_URL + "/activities.json";
 
 		Log.i(TAG, "Request: " + uri);
 		final HttpGet request = new HttpGet(uri);

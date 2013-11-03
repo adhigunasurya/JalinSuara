@@ -70,7 +70,16 @@
             android:name="com.jalinsuara.android.news.NewsListActivity"
             android:label="@string/title_news_list" >
         </activity>
+		<!-- projects -->
 
+        <activity
+            android:name="com.jalinsuara.android.projects.SubProjectActivity"
+            android:label="@string/title_news" >
+        </activity>
+        <activity
+            android:name="com.jalinsuara.android.projects.SubProjectListActivity"
+            android:label="@string/title_news_list" >
+        </activity>
         <!-- home -->
         <activity
             android:name="com.jalinsuara.android.home.DashboardActivity"
