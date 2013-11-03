@@ -56,7 +56,7 @@ public class JalinSuaraSingleton {
 		setGson(builder.create());
 
 		// init news list
-		setNewsList(new ArrayList<News>());		
+		setNewsList(new ArrayList<News>());
 
 		setSubProjectList(new ArrayList<SubProject>());
 	}
@@ -79,23 +79,45 @@ public class JalinSuaraSingleton {
 
 	public News findNewsById(long id) {
 		if (mNewsList == null) {
-			return null;
+			if (mRecentSearchResultList == null) {
+				return null;
+			} else {
+				for (SearchResult result : mRecentSearchResultList) {
+					if (result.isNews()) {
+						if (result.getNews().getId() == id) {
+							return result.getNews();
+						}
+					}
+				}
+				return null;
+			}
 		}
 		for (News news : mNewsList) {
 			if (news.getId() == id) {
 				return news;
 			}
 		}
+		if (mRecentSearchResultList == null) {
+			return null;
+		}
+		for (SearchResult result : mRecentSearchResultList) {
+			if (result.isNews()) {
+				if (result.getNews().getId() == id) {
+					return result.getNews();
+				}
+			}
+		}
 		return null;
 	}
-	
+
 	public ArrayList<SubProject> getSubProjectList() {
 		return mSubProjectList;
 	}
+
 	public void setSubProjectList(ArrayList<SubProject> subProject) {
 		mSubProjectList = subProject;
 	}
-	
+
 	public SubProject findSubProjectById(long id) {
 		if (mSubProjectList == null) {
 			return null;

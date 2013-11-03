@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.NetworkUtils;
+import com.jalinsuara.android.news.NewsActivity;
 
 public class SearchableActivity extends BaseFragmentActivity {
 
@@ -34,6 +37,20 @@ public class SearchableActivity extends BaseFragmentActivity {
 
 		// Get the intent, verify the action and get the query
 		handleIntent(getIntent());
+
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				SearchResult item = (SearchResult) mAdapter.getItem(arg2);
+				if (item.isNews()) {
+					Intent intent = new Intent(getBaseContext(), NewsActivity.class);
+					intent.putExtra(NewsActivity.EXTRA_ID, item.getId());
+					startActivity(intent);
+				}
+			}
+		});
 	}
 
 	@Override
@@ -50,15 +67,6 @@ public class SearchableActivity extends BaseFragmentActivity {
 	}
 
 	public void doSearch(String query) {
-		// mTextView.setText(getString(R.string.no_results, new Object[]
-		// {query}));
-
-		// // Display the number of results
-		// int count = cursor.getCount();
-		// String countString =
-		// getResources().getQuantityString(R.plurals.search_results,
-		// count, new Object[] {count, query});
-		// mTextView.setText(countString);
 
 		resetStatus();
 		setStatusProgress(
