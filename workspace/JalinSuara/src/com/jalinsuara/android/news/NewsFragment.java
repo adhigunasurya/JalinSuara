@@ -2,6 +2,7 @@ package com.jalinsuara.android.news;
 
 import android.os.Bundle;
 import android.text.Html;
+import android.text.format.DateUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ public class NewsFragment extends BaseFragment {
 
 	private News mNews;
 	private ImageView mImageView;
+	private TextView mDateUpdatedView;
 	private TextView mTitleTextView;
 	private TextView mDescriptionTextView;
 
@@ -37,10 +39,15 @@ public class NewsFragment extends BaseFragment {
 					R.id.fragment_news_title_textview);
 			mDescriptionTextView = (TextView) getView().findViewById(
 					R.id.fragment_news_description_textview);
+			mDateUpdatedView = (TextView) getView().findViewById(
+					R.id.fragment_news_date_textview);
 
 			ImageLoader loader = new ImageLoader(getSherlockActivity());
+			
 			// loader.DisplayImage(url, imageView);
 			mTitleTextView.setText(mNews.getTitle());
+			mDateUpdatedView.setText(com.jalinsuara.android.helpers.DateUtils
+					.toStringDateOnly(mNews.getUpdatedAt()));
 			mDescriptionTextView.setText(Html.fromHtml(mNews.getDescription()));
 
 			resetStatus();

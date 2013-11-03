@@ -18,22 +18,38 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/loren_ipsum"
-            android:src="@drawable/ic_stub" />
+            android:src="@drawable/pnpm_picture_square" />
 
         <TextView
             android:id="@+id/fragment_news_title_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="@string/loren_ipsum" 
-            android:layout_marginBottom="30dp"
-            />
+            android:text="@string/loren_ipsum"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/fragment_news_extra_information_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/fragment_news_date_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/fragment_news_description_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/loren_ipsum" />
+            android:text="@string/loren_ipsum"
+           />
     </LinearLayout>
 
 </ScrollView>
