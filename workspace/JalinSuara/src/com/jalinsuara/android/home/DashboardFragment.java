@@ -10,6 +10,7 @@ import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.news.NewsListActivity;
 import com.jalinsuara.android.news.ShareNewsActivity;
+import com.jalinsuara.android.projects.SubProjectListActivity;
 
 public class DashboardFragment extends BaseFragment {
 
@@ -80,6 +81,8 @@ public class DashboardFragment extends BaseFragment {
 
 	protected void navigateToSubProjectList() {
 		// TODO Auto-generated method stub
+		Intent intent = new Intent(getSherlockActivity(),SubProjectListActivity.class);
+		startActivity(intent);
 
 	}
 

@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.jalinsuara.android.helpers.NetworkUtils;
 import com.jalinsuara.android.news.model.News;
+import com.jalinsuara.android.projects.model.SubProject;
 import com.jalinsuara.android.search.SearchResult;
 
 public class WebServiceTest extends TestCase {
@@ -23,6 +24,18 @@ public class WebServiceTest extends TestCase {
 			}
 			
 		}
+	}
+	public void testGetSubProject(){
+		ArrayList<SubProject> list = NetworkUtils.getSubProject();
+		assertTrue(list != null);
+		
+		if (list!=null){
+			for (SubProject subproject : list){
+				Log.i(TAG, subproject.toString());	
+			}
+			
+		}
+		
 	}
 	
 	public void testGetSearch(){
