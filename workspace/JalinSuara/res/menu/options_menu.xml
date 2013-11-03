@@ -13,14 +13,16 @@
 ** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 ** See the License for the specific language governing permissions and
 ** limitations under the License.
-*/
+*/
 -->
-<!-- Options Menu for SearchableActivity and WordActivity.
- -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/search"
-          android:title="@string/menu_search"
-          android:icon="@drawable/ic_menu_search"
-          android:showAsAction="collapseActionView|ifRoom"
-          android:actionViewClass="android.widget.SearchView" />
+<!--  Options Menu for SearchableActivity and WordActivity. -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@drawable/ic_menu_search"
+        android:showAsAction="collapseActionView|ifRoom"
+        android:title="@string/action_search"/>
+
 </menu>
