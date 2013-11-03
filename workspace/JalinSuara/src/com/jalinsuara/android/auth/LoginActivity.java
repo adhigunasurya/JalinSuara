@@ -5,6 +5,7 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.R.id;
 import com.jalinsuara.android.R.layout;
 import com.jalinsuara.android.home.DashboardActivity;
+import com.jalinsuara.android.maps.TestMapsActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,8 +44,10 @@ public class LoginActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
+//				Intent intent = new Intent(getBaseContext(),
+//						SignUpActivity.class);
 				Intent intent = new Intent(getBaseContext(),
-						SignUpActivity.class);
+						TestMapsActivity.class);
 				startActivity(intent);
 				finish();
 
