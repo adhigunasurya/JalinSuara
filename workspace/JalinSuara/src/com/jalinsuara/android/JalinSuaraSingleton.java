@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.search.SearchResult;
+import com.jalinsuara.android.projects.model.SubProject;
 
 /**
  * Singleton used in the entire application
@@ -43,7 +44,7 @@ public class JalinSuaraSingleton {
 	private Gson mGson;
 
 	private ArrayList<News> mNewsList;
-
+	private ArrayList<SubProject> mSubProjectList;
 	private ArrayList<SearchResult> mRecentSearchResultList;
 
 	private JalinSuaraSingleton() {
@@ -57,6 +58,7 @@ public class JalinSuaraSingleton {
 		// init news list
 		setNewsList(new ArrayList<News>());		
 
+		setSubProjectList(new ArrayList<SubProject>());
 	}
 
 	public Gson getGson() {
@@ -82,6 +84,25 @@ public class JalinSuaraSingleton {
 		for (News news : mNewsList) {
 			if (news.getId() == id) {
 				return news;
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<SubProject> getSubProjectList() {
+		return mSubProjectList;
+	}
+	public void setSubProjectList(ArrayList<SubProject> subProject) {
+		mSubProjectList = subProject;
+	}
+	
+	public SubProject findSubProjectById(long id) {
+		if (mSubProjectList == null) {
+			return null;
+		}
+		for (SubProject subproject : mSubProjectList) {
+			if (subproject.getId() == id) {
+				return subproject;
 			}
 		}
 		return null;

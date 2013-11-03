@@ -1,4 +1,4 @@
-package com.jalinsuara.android.news;
+package com.jalinsuara.android.projects;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,23 +9,19 @@ import com.jalinsuara.android.BaseListFragment;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.NetworkUtils;
-import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;
-
-public class NewsListFragment extends BaseListFragment {
-
-	private NewsAdapter mAdapter;
-	private OnNewsItemClickListener mListener;
-
-	public NewsListFragment(OnNewsItemClickListener listener) {
+public class SubProjectListFragment extends BaseListFragment{
+	private SubProjectAdapter mAdapter;
+	private OnSubProjectItemClickListener mListener;
+	public SubProjectListFragment(OnSubProjectItemClickListener listener) {
 		mListener = listener;
 	}
-
+	
 	@Override
 	public int getLayoutId() {
-		return R.layout.fragment_news_list;
+		return R.layout.fragment_sub_projects_list;
 	}
-
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -37,14 +33,14 @@ public class NewsListFragment extends BaseListFragment {
 		task.execute();
 
 	}
-
+	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		News news = (News) mAdapter.getItem(position);
-		mListener.onNewsItemClickListener(news, position);
+		SubProject subproject = (SubProject) mAdapter.getItem(position);
+		mListener.onSubProjectItemClickListener(subproject, position);
 	}
-
+	
 	private class LoadPosts extends AsyncTask<Integer, Integer, Integer> {
 
 		private final static int E_OK = 1;
@@ -55,8 +51,8 @@ public class NewsListFragment extends BaseListFragment {
 			JalinSuaraSingleton.getInstance().setNewsList(
 					NetworkUtils.getPosts());
 			if (getSherlockActivity() != null) {
-				mAdapter = new NewsAdapter(getSherlockActivity(),
-						JalinSuaraSingleton.getInstance().getNewsList());
+				mAdapter = new SubProjectAdapter(getSherlockActivity(),
+						JalinSuaraSingleton.getInstance().getSubProjectList());
 			}
 
 			return E_OK;
@@ -79,10 +75,10 @@ public class NewsListFragment extends BaseListFragment {
 		}
 
 	}
-
-	public interface OnNewsItemClickListener {
-		public void onNewsItemClickListener(News news, int position);
+	public interface OnSubProjectItemClickListener {
+		public void onSubProjectItemClickListener(SubProject subproject, int position);
 
 		
 	}
+	
 }
