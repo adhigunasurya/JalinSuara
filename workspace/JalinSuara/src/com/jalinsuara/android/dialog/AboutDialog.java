@@ -40,7 +40,7 @@ public class AboutDialog extends AlertDialog {
 		message.setTextAppearance(context,
 				android.R.style.TextAppearance_Medium);
 		message.setPadding(10, 0, 10, 0);
-		message.setLinkTextColor(Color.YELLOW);
+		message.setLinkTextColor(Color.BLUE);
 
 		final ScrollView screen = new ScrollView(context);
 		screen.addView(message);
