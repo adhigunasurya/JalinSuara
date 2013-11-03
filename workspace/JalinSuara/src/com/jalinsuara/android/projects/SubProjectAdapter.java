@@ -49,18 +49,16 @@ public class SubProjectAdapter extends BaseAdapter {
 
 			convertView = inflater.inflate(R.layout.list_item_sub_project, null);
 
-		}
-		TextView no = ((TextView) convertView
-				.findViewById(R.id.list_item_sub_project_no_textview));
-		TextView namaPropinsi = ((TextView) convertView
-				.findViewById(R.id.list_item_sub_project_propinsi_textview));
-		TextView namaKecamatan = ((TextView) convertView
-				.findViewById(R.id.list_item_sub_project_kecamatan_textview));
+		}		
+//		TextView namaPropinsi = ((TextView) convertView
+//				.findViewById(R.id.list_item_sub_project_propinsi_textview));
+//		TextView namaKecamatan = ((TextView) convertView
+//				.findViewById(R.id.list_item_sub_project_kecamatan_textview));
 		TextView deskripsiProyek = ((TextView) convertView
 				.findViewById(R.id.list_item_sub_project_title_textview));
 		
-		namaPropinsi.setText("jawa");
-		namaKecamatan.setText("bekasi");
+//		namaPropinsi.setText("jawa");
+//		namaKecamatan.setText("bekasi");
 		deskripsiProyek.setText(object.getName());
 		//		TextView titleTextview = ((TextView) convertView
 //				.findViewById(R.id.list_item_news_title_textview));
