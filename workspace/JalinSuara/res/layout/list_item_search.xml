@@ -10,7 +10,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginRight="6dp"
         android:contentDescription="Image description"
-        android:src="@drawable/pnpm_picture_square" />
+        android:src="@drawable/ic_stub" />
 
     <TextView
         android:id="@+id/list_item_news_title_textview"

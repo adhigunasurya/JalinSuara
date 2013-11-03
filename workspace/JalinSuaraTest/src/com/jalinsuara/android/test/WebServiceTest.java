@@ -22,6 +22,5 @@ public class WebServiceTest extends TestCase {
 			}
 			
 		}
-
 	}
 }

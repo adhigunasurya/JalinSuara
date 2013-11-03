@@ -6,14 +6,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
@@ -110,6 +115,69 @@ public class NetworkUtils {
 		Log.i(TAG, "Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					Log.i(TAG, "Response: " + sb.toString());
+					ireader.close();
+					String response = sb.toString();
+					if (response.length() > 0) {
+						try {
+							Gson gson = JalinSuaraSingleton.getInstance()
+									.getGson();
+							Type collectionType = new TypeToken<ArrayList<News>>() {
+							}.getType();
+							ArrayList<News> retval = gson.fromJson(response,
+									collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
+
+	/**
+	 * Search 
+	 * @param query
+	 * @return
+	 */
+	public static ArrayList<News> getSearch(String query) {
+		final HttpResponse resp;
+		String uri = BASE_URL + "/home/search.json";
+
+		Log.i(TAG, "Request: " + uri);
+		final HttpPost request = new HttpPost(uri);
+
+		try {
+			// add query
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			nameValuePairs.add(new BasicNameValuePair("query", query));
+			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
 			resp = getHttpClient().execute(request);
 
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {

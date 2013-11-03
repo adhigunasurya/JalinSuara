@@ -16,13 +16,14 @@ public class DashboardFragment extends BaseFragment {
 	private Button mNewsButton;
 	private Button mMapsButton;
 	private Button mShareNewsButton;
-	private Button mSubProjectsButton;
-	private Button mSearchButton;
+	private Button mSubProjectsButton;	
 
+	
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		setHasOptionsMenu(true);
+//		setHasOptionsMenu(true);
 
 		mNewsButton = (Button) getView().findViewById(
 				R.id.fragment_dashboard_news_button);
@@ -31,9 +32,7 @@ public class DashboardFragment extends BaseFragment {
 		mShareNewsButton = (Button) getView().findViewById(
 				R.id.fragment_dashboard_share_news_button);
 		mSubProjectsButton = (Button) getView().findViewById(
-				R.id.fragment_dashboard_sub_projects_button);		
-		mSearchButton = (Button) getView().findViewById(
-				R.id.fragment_dashboard_search_button);
+				R.id.fragment_dashboard_sub_projects_button);				
 		mNewsButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -62,14 +61,7 @@ public class DashboardFragment extends BaseFragment {
 				navigateToShareNews();
 			}
 		});
-		
-		mSearchButton.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v){
-				navigateToSearch();
-			}
-		});
-
+			
 		resetStatus();
 		setStatusShowContent();
 
@@ -97,10 +89,6 @@ public class DashboardFragment extends BaseFragment {
 		startActivity(intent);
 	}
 	
-	protected void navigateToSearch(){
-//		Intent intent = new Intent(getActivity(), SearchInterfaceDemo.class);
-//		startActivity(intent);
-	}
 
 	@Override
 	public int getLayoutId() {

@@ -82,9 +82,17 @@
         <item>Lampung</item>
     </string-array>
 
-    <string name="search_label">Dictionary</string>
+    <string name="search_label">Cari di Jalin Suara</string>
+    <string name="search_hint">Cari cerita atau proyek</string>
+    
+ <!-- Shown above search results when we receive a search request. -->
+    <plurals name="search_results">
+        <item quantity="one">%1$d hasil untuk pencarian \"%2$s\": </item>
+        <item quantity="other">%1$d hasil untuk pencarian \"%2$s\": </item>
+    </plurals>
 
-    <!-- The hint text that appears in the search box. -->
-    <string name="search_hint">Search news or projects</string>
+    <!-- Search failure message. -->
+    <string name="search_no_result">Pencarian \"%s\" tidak menemukan hasil</string>
+    <string name="searching_for">Mencari \"%s\"</string>
 
 </resources>
