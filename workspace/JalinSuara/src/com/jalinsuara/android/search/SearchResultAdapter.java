@@ -87,8 +87,8 @@ public class SearchResultAdapter extends BaseAdapter {
 		} else {
 			TextView titleTextview = ((TextView) convertView
 					.findViewById(R.id.list_item_sub_project_title_textview));
-			TextView descriptionTextview = ((TextView) convertView
-					.findViewById(R.id.list_item_sub_project_content_textview));
+//			TextView descriptionTextview = ((TextView) convertView
+//					.findViewById(R.id.list_item_sub_project_content_textview));
 
 			titleTextview.setText(object.getProjects().getName());
 		}
