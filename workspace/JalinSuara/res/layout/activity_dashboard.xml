@@ -11,8 +11,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:layout_weight="1"
-        layout="@layout/layout_left_panel"
-        android:background="#CC0000FF"
+        layout="@layout/layout_left_panel"        
         android:text="Pane 2" />
 
     <FrameLayout

@@ -8,9 +8,6 @@ import android.widget.Button;
 
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.R;
-import com.jalinsuara.android.SearchActivity;
-import com.jalinsuara.android.SearchInterface;
-import com.jalinsuara.android.SearchInterfaceDemo;
 import com.jalinsuara.android.news.NewsListActivity;
 import com.jalinsuara.android.news.ShareNewsActivity;
 
@@ -101,8 +98,8 @@ public class DashboardFragment extends BaseFragment {
 	}
 	
 	protected void navigateToSearch(){
-		Intent intent = new Intent(getActivity(), SearchInterfaceDemo.class);
-		startActivity(intent);
+//		Intent intent = new Intent(getActivity(), SearchInterfaceDemo.class);
+//		startActivity(intent);
 	}
 
 	@Override

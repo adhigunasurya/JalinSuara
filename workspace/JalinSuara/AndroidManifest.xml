@@ -85,31 +85,7 @@
         <activity
             android:name="com.jalinsuara.android.maps.TestMapsActivity"
             android:label="@string/title_profile" />
-        <activity
-            android:name="com.jalinsuara.android.SearchInterfaceDemo"
-            android:label="Search Demo" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.jalinsuara.android.SearchInterface" />
-        </activity>
-        <activity
-            android:name="com.jalinsuara.android.SearchInterface"
-            android:label="Search"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@layout/searchable" />
-        </activity>
-
-        <provider
-            android:name="com.jalinsuara.android.SearchSuggestionProvider"
-            android:authorities="com.jalinsuara.android.SearchInterfaceDemo.SearchSuggestionProvider" />
+       
     </application>
 
 </manifest>

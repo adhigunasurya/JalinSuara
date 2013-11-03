@@ -53,8 +53,10 @@ public class NewsListFragment extends BaseListFragment {
 		protected Integer doInBackground(Integer... params) {
 			JalinSuaraSingleton.getInstance().setNewsList(
 					NetworkUtils.getPosts());
-			mAdapter = new NewsAdapter(getSherlockActivity(),
-					JalinSuaraSingleton.getInstance().getNewsList());
+			if (getSherlockActivity() != null) {
+				mAdapter = new NewsAdapter(getSherlockActivity(),
+						JalinSuaraSingleton.getInstance().getNewsList());
+			}
 
 			return E_OK;
 		}

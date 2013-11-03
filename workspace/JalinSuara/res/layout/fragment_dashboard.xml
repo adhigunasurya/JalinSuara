@@ -1,7 +1,6 @@
 <com.jalinsuara.android.view.DashboardLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#f8f9fe" >
+    android:layout_height="fill_parent" >
 
     <!-- News Feed Button -->
 
@@ -30,7 +29,7 @@
         style="@style/DashboardButton"
         android:drawableTop="@drawable/ic_stub"
         android:text="@string/share_news" />
-    
+
     <Button
         android:id="@+id/fragment_dashboard_search_button"
         style="@style/DashboardButton"

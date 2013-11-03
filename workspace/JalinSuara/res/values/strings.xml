@@ -2,11 +2,16 @@
 <resources>
 
     <string name="app_name">JalinSuara</string>
+    <string name="jalin_suara">Jalin Suara</string>
+    <string name="psf">PSF</string>
+    <string name="jalin_suara_twitter">\@jalin_suara</string>
+    <string name="pnpm_support_twitter">\@PNPM_Support</string>
     <string name="action_settings">Pengaturan</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_search">Cari</string>
     <string name="action_profile">Profil</string>
     <string name="action_about">Tentang Aplikasi</string>
+    <string name="pnpm_mandiri">PNPM Mandiri</string>
     <string name="loading">Sedang menunggu</string>
     <string name="error">Maaf, terdapat kesalahan</string>
     <string name="email">Email</string>

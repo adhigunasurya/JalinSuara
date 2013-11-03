@@ -4,6 +4,11 @@ Jalin Suara Android
 Website
 	http://jalinsuara.web.id/en
 
+	https://www.facebook.com/PNPMsupport
+	https://www.facebook.com/jalin.suara
+	@jalin_suara
+	@PNPM_support
+	
 Preparing environment 
 1. Eclipse
 2. Android SDK
