@@ -1,5 +1,7 @@
 package com.jalinsuara.android.search;
 
+import java.util.ArrayList;
+
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -9,9 +11,10 @@ import com.jalinsuara.android.BaseListActivity;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.NetworkUtils;
-import com.jalinsuara.android.news.NewsAdapter;
 
 public class SearchableActivity extends BaseListActivity {
+
+	public SearchResultAdapter mAdapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class SearchableActivity extends BaseListActivity {
 		setStatusProgress(
 				getString(R.string.searching_for, new Object[] { query }),
 				false);
+		SearchTask task = new SearchTask();
+		task.execute(query);
 
 	}
 
@@ -75,31 +80,37 @@ public class SearchableActivity extends BaseListActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-			JalinSuaraSingleton.getInstance().setRecentSearchResultList(
-					NetworkUtils.getSearch(params[0]));
+			ArrayList<SearchResult> result = NetworkUtils.getSearch(params[0]);
+			JalinSuaraSingleton.getInstance().setRecentSearchResultList(result);
 			if (getBaseContext() != null) {
 
-//				 mAdapter = new NewsAdapter(getBaseContext(),
-//				 JalinSuaraSingleton.getInstance().get
-//				 );
+				mAdapter = new SearchResultAdapter(getBaseContext(),
+						JalinSuaraSingleton.getInstance()
+								.getRecentSearchResultList());
+				if (mAdapter != null) {
+					return E_OK;
+				} else {
+					return E_ERROR;
+				}
 			}
 
-			return E_OK;
+			return E_ERROR;
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
-			// setListAdapter(mAdapter);
 			if (getBaseContext() != null) {
-
 				if (result == E_OK) {
-
-					resetStatus();
-					setStatusShowContent();
-
+					if (mAdapter != null) {
+						setListAdapter(mAdapter);
+						resetStatus();
+						setStatusShowContent();
+					}else{
+						resetStatus();
+						setStatusError("Null ");
+					}
 				} else {
-
 					resetStatus();
 					setStatusError(getString(R.string.error));
 				}

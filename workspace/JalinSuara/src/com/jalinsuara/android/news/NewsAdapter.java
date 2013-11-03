@@ -3,17 +3,15 @@ package com.jalinsuara.android.news;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.Html;
-import android.util.MonthDisplayHelper;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.helpers.DateUtils;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
 import com.jalinsuara.android.news.model.News;
 
@@ -59,7 +57,10 @@ public class NewsAdapter extends BaseAdapter {
 				.findViewById(R.id.list_item_news_title_textview));
 		TextView descriptionTextview = ((TextView) convertView
 				.findViewById(R.id.list_item_news_content_textview));
+		TextView dateTextView = ((TextView) convertView
+				.findViewById(R.id.list_item_news_date_textview));
 
+		dateTextView.setText(DateUtils.toStringDateOnly(object.getUpdatedAt()));
 		convertView.setTag(object.getId());
 		titleTextview.setText(object.getTitle());
 		descriptionTextview.setText(Html.fromHtml(object.getDescription()));

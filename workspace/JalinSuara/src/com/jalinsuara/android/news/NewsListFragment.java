@@ -65,16 +65,17 @@ public class NewsListFragment extends BaseListFragment {
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
-			setListAdapter(mAdapter);
-			if (result == E_OK) {
+			if (getSherlockActivity() != null) {
+				if (result == E_OK) {
+					setListAdapter(mAdapter);
+					resetStatus();
+					setStatusShowContent();
 
-				resetStatus();
-				setStatusShowContent();
+				} else {
 
-			} else {
-
-				resetStatus();
-				setStatusError(getString(R.string.error));
+					resetStatus();
+					setStatusError(getString(R.string.error));
+				}
 			}
 		}
 
@@ -83,6 +84,5 @@ public class NewsListFragment extends BaseListFragment {
 	public interface OnNewsItemClickListener {
 		public void onNewsItemClickListener(News news, int position);
 
-		
 	}
 }

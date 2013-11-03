@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.helpers.DateUtils;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
 
 public class SearchResultAdapter extends BaseAdapter {
@@ -47,18 +48,50 @@ public class SearchResultAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		SearchResult object = mList.get(position);
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.list_item_news, null);
+			if (object.isNews()) {
+				convertView = inflater.inflate(R.layout.list_item_news, null);
+			} else {
+				convertView = inflater.inflate(R.layout.list_item_sub_project,
+						null);
+			}
 
+		} else {
+			SearchResult obj = (SearchResult) convertView.getTag();
+			if (obj.isNews() == object.isNews()) {
+
+			} else {
+				if (object.isNews()) {
+					convertView = inflater.inflate(R.layout.list_item_news,
+							null);
+				} else {
+					convertView = inflater.inflate(
+							R.layout.list_item_sub_project, null);
+				}
+			}
 		}
 
-		TextView titleTextview = ((TextView) convertView
-				.findViewById(R.id.list_item_news_title_textview));
-		TextView descriptionTextview = ((TextView) convertView
-				.findViewById(R.id.list_item_news_content_textview));
-
 		convertView.setTag(object.getId());
-		titleTextview.setText(object.getTitle());
-		descriptionTextview.setText(Html.fromHtml(object.getDescription()));
+		if (object.isNews()) {
+			TextView titleTextview = ((TextView) convertView
+					.findViewById(R.id.list_item_news_title_textview));
+			TextView descriptionTextview = ((TextView) convertView
+					.findViewById(R.id.list_item_news_content_textview));
+			TextView dateTextView = ((TextView) convertView
+					.findViewById(R.id.list_item_news_date_textview));
+
+			dateTextView.setText(DateUtils.toStringDateOnly(object.getNews()
+					.getUpdatedAt()));
+			titleTextview.setText(object.getNews().getTitle());
+			descriptionTextview.setText(Html.fromHtml(object.getNews()
+					.getDescription()));
+		} else {
+			TextView titleTextview = ((TextView) convertView
+					.findViewById(R.id.list_item_sub_project_title_textview));
+			TextView descriptionTextview = ((TextView) convertView
+					.findViewById(R.id.list_item_sub_project_content_textview));
+
+			titleTextview.setText(object.getProjects().getName());
+		}
 
 		return convertView;
 	}
