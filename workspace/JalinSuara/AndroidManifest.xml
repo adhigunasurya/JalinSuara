@@ -40,6 +40,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+
         <!-- auth -->
 
         <activity
@@ -85,31 +86,40 @@
         <activity
             android:name="com.jalinsuara.android.maps.TestMapsActivity"
             android:label="@string/title_profile" />
-        <activity
-            android:name="com.jalinsuara.android.SearchInterfaceDemo"
-            android:label="Search Demo" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value="com.jalinsuara.android.SearchInterface" />
-        </activity>
-        <activity
-            android:name="com.jalinsuara.android.SearchInterface"
-            android:label="Search"
-            android:launchMode="singleTop" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+        
+        
+        
+        <activity android:name="com.jalinsuara.android.SearchableDictionary"
+                  android:launchMode="singleTop">
 
-                <category android:name="android.intent.category.DEFAULT" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@layout/searchable" />
+            <!-- Receives the search request. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <!-- No category needed, because the Intent will specify this class component-->
+            </intent-filter>
+
+            <!-- Points to searchable meta data. -->
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable" />
+
         </activity>
 
-        <provider
-            android:name="com.jalinsuara.android.SearchSuggestionProvider"
-            android:authorities="com.jalinsuara.android.SearchInterfaceDemo.SearchSuggestionProvider" />
+        <!-- Displays the definition of a word. -->
+        <activity android:name="com.jalinsuara.android.WordActivity" />
+
+        <!-- Provides search suggestions for words and their definitions. -->
+        <provider android:name="com.jalinsuara.android.DictionaryProvider"
+                  android:authorities="com.jalinsuara.android.DictionaryProvider" />
+
+        <!-- Points to searchable activity so the whole app can invoke search. -->
+        <meta-data android:name="android.app.default_searchable"
+                   android:value="com.jalinsuara.android.SearchableDictionary" />
+        
     </application>
 
 </manifest>
