@@ -11,6 +11,9 @@
     <string name="action_search">Cari</string>
     <string name="action_profile">Profil</string>
     <string name="action_about">Tentang Aplikasi</string>
+    <string name="about_content">${APP_NAME}\n${VERSION}\nAplikasi Android untuk Jalin Suara.\n
+        Website dapat diakses pada http://jalinsuara.web.id\n                
+        \u00A9 2013</string>
     <string name="pnpm_mandiri">PNPM Mandiri</string>
     <string name="loading">Sedang menunggu</string>
     <string name="error">Maaf, terdapat kesalahan</string>
@@ -19,6 +22,7 @@
     <string name="password">Kata kunci</string>
     <string name="news">Berita</string>
     <string name="maps">Peta</string>
+    <string name="close">Tutup</string>
     <string name="loren_ipsum">Loren ipsum dolores</string>
     <string name="sub_projects">Sub Proyek</string>
     <string name="share_news">Mulai berbagi</string>
@@ -84,8 +88,8 @@
 
     <string name="search_label">Cari di Jalin Suara</string>
     <string name="search_hint">Cari cerita atau proyek</string>
-    
- <!-- Shown above search results when we receive a search request. -->
+
+    <!-- Shown above search results when we receive a search request. -->
     <plurals name="search_results">
         <item quantity="one">%1$d hasil untuk pencarian \"%2$s\": </item>
         <item quantity="other">%1$d hasil untuk pencarian \"%2$s\": </item>
@@ -94,5 +98,8 @@
     <!-- Search failure message. -->
     <string name="search_no_result">Pencarian \"%s\" tidak menemukan hasil</string>
     <string name="searching_for">Mencari \"%s\"</string>
+    <string name="link_fb_jalin_suara">https://www.facebook.com/jalin.suara</string>
+    <string name="link_fb_psf">https://www.facebook.com/PNPMsupport</string>
+    <string name="link_twitter_pnpm_support">https://twitter.com/PNPM_Support/</string>
 
 </resources>

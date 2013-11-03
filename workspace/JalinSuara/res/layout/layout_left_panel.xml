@@ -50,6 +50,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/link_fb_psf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/facebook_64"
@@ -57,14 +58,16 @@
             android:text="@string/psf" />
 
         <TextView
+            android:id="@+id/link_fb_jalin_suara"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/twitter_64"
+            android:drawableLeft="@drawable/facebook_64"
             android:drawablePadding="10dp"
-            android:text="@string/jalin_suara_twitter" />
+            android:text="@string/jalin_suara" />
 
         <TextView
             android:layout_width="wrap_content"
+            android:id="@+id/link_twitter_pnpm_support"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/twitter_64"
             android:drawablePadding="10dp"

@@ -1,5 +1,6 @@
 package com.jalinsuara.android.home;
 
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +14,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.dialog.AboutDialog;
 import com.jalinsuara.android.profile.ProfileActivity;
 
 public class DashboardActivity extends BaseFragmentActivity {
+
+	public final static int DIALOG_ABOUT = 1;
 
 	private SlidingPaneLayout mSlidingLayout;
 
@@ -47,6 +51,8 @@ public class DashboardActivity extends BaseFragmentActivity {
 		if (item.getItemId() == android.R.id.home && !mSlidingLayout.isOpen()) {
 			mSlidingLayout.smoothSlideOpen();
 			return true;
+		}else{
+			mSlidingLayout.smoothSlideClosed();
 		}
 
 		// Handle action buttons
@@ -57,15 +63,13 @@ public class DashboardActivity extends BaseFragmentActivity {
 			startActivity(intent);
 			return true;
 		}
-		case R.id.action_settings: {
-			// Intent intent = new Intent(this, ProfileActivity.class);
-			// startActivity(intent);
-			return true;
-		}
+		// FIXME add settings if needed
+		// case R.id.action_settings: {
+		// return true;
+		// }
 		case R.id.action_about: {
+			showDialog(DIALOG_ABOUT);
 
-			// Intent intent = new Intent(this, ProfileActivity.class);
-			// startActivity(intent);
 			return true;
 		}
 		case R.id.action_search: {
@@ -107,6 +111,18 @@ public class DashboardActivity extends BaseFragmentActivity {
 		// showMenuItem(!drawerOpen, menu, R.id.action_about);
 		// showMenuItem(!drawerOpen, menu, R.id.action_profile);
 		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		switch (id) {
+		case DIALOG_ABOUT: {
+			AboutDialog dialog = new AboutDialog(this);
+
+			return dialog;
+		}
+		}
+		return super.onCreateDialog(id);
 	}
 
 	/**

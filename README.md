@@ -5,9 +5,8 @@ Website
 	http://jalinsuara.web.id/en
 
 	https://www.facebook.com/PNPMsupport
-	https://www.facebook.com/jalin.suara
-	@jalin_suara
-	@PNPM_support
+	https://www.facebook.com/jalin.suara	
+	@PNPM_support https://twitter.com/PNPM_Support
 	
 Preparing environment 
 1. Eclipse

@@ -1,15 +1,16 @@
 package com.jalinsuara.android.home;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.maps.ShowMapActivity;
-import com.jalinsuara.android.maps.TestMapsActivity;
 import com.jalinsuara.android.news.NewsListActivity;
 import com.jalinsuara.android.news.ShareNewsActivity;
 import com.jalinsuara.android.projects.SubProjectListActivity;
@@ -20,6 +21,9 @@ public class DashboardFragment extends BaseFragment {
 	private Button mMapsButton;
 	private Button mShareNewsButton;
 	private Button mSubProjectsButton;
+	private TextView mFbJalinSuara;
+	private TextView mFbPsf;
+	private TextView mTwitterPnpm;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -63,6 +67,43 @@ public class DashboardFragment extends BaseFragment {
 			}
 		});
 
+		mFbJalinSuara = (TextView) getView().findViewById(
+				R.id.link_fb_jalin_suara);
+		mFbPsf = (TextView) getView().findViewById(R.id.link_fb_jalin_suara);
+		mTwitterPnpm = (TextView) getView().findViewById(
+				R.id.link_fb_jalin_suara);
+
+		mFbJalinSuara.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse(getString(R.string.link_fb_jalin_suara)));
+				startActivity(browserIntent);
+
+			}
+		});
+		mFbPsf.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse(getString(R.string.link_fb_psf)));
+				startActivity(browserIntent);
+
+			}
+		});
+		mTwitterPnpm.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri
+						.parse(getString(R.string.link_twitter_pnpm_support)));
+				startActivity(browserIntent);
+
+			}
+		});
+
 		resetStatus();
 		setStatusShowContent();
 
@@ -75,8 +116,7 @@ public class DashboardFragment extends BaseFragment {
 	}
 
 	protected void navigateToMaps() {
-		Intent intent = new Intent(getSherlockActivity(),
-				ShowMapActivity.class);
+		Intent intent = new Intent(getSherlockActivity(), ShowMapActivity.class);
 		startActivity(intent);
 	}
 
