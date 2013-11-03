@@ -52,7 +52,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.jalinsuara.android.auth.SignUpActivity"
             android:label="@string/title_register" >
@@ -83,10 +82,31 @@
             android:name="com.jalinsuara.android.profile.ProfileActivity"
             android:label="@string/title_profile" >
         </activity>
+
+        <!-- map -->
+
         <activity
             android:name="com.jalinsuara.android.maps.TestMapsActivity"
             android:label="@string/title_profile" />
-       
+
+        <!-- search -->
+
+        <activity
+            android:name="com.jalinsuara.android.search.SearchableActivity"
+            android:launchMode="singleTop" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
+        <!-- enable the search dialog to send searches to SearchableActivity -->
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".search.SearchableActivity" />
     </application>
 
 </manifest>

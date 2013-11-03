@@ -1,9 +1,13 @@
 package com.jalinsuara.android.home;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.View;
+import android.widget.SearchView;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -23,7 +27,6 @@ public class DashboardActivity extends BaseFragmentActivity {
 
 		mSlidingLayout = (SlidingPaneLayout) findViewById(R.id.sliding_pane_layout);
 		mSlidingLayout.setPanelSlideListener(new SliderListener());
-		
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -65,6 +68,13 @@ public class DashboardActivity extends BaseFragmentActivity {
 			// startActivity(intent);
 			return true;
 		}
+		case R.id.action_search: {
+
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
+				onSearchRequested();
+
+			return super.onOptionsItemSelected(item);
+		}
 
 		default:
 			return super.onOptionsItemSelected(item);
@@ -73,6 +83,19 @@ public class DashboardActivity extends BaseFragmentActivity {
 
 	public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
 		getSupportMenuInflater().inflate(R.menu.activity_dashboard, menu);
+
+		// Get the SearchView and set the searchable configuration
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
+				.getActionView();
+
+		// Assumes current activity is the searchable activity
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getComponentName()));
+
+		// Do not iconify the widget; expand it by default
+		searchView.setIconifiedByDefault(false);
+
 		return true;
 
 	};

@@ -6,14 +6,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
@@ -26,10 +31,15 @@ import android.text.format.Formatter;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;
+import com.jalinsuara.android.search.SearchResult;
 
 public class NetworkUtils {
 
@@ -155,8 +165,102 @@ public class NetworkUtils {
 
 		return null;
 	}
-	
-	public static ArrayList<SubProject> getSubProject(){
+
+	/**
+	 * Search
+	 * 
+	 * @param query
+	 * @return
+	 */
+	public static ArrayList<SearchResult> getSearch(String query) {
+		final HttpResponse resp;
+		String uri = BASE_URL + "/home/search.json";
+
+		Log.i(TAG, "Request: " + uri);
+		final HttpPost request = new HttpPost(uri);
+
+		try {
+			// add query
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			nameValuePairs.add(new BasicNameValuePair("query", query));
+			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					Log.i(TAG, "Response: " + sb.toString());
+					ireader.close();
+					String response = sb.toString();
+					if (response.length() > 0) {
+						try {
+							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
+							JsonParser parser = new JsonParser();
+							JsonElement resElmt = parser.parse(response);
+							if (resElmt.isJsonArray()) {
+								JsonArray resArr = resElmt.getAsJsonArray();
+								for (int i = 0; i < resArr.size(); i++) {
+									JsonElement elmt = resArr.get(i);
+									if (elmt.isJsonObject()) {
+										JsonObject obj = elmt.getAsJsonObject();
+										String objString = elmt.toString();
+										JsonElement blmAmountElmt = obj
+												.get("blm_amount");
+										SearchResult retvalElmt = new SearchResult();
+										if (blmAmountElmt != null) {
+											retvalElmt.setNews(false);
+
+											SubProject project = JalinSuaraSingleton
+													.getInstance()
+													.getGson()
+													.fromJson(objString,
+															SubProject.class);
+											retvalElmt.setProjects(project);
+
+										} else {
+											retvalElmt.setNews(true);
+											News news = JalinSuaraSingleton
+													.getInstance()
+													.getGson()
+													.fromJson(objString,
+															News.class);
+											retvalElmt.setNews(news);
+										}
+										retval.add(retvalElmt);
+									}
+								}
+							}
+
+							return retval;
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public static ArrayList<SubProject> getSubProject() {
 		final HttpResponse resp;
 		String uri = BASE_URL + "/posts.json";
 
@@ -186,8 +290,8 @@ public class NetworkUtils {
 									.getGson();
 							Type collectionType = new TypeToken<ArrayList<SubProject>>() {
 							}.getType();
-							ArrayList<SubProject> retval = gson.fromJson(response,
-									collectionType);
+							ArrayList<SubProject> retval = gson.fromJson(
+									response, collectionType);
 							return retval;
 
 						} catch (Exception ex) {
@@ -206,8 +310,9 @@ public class NetworkUtils {
 		}
 
 		return null;
-		
+
 	}
+
 	public static class AuthResponse {
 		public String token;
 	}

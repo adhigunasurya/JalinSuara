@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.jalinsuara.android.helpers.NetworkUtils;
 import com.jalinsuara.android.news.model.News;
+import com.jalinsuara.android.search.SearchResult;
 
 public class WebServiceTest extends TestCase {
 	
@@ -22,6 +23,17 @@ public class WebServiceTest extends TestCase {
 			}
 			
 		}
-
+	}
+	
+	public void testGetSearch(){
+		ArrayList<SearchResult> list = NetworkUtils.getSearch("air");
+		assertTrue(list != null);
+		
+		if (list!=null){
+			for (SearchResult item: list){
+				Log.i(TAG, item.toString());	
+			}
+			
+		}
 	}
 }

@@ -9,6 +9,7 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jalinsuara.android.news.model.News;
+import com.jalinsuara.android.search.SearchResult;
 import com.jalinsuara.android.projects.model.SubProject;
 
 /**
@@ -44,6 +45,8 @@ public class JalinSuaraSingleton {
 
 	private ArrayList<News> mNewsList;
 	private ArrayList<SubProject> mSubProjectList;
+	private ArrayList<SearchResult> mRecentSearchResultList;
+
 	private JalinSuaraSingleton() {
 		log.info("JalinSuaraSingleton()");
 
@@ -53,7 +56,8 @@ public class JalinSuaraSingleton {
 		setGson(builder.create());
 
 		// init news list
-		setNewsList(new ArrayList<News>());
+		setNewsList(new ArrayList<News>());		
+
 		setSubProjectList(new ArrayList<SubProject>());
 	}
 
@@ -102,6 +106,15 @@ public class JalinSuaraSingleton {
 			}
 		}
 		return null;
+	}
+
+	public ArrayList<SearchResult> getRecentSearchResultList() {
+		return mRecentSearchResultList;
+	}
+
+	public void setRecentSearchResultList(
+			ArrayList<SearchResult> recentSearchResultList) {
+		mRecentSearchResultList = recentSearchResultList;
 	}
 
 }

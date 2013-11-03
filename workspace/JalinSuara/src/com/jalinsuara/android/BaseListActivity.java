@@ -23,7 +23,7 @@ import com.actionbarsherlock.view.MenuItem;
 public abstract class BaseListActivity extends SherlockListActivity{
 
 
-	private Logger log = LoggerFactory.getLogger(this.getClass()
+	public Logger log = LoggerFactory.getLogger(this.getClass()
 			.getSimpleName());
 
 	/*
