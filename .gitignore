@@ -14,6 +14,7 @@ proguard-project.txt
 *.log
 *.orig
 local.properties
+.classpath
 
 build
 lint.xml

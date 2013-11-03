@@ -3,6 +3,7 @@ package com.jalinsuara.android.search;
 import java.util.ArrayList;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -84,9 +85,7 @@ public class SearchableActivity extends BaseListActivity {
 			JalinSuaraSingleton.getInstance().setRecentSearchResultList(result);
 			if (getBaseContext() != null) {
 
-				mAdapter = new SearchResultAdapter(getBaseContext(),
-						JalinSuaraSingleton.getInstance()
-								.getRecentSearchResultList());
+				mAdapter = new SearchResultAdapter(getBaseContext(), result);
 				if (mAdapter != null) {
 					return E_OK;
 				} else {
@@ -100,13 +99,13 @@ public class SearchableActivity extends BaseListActivity {
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
-			if (getBaseContext() != null) {
+			if (getBaseContext() != null && !isFinishing()) {
 				if (result == E_OK) {
 					if (mAdapter != null) {
 						setListAdapter(mAdapter);
 						resetStatus();
 						setStatusShowContent();
-					}else{
+					} else {
 						resetStatus();
 						setStatusError("Null ");
 					}
@@ -116,6 +115,11 @@ public class SearchableActivity extends BaseListActivity {
 				}
 			}
 		}
-
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		log.info("onDestroy()");
 	}
 }
