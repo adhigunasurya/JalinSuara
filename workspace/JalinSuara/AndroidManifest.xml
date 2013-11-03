@@ -70,7 +70,11 @@
             android:name="com.jalinsuara.android.news.NewsListActivity"
             android:label="@string/title_news_list" >
         </activity>
-		<!-- projects -->
+        <activity
+            android:name="com.jalinsuara.android.news.CommentActivity"
+            android:label="@string/title_news" >
+        </activity>
+        <!-- projects -->
 
         <activity
             android:name="com.jalinsuara.android.projects.SubProjectActivity"
@@ -97,6 +101,10 @@
         <activity
             android:name="com.jalinsuara.android.maps.TestMapsActivity"
             android:label="@string/title_profile" />
+        
+        <activity
+            android:name="com.jalinsuara.android.maps.ShowMapActivity"
+            android:label="@string/app_name" />
 
         <!-- search -->
 

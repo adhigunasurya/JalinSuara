@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.maps.ShowMapActivity;
+import com.jalinsuara.android.maps.TestMapsActivity;
 import com.jalinsuara.android.news.NewsListActivity;
 import com.jalinsuara.android.news.ShareNewsActivity;
 import com.jalinsuara.android.projects.SubProjectListActivity;
@@ -17,14 +19,12 @@ public class DashboardFragment extends BaseFragment {
 	private Button mNewsButton;
 	private Button mMapsButton;
 	private Button mShareNewsButton;
-	private Button mSubProjectsButton;	
+	private Button mSubProjectsButton;
 
-	
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-//		setHasOptionsMenu(true);
+		// setHasOptionsMenu(true);
 
 		mNewsButton = (Button) getView().findViewById(
 				R.id.fragment_dashboard_news_button);
@@ -33,7 +33,7 @@ public class DashboardFragment extends BaseFragment {
 		mShareNewsButton = (Button) getView().findViewById(
 				R.id.fragment_dashboard_share_news_button);
 		mSubProjectsButton = (Button) getView().findViewById(
-				R.id.fragment_dashboard_sub_projects_button);				
+				R.id.fragment_dashboard_sub_projects_button);
 		mNewsButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -62,7 +62,7 @@ public class DashboardFragment extends BaseFragment {
 				navigateToShareNews();
 			}
 		});
-			
+
 		resetStatus();
 		setStatusShowContent();
 
@@ -75,13 +75,14 @@ public class DashboardFragment extends BaseFragment {
 	}
 
 	protected void navigateToMaps() {
-		// TODO Auto-generated method stub
-
+		Intent intent = new Intent(getSherlockActivity(),
+				ShowMapActivity.class);
+		startActivity(intent);
 	}
 
 	protected void navigateToSubProjectList() {
-		// TODO Auto-generated method stub
-		Intent intent = new Intent(getSherlockActivity(),SubProjectListActivity.class);
+		Intent intent = new Intent(getSherlockActivity(),
+				SubProjectListActivity.class);
 		startActivity(intent);
 
 	}
@@ -91,7 +92,6 @@ public class DashboardFragment extends BaseFragment {
 				ShareNewsActivity.class);
 		startActivity(intent);
 	}
-	
 
 	@Override
 	public int getLayoutId() {

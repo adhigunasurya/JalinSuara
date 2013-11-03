@@ -44,10 +44,8 @@ public class LoginActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-//				Intent intent = new Intent(getBaseContext(),
-//						SignUpActivity.class);
 				Intent intent = new Intent(getBaseContext(),
-						TestMapsActivity.class);
+						SignUpActivity.class);				
 				startActivity(intent);
 				finish();
 

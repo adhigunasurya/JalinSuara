@@ -15,9 +15,9 @@ import com.jalinsuara.android.R;
 public class TestMapsActivity extends BaseFragmentActivity {
 
 	static final LatLng HAMBURG = new LatLng(53.558, 9.927);
-	
-	 static final LatLng KIEL = new LatLng(53.551, 9.993);
-	
+
+	static final LatLng KIEL = new LatLng(53.551, 9.993);
+
 	private GoogleMap map;
 
 	@Override
@@ -31,13 +31,13 @@ public class TestMapsActivity extends BaseFragmentActivity {
 
 			Marker hamburg = map.addMarker(new MarkerOptions()
 					.position(HAMBURG).title("Hamburg"));
-			
+
 			Marker kiel = map.addMarker(new MarkerOptions()
-	        .position(KIEL)
-	        .title("Kiel")
-	        .snippet("Kiel is cool")
-	        .icon(BitmapDescriptorFactory
-	            .fromResource(R.drawable.ic_launcher)));
+					.position(KIEL)
+					.title("Kiel")
+					.snippet("Kiel is cool")
+					.icon(BitmapDescriptorFactory
+							.fromResource(R.drawable.ic_launcher)));
 			// Move the camera instantly to hamburg with a zoom of 15.
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
 

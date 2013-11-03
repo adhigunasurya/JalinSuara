@@ -11,20 +11,21 @@ import com.jalinsuara.android.projects.model.SubProject;
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.R;
 
-public class SubProjectFragment extends BaseFragment{
+public class SubProjectFragment extends BaseFragment {
 	private SubProject mSubProject;
 	private ImageView mImageView;
 	private TextView mTitleTextView;
 	private TextView mDescriptionTextView;
+
 	public SubProjectFragment(SubProject subproject) {
 		mSubProject = subproject;
 	}
-	
+
 	@Override
 	public int getLayoutId() {
 		return R.layout.fragment_sub_projects;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -40,7 +41,8 @@ public class SubProjectFragment extends BaseFragment{
 			ImageLoader loader = new ImageLoader(getSherlockActivity());
 			// loader.DisplayImage(url, imageView);
 			mTitleTextView.setText(mSubProject.getName());
-			mDescriptionTextView.setText(Html.fromHtml(mSubProject.getDescription()));
+			mDescriptionTextView.setText(Html.fromHtml(mSubProject
+					.getDescription()));
 
 			resetStatus();
 			setStatusShowContent();
@@ -50,7 +52,5 @@ public class SubProjectFragment extends BaseFragment{
 		}
 
 	}
-	
-	
-	
+
 }
