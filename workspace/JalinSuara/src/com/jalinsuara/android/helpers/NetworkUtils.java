@@ -199,7 +199,7 @@ public class NetworkUtils {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-					Log.i(TAG, "Response: " + sb.toString());
+//					Log.i(TAG, "Response: " + sb.toString());
 					ireader.close();
 					String response = sb.toString();
 					if (response.length() > 0) {

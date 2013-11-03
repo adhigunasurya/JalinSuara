@@ -38,7 +38,9 @@ public class SearchResult {
 		mNews = news;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -46,7 +48,15 @@ public class SearchResult {
 		return "SearchResult [mIsNews=" + mIsNews + ", mNews=" + mNews
 				+ ", mProjects=" + mProjects + "]";
 	}
-	
-	
+
+	public long getId() {
+		if (mNews != null) {
+			return mNews.getId();
+
+		} else if (mProjects != null) {
+			return mProjects.getId();
+		}
+		return -1;
+	}
 
 }
