@@ -38,4 +38,15 @@ public class SearchResult {
 		mNews = news;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "SearchResult [mIsNews=" + mIsNews + ", mNews=" + mNews
+				+ ", mProjects=" + mProjects + "]";
+	}
+	
+	
+
 }

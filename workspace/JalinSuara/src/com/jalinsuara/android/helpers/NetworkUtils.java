@@ -31,10 +31,15 @@ import android.text.format.Formatter;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;
+import com.jalinsuara.android.search.SearchResult;
 
 public class NetworkUtils {
 
@@ -160,14 +165,14 @@ public class NetworkUtils {
 
 		return null;
 	}
-	
-	
+
 	/**
-	 * Search 
+	 * Search
+	 * 
 	 * @param query
 	 * @return
 	 */
-	public static ArrayList<News> getSearch(String query) {
+	public static ArrayList<SearchResult> getSearch(String query) {
 		final HttpResponse resp;
 		String uri = BASE_URL + "/home/search.json";
 
@@ -199,14 +204,44 @@ public class NetworkUtils {
 					String response = sb.toString();
 					if (response.length() > 0) {
 						try {
-							Gson gson = JalinSuaraSingleton.getInstance()
-									.getGson();
-							Type collectionType = new TypeToken<ArrayList<News>>() {
-							}.getType();
-							ArrayList<News> retval = gson.fromJson(response,
-									collectionType);
-							return retval;
+							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
+							JsonParser parser = new JsonParser();
+							JsonElement resElmt = parser.parse(response);
+							if (resElmt.isJsonArray()) {
+								JsonArray resArr = resElmt.getAsJsonArray();
+								for (int i = 0; i < resArr.size(); i++) {
+									JsonElement elmt = resArr.get(i);
+									if (elmt.isJsonObject()) {
+										JsonObject obj = elmt.getAsJsonObject();
+										String objString = elmt.toString();
+										JsonElement blmAmountElmt = obj
+												.get("blm_amount");
+										SearchResult retvalElmt = new SearchResult();
+										if (blmAmountElmt != null) {
+											retvalElmt.setNews(false);
 
+											SubProject project = JalinSuaraSingleton
+													.getInstance()
+													.getGson()
+													.fromJson(objString,
+															SubProject.class);
+											retvalElmt.setProjects(project);
+
+										} else {
+											retvalElmt.setNews(true);
+											News news = JalinSuaraSingleton
+													.getInstance()
+													.getGson()
+													.fromJson(objString,
+															News.class);
+											retvalElmt.setNews(news);
+										}
+										retval.add(retvalElmt);
+									}
+								}
+							}
+
+							return retval;
 						} catch (Exception ex) {
 							ex.printStackTrace();
 						}
@@ -224,7 +259,8 @@ public class NetworkUtils {
 
 		return null;
 	}
-public static ArrayList<SubProject> getSubProject(){
+
+	public static ArrayList<SubProject> getSubProject() {
 		final HttpResponse resp;
 		String uri = BASE_URL + "/posts.json";
 
@@ -254,8 +290,8 @@ public static ArrayList<SubProject> getSubProject(){
 									.getGson();
 							Type collectionType = new TypeToken<ArrayList<SubProject>>() {
 							}.getType();
-							ArrayList<SubProject> retval = gson.fromJson(response,
-									collectionType);
+							ArrayList<SubProject> retval = gson.fromJson(
+									response, collectionType);
 							return retval;
 
 						} catch (Exception ex) {
@@ -274,8 +310,9 @@ public static ArrayList<SubProject> getSubProject(){
 		}
 
 		return null;
-		
+
 	}
+
 	public static class AuthResponse {
 		public String token;
 	}

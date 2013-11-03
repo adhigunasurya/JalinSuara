@@ -12,8 +12,7 @@ import com.jalinsuara.android.helpers.NetworkUtils;
 import com.jalinsuara.android.news.NewsAdapter;
 
 public class SearchableActivity extends BaseListActivity {
-	
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,7 +40,6 @@ public class SearchableActivity extends BaseListActivity {
 		// mTextView.setText(getString(R.string.no_results, new Object[]
 		// {query}));
 
-		
 		// // Display the number of results
 		// int count = cursor.getCount();
 		// String countString =
@@ -53,8 +51,7 @@ public class SearchableActivity extends BaseListActivity {
 		setStatusProgress(
 				getString(R.string.searching_for, new Object[] { query }),
 				false);
-		
-		
+
 	}
 
 	@Override
@@ -62,7 +59,7 @@ public class SearchableActivity extends BaseListActivity {
 			com.actionbarsherlock.view.MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_search:
-			 onSearchRequested();
+			onSearchRequested();
 			return true;
 		default:
 
@@ -71,7 +68,6 @@ public class SearchableActivity extends BaseListActivity {
 
 	}
 
-	
 	private class SearchTask extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
@@ -79,13 +75,13 @@ public class SearchableActivity extends BaseListActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-			JalinSuaraSingleton.getInstance().setNewsList(
-					NetworkUtils.getPosts());
-			if (getBaseContext() != null) {				
-				NetworkUtils.getSearch(params[0]);
-//				mAdapter = new NewsAdapter(getBaseContext(),
-//						JalinSuaraSingleton.getInstance().get
-//						);
+			JalinSuaraSingleton.getInstance().setRecentSearchResultList(
+					NetworkUtils.getSearch(params[0]));
+			if (getBaseContext() != null) {
+
+//				 mAdapter = new NewsAdapter(getBaseContext(),
+//				 JalinSuaraSingleton.getInstance().get
+//				 );
 			}
 
 			return E_OK;
@@ -94,16 +90,19 @@ public class SearchableActivity extends BaseListActivity {
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
-//			setListAdapter(mAdapter);
-			if (result == E_OK) {
+			// setListAdapter(mAdapter);
+			if (getBaseContext() != null) {
 
-				resetStatus();
-				setStatusShowContent();
+				if (result == E_OK) {
 
-			} else {
+					resetStatus();
+					setStatusShowContent();
 
-				resetStatus();
-				setStatusError(getString(R.string.error));
+				} else {
+
+					resetStatus();
+					setStatusError(getString(R.string.error));
+				}
 			}
 		}
 
