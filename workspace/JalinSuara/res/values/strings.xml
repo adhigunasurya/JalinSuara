@@ -17,7 +17,6 @@
     <string name="loren_ipsum">Loren ipsum dolores</string>
     <string name="sub_projects">Sub Proyek</string>
     <string name="share_news">Mulai berbagi</string>
-    <string name="search">Search</string>
     <string name="login">Login</string>
     <string name="drawer_open">Buka</string>
     <string name="drawer_close">Tutup</string>
@@ -77,27 +76,5 @@
         <item>Lampung</item>
     </string-array>
 
-        <!-- The label for use as a searchable item -->
-    <string name="search_label">Dictionary</string>
-
-    <!-- The hint text that appears in the search box. -->
-    <string name="search_hint">Search the dictionary</string>
-
-    <!-- The menu entry that invokes search. -->
-    <string name="menu_search">Search</string>
-
-    <!-- The description that will show up in the search settings for this source.  -->
-    <string name="settings_description">Definitions of words</string>
-
-    <!-- General instructions in the main activity. -->
-    <string name="search_instructions">Use the search box in the Action Bar to look up a word</string>
-
-    <!-- Shown above search results when we receive a search request. -->
-    <plurals name="search_results">
-      <item quantity="one">%1$d result for \"%2$s\": </item>
-      <item quantity="other">%1$d results for \"%2$s\": </item>
-    </plurals>
-
-    <!-- Search failure message. -->
-    <string name="no_results">No results found for \"%s\"</string>
+  
 </resources>
