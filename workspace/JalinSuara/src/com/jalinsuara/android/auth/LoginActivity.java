@@ -1,18 +1,15 @@
 package com.jalinsuara.android.auth;
 
-import com.jalinsuara.android.BaseFragmentActivity;
-import com.jalinsuara.android.R;
-import com.jalinsuara.android.R.id;
-import com.jalinsuara.android.R.layout;
-import com.jalinsuara.android.home.DashboardActivity;
-import com.jalinsuara.android.maps.TestMapsActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.jalinsuara.android.BaseFragmentActivity;
+import com.jalinsuara.android.R;
+import com.jalinsuara.android.home.DashboardActivity;
 
 public class LoginActivity extends BaseFragmentActivity {
 

@@ -2,6 +2,7 @@ package com.jalinsuara.android.maps;
 
 import android.os.Bundle;
 
+import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -18,10 +19,13 @@ public class ShowMapActivity extends BaseFragmentActivity {
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
+
 		setContentView(R.layout.activity_show_map);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.activity_show_map_mapfragment)).getMap();
+		
 		if (map != null) {
 
 			// Marker hamburg = map.addMarker(new MarkerOptions()
@@ -47,5 +51,17 @@ public class ShowMapActivity extends BaseFragmentActivity {
 		resetStatus();
 		setStatusShowContent();
 
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home: {
+			finish();
+			return true;
+		}
+
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }
