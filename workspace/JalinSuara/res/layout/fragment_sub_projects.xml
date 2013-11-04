@@ -24,16 +24,114 @@
             android:id="@+id/fragment_sub_project_title_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:gravity="left"
             android:text="@string/loren_ipsum" 
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="20dp"
             />
 
         <TextView
-            android:id="@+id/fragment_sub_project_description_textview"
+            android:id="@+id/fragment_sub_project_sub_title_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/loren_ipsum" />
+            android:text="Informasi Utama"
+            android:layout_marginBottom="10dp" />
+        
+        <TextView
+            android:id="@+id/fragment_sub_project_information_title_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Informasi Aktivitas"
+            android:layout_marginBottom="4dp" />
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_1_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jumlah Proposal(L): "
+            android:layout_marginBottom="2dp" 
+            android:layout_marginLeft="10dp"/>
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_2_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jumlah Proposal (P): "
+            android:layout_marginBottom="2dp" 
+            android:layout_marginLeft="10dp"/>
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_4_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Panjang Proyek: "
+            android:layout_marginBottom="2dp" 
+            android:layout_marginLeft="10dp"/>
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_5_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Luas Proyek: "
+            android:layout_marginBottom="2dp" 
+            android:layout_marginLeft="10dp"/>
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_6_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Jumlah Proyek: "
+            android:layout_marginBottom="5dp" 
+            android:layout_marginLeft="10dp"/>
+		
+		<TextView
+            android:id="@+id/fragment_sub_project_information_title_2_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Informasi Dana"
+            android:layout_marginBottom="4dp" />
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_2_1_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="BLM: Rp 83,432,500.00 "
+            android:layout_marginBottom="2dp" 
+            android:layout_marginLeft="10dp"/>
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_2_2_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Swadaya Masyarakat: Rp 3,024,000.00 "
+            android:layout_marginBottom="2dp" 
+            android:layout_marginLeft="10dp"/>
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_2_3_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Penerima Manfaat (L): 205"
+            android:layout_marginBottom="2dp" 
+            android:layout_marginLeft="10dp"/>
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_2_4_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Penerima Manfaat (P): 218"
+            android:layout_marginBottom="2dp" 
+            android:layout_marginLeft="10dp"/>
+		<TextView
+            android:id="@+id/fragment_sub_project_information_content_2_5_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Penerima Manfaat (Miskin): 325"
+            android:layout_marginBottom="10dp" 
+            android:layout_marginLeft="10dp"/>
+		
+		<TextView
+            android:id="@+id/fragment_sub_project_sub_title_2_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cerita Terkait"
+            android:layout_marginBottom="10dp" />
+		
+		
+		
+
+        
+        
     </LinearLayout>
 
 </ScrollView>
