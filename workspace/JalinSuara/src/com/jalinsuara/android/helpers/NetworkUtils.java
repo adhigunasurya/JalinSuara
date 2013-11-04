@@ -41,6 +41,13 @@ import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;
 import com.jalinsuara.android.search.SearchResult;
 
+/**
+ * Helper for accessing network
+ * 
+ * @author tonoman3g
+ * @author gabriellewp
+ * 
+ */
 public class NetworkUtils {
 
 	/** The tag used to log to adb console. */
@@ -103,16 +110,9 @@ public class NetworkUtils {
 	}
 
 	/**
-	 * Connects to the SampleSync test server, authenticates the provided
-	 * username and password.
+	 * Get post from server
 	 * 
-	 * @param username
-	 *            The server account username
-	 * @param password
-	 *            The server account password
-	 * @return String The authentication token returned by the server (or null)
-	 * @throws IOException
-	 * @throws ClientProtocolException
+	 * @return
 	 */
 	public static ArrayList<News> getPosts() {
 		final HttpResponse resp;
@@ -135,7 +135,8 @@ public class NetworkUtils {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-					Log.i(TAG, "Response: " + sb.toString());
+
+					// Log.i(TAG, "Response: " + sb.toString());
 					ireader.close();
 					String response = sb.toString();
 					if (response.length() > 0) {
@@ -167,7 +168,7 @@ public class NetworkUtils {
 	}
 
 	/**
-	 * Search
+	 * Search for news or sub projects by a certain query
 	 * 
 	 * @param query
 	 * @return
@@ -199,7 +200,8 @@ public class NetworkUtils {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-//					Log.i(TAG, "Response: " + sb.toString());
+
+					// Log.i(TAG, "Response: " + sb.toString());
 					ireader.close();
 					String response = sb.toString();
 					if (response.length() > 0) {
@@ -260,6 +262,11 @@ public class NetworkUtils {
 		return null;
 	}
 
+	/**
+	 * Get sub project from server
+	 * 
+	 * @return
+	 */
 	public static ArrayList<SubProject> getSubProject() {
 		final HttpResponse resp;
 		String uri = BASE_URL + "/activities.json";
@@ -313,7 +320,4 @@ public class NetworkUtils {
 
 	}
 
-	public static class AuthResponse {
-		public String token;
-	}
 }

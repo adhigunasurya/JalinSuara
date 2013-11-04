@@ -20,21 +20,40 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.dialog.AboutDialog;
 import com.jalinsuara.android.profile.ProfileActivity;
 
+/**
+ * Jalin suara's dashboard screen
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class DashboardActivity extends BaseFragmentActivity {
 
 	public final static int DIALOG_ABOUT = 1;
 
+	/**
+	 * Slideable Left panel
+	 */
 	private SlidingPaneLayout mSlidingLayout;
 
+	/**
+	 * Link in left panel
+	 */
 	private TextView mFbJalinSuara;
 
+	/**
+	 * Link in left panel
+	 */
 	private TextView mFbPsf;
 
+	/**
+	 * Link in left panel
+	 */
 	private TextView mTwitterPnpm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_dashboard);
 		setTitle(R.string.title_dashboard);
 
@@ -50,11 +69,9 @@ public class DashboardActivity extends BaseFragmentActivity {
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.content_frame, new DashboardFragment()).commit();
 
-		mFbJalinSuara = (TextView) findViewById(
-				R.id.link_fb_jalin_suara);
+		mFbJalinSuara = (TextView) findViewById(R.id.link_fb_jalin_suara);
 		mFbPsf = (TextView) findViewById(R.id.link_fb_psf);
-		mTwitterPnpm = (TextView) findViewById(
-				R.id.link_twitter_pnpm_support);
+		mTwitterPnpm = (TextView) findViewById(R.id.link_twitter_pnpm_support);
 
 		mFbJalinSuara.setOnClickListener(new OnClickListener() {
 
@@ -91,8 +108,6 @@ public class DashboardActivity extends BaseFragmentActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// The action bar home/up action should open or close the drawer.
-		// ActionBarDrawerToggle will take care of this.
 
 		if (item.getItemId() == android.R.id.home && !mSlidingLayout.isOpen()) {
 			mSlidingLayout.smoothSlideOpen();
@@ -109,10 +124,12 @@ public class DashboardActivity extends BaseFragmentActivity {
 			startActivity(intent);
 			return true;
 		}
+
 		// FIXME add settings if needed
 		// case R.id.action_settings: {
 		// return true;
 		// }
+
 		case R.id.action_about: {
 			showDialog(DIALOG_ABOUT);
 

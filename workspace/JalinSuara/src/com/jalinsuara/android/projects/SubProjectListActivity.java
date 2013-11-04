@@ -9,11 +9,12 @@ import com.jalinsuara.android.news.NewsListFragment.OnNewsItemClickListener;
 import com.jalinsuara.android.projects.SubProjectListFragment.OnSubProjectItemClickListener;
 import com.jalinsuara.android.projects.model.SubProject;
 import com.actionbarsherlock.view.MenuItem;
+
 public class SubProjectListActivity extends BaseFragmentActivity implements
-OnSubProjectItemClickListener {
+		OnSubProjectItemClickListener {
 	private boolean mMultiPane;
 	private SubProjectListFragment mListFragment;
-	
+
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -21,15 +22,16 @@ OnSubProjectItemClickListener {
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		
+
 		resetStatus();
 		setStatusProgress(getResources().getString(R.string.loading), false);
 
 		mListFragment = new SubProjectListFragment(this);
 
-		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.activity_subproject_list_list_fragment, mListFragment)
-				.commit();
+		getSupportFragmentManager()
+				.beginTransaction()
+				.replace(R.id.activity_subproject_list_list_fragment,
+						mListFragment).commit();
 
 		if (findViewById(R.id.activity_subproject_detail_fragment) == null) {
 			setMultiPane(false);
@@ -42,7 +44,7 @@ OnSubProjectItemClickListener {
 		resetStatus();
 		setStatusShowContent();
 	}
-	
+
 	public boolean isMultiPane() {
 		return mMultiPane;
 	}
@@ -50,9 +52,10 @@ OnSubProjectItemClickListener {
 	public void setMultiPane(boolean multiPane) {
 		mMultiPane = multiPane;
 	}
-	
+
 	@Override
-	public void onSubProjectItemClickListener(SubProject subproject, int position) {
+	public void onSubProjectItemClickListener(SubProject subproject,
+			int position) {
 		if (mMultiPane) {
 
 		} else {
@@ -62,7 +65,7 @@ OnSubProjectItemClickListener {
 		}
 
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

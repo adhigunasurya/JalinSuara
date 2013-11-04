@@ -17,7 +17,6 @@ import com.jalinsuara.android.R;
  * Dialog that will be used for viewing the application version and additional
  * information
  * 
- * 
  * @author tonoman3g
  */
 public class AboutDialog extends AlertDialog {

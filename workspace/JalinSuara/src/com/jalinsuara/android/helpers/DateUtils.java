@@ -9,7 +9,10 @@ import java.util.Date;
 
 /**
  * Helper class that used for date conversion
+ * 
+ * @author tonoman3g
  */
+
 @SuppressLint("SimpleDateFormat")
 public class DateUtils {
 

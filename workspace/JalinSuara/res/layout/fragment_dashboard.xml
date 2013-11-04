@@ -7,7 +7,7 @@
     <Button
         android:id="@+id/fragment_dashboard_news_button"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/ic_stub"
+        android:drawableTop="@drawable/dashboard_news"
         android:text="@string/news" />
 
     <!-- Friends Button -->
@@ -15,19 +15,19 @@
     <Button
         android:id="@+id/fragment_dashboard_maps_button"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/ic_stub"
+        android:drawableTop="@drawable/dashboard_map"
         android:text="@string/maps" />
 
     <Button
         android:id="@+id/fragment_dashboard_sub_projects_button"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/ic_stub"
+        android:drawableTop="@drawable/dashboard_projects"
         android:text="@string/sub_projects" />
 
     <Button
         android:id="@+id/fragment_dashboard_share_news_button"
         style="@style/DashboardButton"
-        android:drawableTop="@drawable/ic_stub"
+        android:drawableTop="@drawable/dashboard_share_news"
         android:text="@string/share_news" />
     
 

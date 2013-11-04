@@ -29,10 +29,12 @@ public class SearchableActivity extends BaseFragmentActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_search);
 		mListView = (ListView) findViewById(android.R.id.list);
 		mStatusTextView = (TextView) findViewById(R.id.activity_search_result_status_textview);
 		mEmptyTextView = (TextView) findViewById(android.R.id.empty);
+		
 		log.info("onCreate()");
 
 		// Get the intent, verify the action and get the query
@@ -45,7 +47,8 @@ public class SearchableActivity extends BaseFragmentActivity {
 					long arg3) {
 				SearchResult item = (SearchResult) mAdapter.getItem(arg2);
 				if (item.isNews()) {
-					Intent intent = new Intent(getBaseContext(), NewsActivity.class);
+					Intent intent = new Intent(getBaseContext(),
+							NewsActivity.class);
 					intent.putExtra(NewsActivity.EXTRA_ID, item.getId());
 					startActivity(intent);
 				}

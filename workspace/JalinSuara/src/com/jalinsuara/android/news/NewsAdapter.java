@@ -50,7 +50,6 @@ public class NewsAdapter extends BaseAdapter {
 		News object = mList.get(position);
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.list_item_news, null);
-
 		}
 
 		TextView titleTextview = ((TextView) convertView
@@ -59,9 +58,9 @@ public class NewsAdapter extends BaseAdapter {
 				.findViewById(R.id.list_item_news_content_textview));
 		TextView dateTextView = ((TextView) convertView
 				.findViewById(R.id.list_item_news_date_textview));
-
-		dateTextView.setText(DateUtils.toStringDateOnly(object.getUpdatedAt()));
+		
 		convertView.setTag(object.getId());
+		dateTextView.setText(DateUtils.toStringDateOnly(object.getUpdatedAt()));
 		titleTextview.setText(object.getTitle());
 		descriptionTextview.setText(Html.fromHtml(object.getDescription()));
 

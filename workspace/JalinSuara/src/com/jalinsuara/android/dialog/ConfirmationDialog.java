@@ -10,7 +10,7 @@ import com.actionbarsherlock.app.SherlockDialogFragment;
 
 /**
  * <p>
- * Helper class for showing confirmation dialog
+ * Helper class for showing confirmation dialog with yes no button
  * <p>
  * 
  * @author tonoman3g

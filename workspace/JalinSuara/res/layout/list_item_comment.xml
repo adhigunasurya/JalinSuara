@@ -5,9 +5,8 @@
 
     <ImageView
         android:id="@+id/list_item_comment_user_imageview"
-        android:layout_width="50dp"
+        android:layout_width="50dp"   android:layout_centerVertical="true"
         android:layout_height="50dp"
-        android:layout_alignParentTop="true"
         android:layout_marginRight="6dp"
         android:contentDescription="Image description"
         android:src="@drawable/ic_stub" />

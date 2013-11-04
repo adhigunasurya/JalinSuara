@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
 
-public class ShowMapActivity extends BaseFragmentActivity{
+public class ShowMapActivity extends BaseFragmentActivity {
 
 	private GoogleMap map;
 
@@ -24,24 +24,24 @@ public class ShowMapActivity extends BaseFragmentActivity{
 				.findFragmentById(R.id.activity_show_map_mapfragment)).getMap();
 		if (map != null) {
 
-//			Marker hamburg = map.addMarker(new MarkerOptions()
-//					.position(HAMBURG).title("Hamburg"));
-//
-//			Marker kiel = map.addMarker(new MarkerOptions()
-//					.position(KIEL)
-//					.title("Kiel")
-//					.snippet("Kiel is cool")
-//					.icon(BitmapDescriptorFactory
-//							.fromResource(R.drawable.ic_launcher)));
-//			// Move the camera instantly to hamburg with a zoom of 15.
-//			map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
-//
-//			// Marker kiel = map.addMarker(new MarkerOptions()
-//			// .position(KIEL)
-//			// .title("Kiel")
-//			// .snippet("Kiel is cool")
-//			// .icon(BitmapDescriptorFactory
-//			// .fromResource(R.drawable.ic_launcher)));
+			// Marker hamburg = map.addMarker(new MarkerOptions()
+			// .position(HAMBURG).title("Hamburg"));
+			//
+			// Marker kiel = map.addMarker(new MarkerOptions()
+			// .position(KIEL)
+			// .title("Kiel")
+			// .snippet("Kiel is cool")
+			// .icon(BitmapDescriptorFactory
+			// .fromResource(R.drawable.ic_launcher)));
+			// // Move the camera instantly to hamburg with a zoom of 15.
+			// map.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
+			//
+			// // Marker kiel = map.addMarker(new MarkerOptions()
+			// // .position(KIEL)
+			// // .title("Kiel")
+			// // .snippet("Kiel is cool")
+			// // .icon(BitmapDescriptorFactory
+			// // .fromResource(R.drawable.ic_launcher)));
 		}
 
 		resetStatus();

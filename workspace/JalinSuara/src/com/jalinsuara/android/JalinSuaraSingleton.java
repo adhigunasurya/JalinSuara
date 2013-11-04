@@ -41,10 +41,24 @@ public class JalinSuaraSingleton {
 		return ourInstance;
 	}
 
+	/**
+	 * Gson for deserialize and serialize json
+	 */
 	private Gson mGson;
 
+	/**
+	 * News list
+	 */
 	private ArrayList<News> mNewsList;
+
+	/**
+	 * Sub project list
+	 */
 	private ArrayList<SubProject> mSubProjectList;
+
+	/**
+	 * Recent search list, always check for null value whenever using this field
+	 */
 	private ArrayList<SearchResult> mRecentSearchResultList;
 
 	private JalinSuaraSingleton() {
@@ -77,6 +91,12 @@ public class JalinSuaraSingleton {
 		mNewsList = newsList;
 	}
 
+	/**
+	 * Find news from news list loaded from server or from recent search results
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public News findNewsById(long id) {
 		if (mNewsList == null) {
 			if (mRecentSearchResultList == null) {
@@ -118,6 +138,12 @@ public class JalinSuaraSingleton {
 		mSubProjectList = subProject;
 	}
 
+	/**
+	 * Find sub project from sub project list that has been loaded from server
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public SubProject findSubProjectById(long id) {
 		if (mSubProjectList == null) {
 			return null;

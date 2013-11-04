@@ -57,14 +57,6 @@ public class CommentAdapter extends BaseAdapter {
 
 		}
 
-//		TextView titleTextview = ((TextView) convertView
-//				.findViewById(R.id.list_item_news_title_textview));
-//		TextView descriptionTextview = ((TextView) convertView
-//				.findViewById(R.id.list_item_news_content_textview));
-//		
-//		convertView.setTag(object.getId());
-//		titleTextview.setText(object.getTitle());
-//		descriptionTextview.setText(Html.fromHtml(object.getDescription()));
 		TextView usernameTextview = ((TextView) convertView
 				.findViewById(R.id.list_item_comment_user_name_textview));
 		TextView dateTextview = ((TextView) convertView
@@ -75,10 +67,7 @@ public class CommentAdapter extends BaseAdapter {
 		dateTextview.setText(DateUtils.toStringDateOnly(object.getCreatedAt()));
 		convertView.setTag(object.getId());
 		usernameTextview.setText(object.getGuestName());
-		bodyTextView.setText(object.getCommentableType());
-		
-
-		
+		bodyTextView.setText(object.getBody());
 
 		return convertView;
 	}

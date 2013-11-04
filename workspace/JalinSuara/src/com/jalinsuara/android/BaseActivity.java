@@ -20,8 +20,8 @@ import com.actionbarsherlock.view.MenuItem;
  */
 public abstract class BaseActivity extends SherlockActivity {
 
-	public Logger log = LoggerFactory.getLogger(this.getClass()
-			.getSimpleName());
+	public Logger log = LoggerFactory
+			.getLogger(this.getClass().getSimpleName());
 
 	/*
 	 * initial -> error / progressing / content loaded

@@ -15,17 +15,38 @@ import com.jalinsuara.android.news.NewsListActivity;
 import com.jalinsuara.android.news.ShareNewsActivity;
 import com.jalinsuara.android.projects.SubProjectListActivity;
 
+/**
+ * Fragment for showing menu in dashboard. Used in {@link DashboardActivity}
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class DashboardFragment extends BaseFragment {
 
+	/**
+	 * Navigate to news list
+	 */
 	private Button mNewsButton;
+
+	/**
+	 * Navigate to map screen
+	 */
 	private Button mMapsButton;
+
+	/**
+	 * Navigate to share news screen
+	 */
 	private Button mShareNewsButton;
+
+	/**
+	 * Navigate to sub project list screen
+	 */
 	private Button mSubProjectsButton;
-	
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+
 		// setHasOptionsMenu(true);
 
 		mNewsButton = (Button) getView().findViewById(
@@ -36,6 +57,7 @@ public class DashboardFragment extends BaseFragment {
 				R.id.fragment_dashboard_share_news_button);
 		mSubProjectsButton = (Button) getView().findViewById(
 				R.id.fragment_dashboard_sub_projects_button);
+		
 		mNewsButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -64,8 +86,6 @@ public class DashboardFragment extends BaseFragment {
 				navigateToShareNews();
 			}
 		});
-
-		
 
 		resetStatus();
 		setStatusShowContent();

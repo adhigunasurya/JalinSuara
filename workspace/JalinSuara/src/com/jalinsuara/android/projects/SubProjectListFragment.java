@@ -11,18 +11,21 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.NetworkUtils;
 
 import com.jalinsuara.android.projects.model.SubProject;
-public class SubProjectListFragment extends BaseListFragment{
+
+public class SubProjectListFragment extends BaseListFragment {
+
 	private SubProjectAdapter mAdapter;
 	private OnSubProjectItemClickListener mListener;
+
 	public SubProjectListFragment(OnSubProjectItemClickListener listener) {
 		mListener = listener;
 	}
-	
+
 	@Override
 	public int getLayoutId() {
 		return R.layout.fragment_sub_projects_list;
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -34,14 +37,14 @@ public class SubProjectListFragment extends BaseListFragment{
 		task.execute();
 
 	}
-	
+
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		SubProject subproject = (SubProject) mAdapter.getItem(position);
 		mListener.onSubProjectItemClickListener(subproject, position);
 	}
-	
+
 	private class LoadProject extends AsyncTask<Integer, Integer, Integer> {
 
 		private final static int E_OK = 1;
@@ -76,10 +79,11 @@ public class SubProjectListFragment extends BaseListFragment{
 		}
 
 	}
-	public interface OnSubProjectItemClickListener {
-		public void onSubProjectItemClickListener(SubProject subproject, int position);
 
-		
+	public interface OnSubProjectItemClickListener {
+		public void onSubProjectItemClickListener(SubProject subproject,
+				int position);
+
 	}
-	
+
 }

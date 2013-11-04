@@ -12,6 +12,7 @@ import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.R;
 
 public class SubProjectFragment extends BaseFragment {
+
 	private SubProject mSubProject;
 	private ImageView mImageView;
 	private TextView mTitleTextView;

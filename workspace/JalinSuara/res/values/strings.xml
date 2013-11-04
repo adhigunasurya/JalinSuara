@@ -8,6 +8,9 @@
     <string name="pnpm_support_twitter">\@PNPM_Support</string>
     <string name="action_settings">Pengaturan</string>
     <string name="action_refresh">Refresh</string>
+    <string name="action_submit">Kirim</string>
+    <string name="action_reply">Balas</string>
+    <string name="action_comment">Lihat Komentar</string>
     <string name="action_search">Cari</string>
     <string name="action_profile">Profil</string>
     <string name="action_about">Tentang Aplikasi</string>
@@ -23,6 +26,7 @@
     <string name="news">Berita</string>
     <string name="maps">Peta</string>
     <string name="close">Tutup</string>
+    <string name="reply">Balas</string>
     <string name="loren_ipsum">Loren ipsum dolores</string>
     <string name="sub_projects">Sub Proyek</string>
     <string name="share_news">Mulai berbagi</string>
