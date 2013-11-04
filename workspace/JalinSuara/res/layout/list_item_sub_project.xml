@@ -4,50 +4,43 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
-<<<<<<< HEAD
-    
-	<TextView
-        android:id="@+id/list_item_sub_project_no_textview"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center_vertical"
-        android:text="No"
-        android:textColor="#372c24"
-        android:textSize="16sp" />
+<!--     <TextView -->
+<!--         android:id="@+id/list_item_sub_project_no_textview" -->
+<!--         android:layout_width="40dp" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignParentTop="true" -->
+<!--         android:gravity="center_vertical" -->
+<!--         android:text="No" -->
+<!--         android:textColor="#372c24" -->
+<!--         android:textSize="16sp" /> -->
 
-	
-	<TextView
-        android:id="@+id/list_item_sub_project_propinsi_textview"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/list_item_sub_project_no_textview"
-        android:gravity="center_vertical"
-        android:text="Nama Propinsi"
-        android:textColor="#372c24"
-        android:textSize="16sp" />
+<!--     <TextView -->
+<!--         android:id="@+id/list_item_sub_project_propinsi_textview" -->
+<!--         android:layout_width="150dp" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignParentTop="true" -->
+<!--         android:layout_toRightOf="@id/list_item_sub_project_no_textview" -->
+<!--         android:gravity="center_vertical" -->
+<!--         android:text="Nama Propinsi" -->
+<!--         android:textColor="#372c24" -->
+<!--         android:textSize="16sp" /> -->
 
-	
-	<TextView
-        android:id="@+id/list_item_sub_project_kecamatan_textview"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/list_item_sub_project_propinsi_textview"
-        android:gravity="center_vertical"
-        android:text="Nama Kecamatan"
-        android:textColor="#372c24"
-        android:textSize="16sp" />
+<!--     <TextView -->
+<!--         android:id="@+id/list_item_sub_project_kecamatan_textview" -->
+<!--         android:layout_width="100dp" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_alignParentRight="true" -->
+<!--         android:layout_alignParentTop="true" -->
+<!--         android:layout_toRightOf="@id/list_item_sub_project_propinsi_textview" -->
+<!--         android:gravity="center_vertical" -->
+<!--         android:text="Nama Kecamatan" -->
+<!--         android:textColor="#372c24" -->
+<!--         android:textSize="16sp" /> -->
 
-	
-=======
->>>>>>> a0a25e4b3897a53d752389f8d27ef59858eb2eaa
     <TextView
         android:id="@+id/list_item_sub_project_title_textview"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"                
+        android:layout_height="wrap_content"
         android:text="Nama Sub Proyek"
         android:textColor="#372c24"
         android:textSize="16sp" />

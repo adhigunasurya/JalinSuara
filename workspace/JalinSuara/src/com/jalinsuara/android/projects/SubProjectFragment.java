@@ -41,17 +41,12 @@ public class SubProjectFragment extends BaseFragment {
 			ImageLoader loader = new ImageLoader(getSherlockActivity());
 			// loader.DisplayImage(url, imageView);
 			mTitleTextView.setText(mSubProject.getName());
-<<<<<<< HEAD
-			mDescriptionTextView.setText(mSubProject
-					.getDescription());
-			
-=======
+
 			if (mSubProject.getDescription() != null) {
 				mDescriptionTextView.setText(Html.fromHtml(mSubProject
 						.getDescription()));
 			}
 
->>>>>>> a0a25e4b3897a53d752389f8d27ef59858eb2eaa
 			resetStatus();
 			setStatusShowContent();
 		} else {
