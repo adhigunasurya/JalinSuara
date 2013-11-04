@@ -86,7 +86,7 @@
         </activity>
         <activity
             android:name="com.jalinsuara.android.projects.SubProjectListActivity"
-            android:label="@string/title_news_list" >
+            android:label="@string/title_project_list" >
         </activity>
         <!-- home -->
         <activity

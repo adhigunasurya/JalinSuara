@@ -19,6 +19,12 @@ import com.jalinsuara.android.helpers.lazylist.ImageLoader;
 import com.jalinsuara.android.news.model.Comment;
 import com.jalinsuara.android.news.model.News;
 
+/**
+ * Comment adapter
+ * 
+ * @author tonoman3g
+ *
+ */
 public class CommentAdapter extends BaseAdapter {
 
 	private ArrayList<Comment> mList;
