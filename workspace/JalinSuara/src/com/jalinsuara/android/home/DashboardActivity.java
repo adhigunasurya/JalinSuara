@@ -180,7 +180,8 @@ public class DashboardActivity extends BaseFragmentActivity {
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case DIALOG_ABOUT: {
-			AboutDialog dialog = new AboutDialog(this);
+			AboutDialog dialog = new AboutDialog(this,
+					getSupportFragmentManager());
 
 			return dialog;
 		}

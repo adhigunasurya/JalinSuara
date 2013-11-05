@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentDescription="@string/loren_ipsum"
-            android:src="@drawable/ic_stub" />
+            android:src="@drawable/pnpm_picture_square" />
 
         <TextView
             android:id="@+id/fragment_sub_project_title_textview"

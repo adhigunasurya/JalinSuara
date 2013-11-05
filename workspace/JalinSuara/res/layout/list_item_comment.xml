@@ -9,7 +9,7 @@
         android:layout_height="50dp"
         android:layout_marginRight="6dp"
         android:contentDescription="Image description"
-        android:src="@drawable/ic_stub" />
+        android:src="@drawable/users_pictures_tiny" />
 
     <TextView
         android:id="@+id/list_item_comment_user_name_textview"
