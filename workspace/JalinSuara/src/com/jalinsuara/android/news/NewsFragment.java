@@ -49,7 +49,7 @@ public class NewsFragment extends BaseFragment {
 			mDateUpdatedView.setText(com.jalinsuara.android.helpers.DateUtils
 					.toStringDateOnly(mNews.getUpdatedAt()));
 			mDescriptionTextView.setText(Html.fromHtml(mNews.getDescription()));
-
+			
 			resetStatus();
 			setStatusShowContent();
 		} else {

@@ -37,6 +37,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.jalinsuara.android.JalinSuaraSingleton;
+import com.jalinsuara.android.news.model.Comment;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;
 import com.jalinsuara.android.search.SearchResult;
@@ -326,15 +327,20 @@ public class NetworkUtils {
 	 * 
 	 * @return
 	 */
-	public static ArrayList<SubProject> getSubProject() {
+	public static ArrayList<Comment> getComment(String post_id, int page) {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/activities.json";
+		String id_page="";
+		if(page==-1){
+			id_page="";
+		}else{
+			id_page =Integer.toString(page);
+		}
+		String uri = BASE_URL + "/posts/"+post_id+"/comments/"+id_page+".json";
 
 		Log.i(TAG, "Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
 			resp = getHttpClient().execute(request);
-
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
@@ -354,9 +360,9 @@ public class NetworkUtils {
 						try {
 							Gson gson = JalinSuaraSingleton.getInstance()
 									.getGson();
-							Type collectionType = new TypeToken<ArrayList<SubProject>>() {
+							Type collectionType = new TypeToken<ArrayList<Comment>>() {
 							}.getType();
-							ArrayList<SubProject> retval = gson.fromJson(
+							ArrayList<Comment> retval = gson.fromJson(
 									response, collectionType);
 							return retval;
 

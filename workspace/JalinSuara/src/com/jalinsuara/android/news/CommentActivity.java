@@ -15,6 +15,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.helpers.NetworkUtils;
 import com.jalinsuara.android.news.model.Comment;
 import com.jalinsuara.android.news.model.News;
 
@@ -88,6 +89,7 @@ public class CommentActivity extends BaseFragmentActivity {
 		@Override
 		protected Integer doInBackground(String... params) {
 			ArrayList<Comment> comments = new ArrayList<Comment>();
+			comments = NetworkUtils.getComment(EXTRA_ID,1);
 			Comment comment = new Comment();
 			comment.setBody("body");
 			comment.setCreatedAt(new Date());
