@@ -7,6 +7,13 @@ import com.jalinsuara.android.R.layout;
 
 import android.os.Bundle;
 
+/**
+ * Profile activity to show user's profile.
+ * 
+ * @author tonoman3g
+ * @author gabriellewp
+ * 
+ */
 public class ProfileActivity extends BaseFragmentActivity {
 
 	@Override

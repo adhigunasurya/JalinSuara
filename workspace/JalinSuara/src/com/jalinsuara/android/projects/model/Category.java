@@ -2,15 +2,22 @@ package com.jalinsuara.android.projects.model;
 
 import java.util.Date;
 
+/**
+ * Model for category
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class Category {
 
 	private long id;
+
 	private String name;
+
 	private Date createdAt;
+
 	private Date updatedAt;
 
-	
-	
 	/**
 	 * @return the id
 	 */
@@ -19,7 +26,8 @@ public class Category {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -70,7 +78,9 @@ public class Category {
 		this.updatedAt = updatedAt;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -78,6 +88,5 @@ public class Category {
 		return "Category [id=" + id + ", name=" + name + ", createdAt="
 				+ createdAt + ", updatedAt=" + updatedAt + "]";
 	}
-
 
 }

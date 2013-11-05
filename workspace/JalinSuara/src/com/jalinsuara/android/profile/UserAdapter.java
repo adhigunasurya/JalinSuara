@@ -12,6 +12,12 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
 import com.jalinsuara.android.profile.model.User;
 
+/**
+ * User adapter to show list of users
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class UserAdapter extends BaseAdapter {
 
 	private ArrayList<User> mList;
@@ -50,16 +56,14 @@ public class UserAdapter extends BaseAdapter {
 
 		}
 
-//		TextView titleTextview = ((TextView) convertView
-//				.findViewById(R.id.list_item_news_title_textview));
-//		TextView descriptionTextview = ((TextView) convertView
-//				.findViewById(R.id.list_item_news_content_textview));
-//		
-//		convertView.setTag(object.getId());
-//		titleTextview.setText(object.getTitle());
-//		descriptionTextview.setText(Html.fromHtml(object.getDescription()));
-		
-		
+		// TextView titleTextview = ((TextView) convertView
+		// .findViewById(R.id.list_item_news_title_textview));
+		// TextView descriptionTextview = ((TextView) convertView
+		// .findViewById(R.id.list_item_news_content_textview));
+		//
+		// convertView.setTag(object.getId());
+		// titleTextview.setText(object.getTitle());
+		// descriptionTextview.setText(Html.fromHtml(object.getDescription()));
 
 		return convertView;
 	}

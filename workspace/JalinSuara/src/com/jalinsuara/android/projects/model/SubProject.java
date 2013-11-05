@@ -2,9 +2,16 @@ package com.jalinsuara.android.projects.model;
 
 import java.util.Date;
 
+/**
+ * Model for sub project
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class SubProject {
 
 	private long id;
+
 	/**
 	 * @return the id
 	 */
@@ -13,7 +20,8 @@ public class SubProject {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(long id) {
 		this.id = id;
@@ -388,7 +396,9 @@ public class SubProject {
 		this.dynamicAttributes = dynamicAttributes;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

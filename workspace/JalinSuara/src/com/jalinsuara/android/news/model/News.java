@@ -3,7 +3,7 @@ package com.jalinsuara.android.news.model;
 import java.util.Date;
 
 /**
- * Model for post
+ * Model for post / news
  * 
  * @author tonoman3g
  * 

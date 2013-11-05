@@ -12,6 +12,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
 
+/**
+ * 
+ * Show maps activity
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class ShowMapActivity extends BaseFragmentActivity {
 
 	private GoogleMap map;
@@ -25,7 +32,7 @@ public class ShowMapActivity extends BaseFragmentActivity {
 
 		map = ((SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.activity_show_map_mapfragment)).getMap();
-		
+
 		if (map != null) {
 
 			// Marker hamburg = map.addMarker(new MarkerOptions()
