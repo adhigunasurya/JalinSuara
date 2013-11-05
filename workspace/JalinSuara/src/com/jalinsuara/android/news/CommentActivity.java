@@ -24,6 +24,7 @@ public class CommentActivity extends BaseFragmentActivity {
 	public final static String EXTRA_ID = "news_id";
 	private ListView mListView;
 	private TextView mEmptyTextView;
+	private News mNews;
 	private CommentAdapter mAdapter;
 
 	@Override
@@ -42,9 +43,9 @@ public class CommentActivity extends BaseFragmentActivity {
 
 		long id = getIntent().getLongExtra(EXTRA_ID, -1);
 		if (id != -1) {
-			News news = JalinSuaraSingleton.getInstance().findNewsById(id);
-			if (news != null) {
-				setTitle(news.getTitle());
+			mNews = JalinSuaraSingleton.getInstance().findNewsById(id);
+			if (mNews != null) {
+				setTitle(mNews.getTitle());
 
 				LoadComments task = new LoadComments();
 				task.execute();
@@ -88,18 +89,10 @@ public class CommentActivity extends BaseFragmentActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-			ArrayList<Comment> comments = new ArrayList<Comment>();
-			comments = NetworkUtils.getComment(EXTRA_ID,1);
-			Comment comment = new Comment();
-			comment.setBody("body");
-			comment.setCreatedAt(new Date());
-			comment.setId(1);
-			comment.setGuestName("tono");
-			comments.add(comment);
+			ArrayList<Comment> comments = NetworkUtils.getComment(Long.toString(mNews.getId()),1);
 			if (!isFinishing()) {
 				mAdapter = new CommentAdapter(getBaseContext(), comments);
 			}
-
 			return E_OK;
 		}
 

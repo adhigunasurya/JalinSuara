@@ -336,8 +336,8 @@ public class NetworkUtils {
 			id_page =Integer.toString(page);
 		}
 		String uri = BASE_URL + "/posts/"+post_id+"/comments/"+id_page+".json";
-
-		Log.i(TAG, "Request: " + uri);
+		
+		Log.i(TAG, "Request: " + uri+"post_id"+post_id+"id_page"+id_page);
 		final HttpGet request = new HttpGet(uri);
 		try {
 			resp = getHttpClient().execute(request);

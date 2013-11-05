@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 import android.util.Log;
 
 import com.jalinsuara.android.helpers.NetworkUtils;
+import com.jalinsuara.android.news.model.Comment;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;
 import com.jalinsuara.android.search.SearchResult;
@@ -47,6 +48,17 @@ public class WebServiceTest extends TestCase {
 				Log.i(TAG, item.toString());	
 			}
 			
+		}
+	}
+	
+	public void testGetComment(){
+		ArrayList<Comment> list = NetworkUtils.getComment("15",1);
+		assertTrue(list!=null);
+		
+		if(list!=null){
+			for(Comment comment:list){
+				Log.i(TAG,comment.toString());
+			}
 		}
 	}
 }
