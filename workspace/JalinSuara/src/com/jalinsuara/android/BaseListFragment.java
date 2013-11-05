@@ -22,7 +22,7 @@ import com.actionbarsherlock.app.SherlockListFragment;
  */
 public abstract class BaseListFragment extends SherlockListFragment {
 
-	private Logger log = LoggerFactory.getLogger(this.getClass()
+	public Logger log = LoggerFactory.getLogger(this.getClass()
 			.getSimpleName());
 
 	/*

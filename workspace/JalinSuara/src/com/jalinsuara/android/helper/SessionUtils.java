@@ -1,4 +1,4 @@
-package com.jalinsuara.android.helpers;
+package com.jalinsuara.android.helper;
 
 /**
  * To handle user's session.

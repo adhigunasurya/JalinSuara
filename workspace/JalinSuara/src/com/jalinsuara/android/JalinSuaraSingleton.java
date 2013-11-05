@@ -71,7 +71,6 @@ public class JalinSuaraSingleton {
 
 		// init news list
 		setNewsList(new ArrayList<News>());
-
 		setSubProjectList(new ArrayList<SubProject>());
 	}
 

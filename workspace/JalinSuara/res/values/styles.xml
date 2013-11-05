@@ -5,27 +5,149 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:drawablePadding">2dp</item>        
-        <item name="android:textStyle">bold</item>        
+        <item name="android:drawablePadding">2dp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:background">@null</item>
     </style>
-    
+
     <style name="NewsTitle">
         <item name="android:layout_gravity">center_horizontal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:drawablePadding">2dp</item>        
+        <item name="android:drawablePadding">2dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#ff29549f</item>
         <item name="android:background">@null</item>
     </style>
+
     <style name="EmptyTextListView">
-        <item name="android:layout_gravity">center</item>        
+        <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
-        
+    </style>
+
+    <style name="BoxInner">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="BoxDivider">
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">3dp</item>
+    </style>
+
+    <style name="BoxTextMedium">
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+        <item name="android:gravity">top</item>
+        <item name="android:paddingLeft">8.0dp</item>
+        <item name="android:paddingTop">8.0dp</item>
+        <item name="android:paddingBottom">8.0dp</item>
+    </style>
+
+    <style name="BoxTextLarge">
+        <item name="android:textAppearance">?android:textAppearanceLarge</item>
+        <item name="android:gravity">top</item>
+        <item name="android:paddingLeft">8.0dp</item>
+        <item name="android:paddingTop">8.0dp</item>
+        <item name="android:paddingBottom">8.0dp</item>
+    </style>
+
+    <style name="SectionHeader" parent="@style/AppBaseTheme">
+        <item name="android:drawableBottom">@drawable/section_header</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingRight">10dip</item>
+        <item name="android:textColor">#3d5b00</item>
+        <item name="android:layout_margin">10dip</item>
+        <item name="android:textSize">@dimen/section_header_text_size</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="GeneralInfo" parent="@style/AppBaseTheme">
+        <item name="android:drawableBottom">@drawable/section_header</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingLeft">10dip</item>
+        <item name="android:paddingRight">10dip</item>
+        <item name="android:textColor">#3d5b00</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:layout_margin">10dip</item>
+        <item name="android:textSize">@dimen/content_text_size</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="TableRowTextStyle" parent="@style/AppBaseTheme">
+        <item name="android:textSize">@dimen/content_text_size</item>
+        <item name="android:layout_margin">10dip</item>
+    </style>
+
+    <style name="ContentTextStyle" parent="@style/AppBaseTheme">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/content_text_size</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="ContentDurationTextStyle" parent="@style/AppBaseTheme">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/content_header_2_text_size</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="ContentHeaderTextStyle" parent="@style/AppBaseTheme">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/content_header_text_size</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="ContentTitleTextStyle" parent="@style/AppBaseTheme">
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">@dimen/content_title_text_size</item>
+        <item name="android:background">#698255</item>
+    </style>
+
+    <style name="ContentTitleTextNoBackgroundStyle" parent="@style/AppBaseTheme">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/content_title_text_size</item>
+    </style>
+
+    <style name="ListItemStyle" parent="@style/AppBaseTheme">
+        <item name="android:textColor">#000000</item>
+        <item name="android:textSize">@dimen/content_header_text_size</item>
+        <item name="android:background">#E3E3E3</item>
+    </style>
+
+    <style name="FormEditTextStyle" parent="@style/AppBaseTheme">
+        <item name="android:textSize">@dimen/content_text_size</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="FormButtonTextStyle" parent="@style/AppBaseTheme">
+        <item name="android:textSize">@dimen/content_text_size</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="FormLabelViewStyle" parent="@style/AppBaseTheme">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/content_header_text_size</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+    </style>
+
+    <style name="FormSmallLabelViewStyle" parent="@style/AppBaseTheme">
+        <item name="android:textSize">@dimen/content_header_2_text_size</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
     </style>
 
 </resources>

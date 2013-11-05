@@ -21,7 +21,7 @@ import com.actionbarsherlock.app.SherlockFragment;
  */
 public abstract class BaseFragment extends SherlockFragment {
 
-	private Logger log = LoggerFactory.getLogger(this.getClass()
+	protected Logger log = LoggerFactory.getLogger(this.getClass()
 			.getSimpleName());
 
 	/*

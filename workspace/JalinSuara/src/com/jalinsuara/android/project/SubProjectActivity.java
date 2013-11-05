@@ -1,4 +1,4 @@
-package com.jalinsuara.android.projects;
+package com.jalinsuara.android.project;
 
 import android.os.Bundle;
 import com.actionbarsherlock.view.MenuItem;

@@ -3,6 +3,13 @@
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    
+    <dimen name="content_title_text_size">30sp</dimen>
+    <dimen name="section_header_text_size">22sp</dimen>
+    <dimen name="content_header_text_size">18sp</dimen>
+    <dimen name="content_header_2_text_size">16sp</dimen>
+    <dimen name="content_text_size">12sp</dimen>
+    <dimen name="list_item_text_size">12sp</dimen>
+    <dimen name="content_title_height">33dp</dimen>
+    <dimen name="header_title_text_size">30sp</dimen>
 
 </resources>

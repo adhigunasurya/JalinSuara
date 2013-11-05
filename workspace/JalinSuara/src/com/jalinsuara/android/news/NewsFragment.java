@@ -57,7 +57,7 @@ public class NewsFragment extends BaseFragment {
 			// loader.DisplayImage(url, imageView);
 			mMapView.onCreate(savedInstanceState);
 			mTitleTextView.setText(mNews.getTitle());
-			mDateUpdatedView.setText(com.jalinsuara.android.helpers.DateUtils
+			mDateUpdatedView.setText(com.jalinsuara.android.helper.DateUtils
 					.toStringDateOnly(mNews.getUpdatedAt()));
 			mDescriptionTextView.setText(Html.fromHtml(mNews.getDescription()));
 

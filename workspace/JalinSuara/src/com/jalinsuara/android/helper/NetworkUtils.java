@@ -1,4 +1,4 @@
-package com.jalinsuara.android.helpers;
+package com.jalinsuara.android.helper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -266,11 +266,18 @@ public class NetworkUtils {
 	/**
 	 * Get sub project from server
 	 * 
+	 * @param page
+	 *            if page == -1 no parameter
 	 * @return
 	 */
-	public static ArrayList<SubProject> getSubProject() {
+	public static ArrayList<SubProject> getSubProject(int page) {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/activities.json";
+		String uri = null;
+		if (page < 0) {
+			uri = BASE_URL + "/activities.json?";
+		} else {
+			uri = BASE_URL + "/activities.json?page=" + page;
+		}
 
 		Log.i(TAG, "Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
@@ -289,7 +296,7 @@ public class NetworkUtils {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-					Log.i(TAG, "Response: " + sb.toString());
+					Log.i(TAG, "Response retrieved");
 					ireader.close();
 					String response = sb.toString();
 					if (response.length() > 0) {
@@ -320,8 +327,7 @@ public class NetworkUtils {
 		return null;
 
 	}
-	
-	
+
 	/**
 	 * Get comment from server
 	 * 
@@ -329,15 +335,17 @@ public class NetworkUtils {
 	 */
 	public static ArrayList<Comment> getComment(String post_id, int page) {
 		final HttpResponse resp;
-		String id_page="";
-		if(page==-1){
-			id_page="";
-		}else{
-			id_page =Integer.toString(page);
+		String id_page = "";
+		if (page == -1) {
+			id_page = "";
+		} else {
+			id_page = Integer.toString(page);
 		}
-		String uri = BASE_URL + "/posts/"+post_id+"/comments/"+id_page+".json";
-		
-		Log.i(TAG, "Request: " + uri+"post_id"+post_id+"id_page"+id_page);
+		String uri = BASE_URL + "/posts/" + post_id + "/comments/" + id_page
+				+ ".json";
+
+		Log.i(TAG, "Request: " + uri + "post_id" + post_id + "id_page"
+				+ id_page);
 		final HttpGet request = new HttpGet(uri);
 		try {
 			resp = getHttpClient().execute(request);
@@ -362,8 +370,8 @@ public class NetworkUtils {
 									.getGson();
 							Type collectionType = new TypeToken<ArrayList<Comment>>() {
 							}.getType();
-							ArrayList<Comment> retval = gson.fromJson(
-									response, collectionType);
+							ArrayList<Comment> retval = gson.fromJson(response,
+									collectionType);
 							return retval;
 
 						} catch (Exception ex) {
@@ -384,7 +392,5 @@ public class NetworkUtils {
 		return null;
 
 	}
-	
-	
 
 }

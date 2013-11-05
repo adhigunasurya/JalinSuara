@@ -13,7 +13,7 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.maps.ShowMapActivity;
 import com.jalinsuara.android.news.NewsListActivity;
 import com.jalinsuara.android.news.ShareNewsActivity;
-import com.jalinsuara.android.projects.SubProjectListActivity;
+import com.jalinsuara.android.project.SubProjectListActivity;
 
 /**
  * Fragment for showing menu in dashboard. Used in {@link DashboardActivity}

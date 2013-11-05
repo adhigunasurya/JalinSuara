@@ -3,7 +3,9 @@ package com.jalinsuara.android;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -244,6 +246,14 @@ public abstract class BaseActivity extends SherlockActivity {
 	 */
 	private synchronized void setPaused(boolean paused) {
 		mPaused = paused;
+	}
+
+	@Override
+	protected void onCreate(Bundle arg0) {
+		super.onCreate(arg0);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		setProgressBarIndeterminate(true);
+		setProgressBarIndeterminateVisibility(false);
 	}
 
 	@Override

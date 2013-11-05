@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import junit.framework.TestCase;
 import android.util.Log;
 
-import com.jalinsuara.android.helpers.NetworkUtils;
+import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.model.Comment;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;

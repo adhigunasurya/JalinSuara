@@ -1,4 +1,4 @@
-package com.jalinsuara.android.projects;
+package com.jalinsuara.android.project;
 
 import java.util.ArrayList;
 
@@ -10,17 +10,15 @@ import android.widget.BaseAdapter;
 
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
-import com.jalinsuara.android.profile.model.User;
-import com.jalinsuara.android.projects.model.Category;
-import com.jalinsuara.android.projects.model.Province;
+import com.jalinsuara.android.projects.model.District;
 
-public class ProvinceAdapter extends BaseAdapter {
+public class DistrictAdapter extends BaseAdapter {
 
-	private ArrayList<Province> mList;
+	private ArrayList<District> mList;
 	private ImageLoader mImageLoader;
 	private Context mContext;
 
-	public ProvinceAdapter(Context context, ArrayList<Province> list) {
+	public DistrictAdapter(Context context, ArrayList<District> list) {
 		mList = list;
 		mImageLoader = new ImageLoader(context);
 		mContext = context;
@@ -43,7 +41,7 @@ public class ProvinceAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Province object = mList.get(position);
+		District object = mList.get(position);
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) parent.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

@@ -74,11 +74,11 @@
         <!-- projects -->
 
         <activity
-            android:name="com.jalinsuara.android.projects.SubProjectActivity"
+            android:name="com.jalinsuara.android.project.SubProjectActivity"
             android:label="@string/title_news" >
         </activity>
         <activity
-            android:name="com.jalinsuara.android.projects.SubProjectListActivity"
+            android:name="com.jalinsuara.android.project.SubProjectListActivity"
             android:label="@string/title_project_list" >
         </activity>
         <!-- home -->

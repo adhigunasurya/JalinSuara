@@ -1,4 +1,4 @@
-package com.jalinsuara.android.helpers;
+package com.jalinsuara.android.helper;
 
 import android.annotation.SuppressLint;
 

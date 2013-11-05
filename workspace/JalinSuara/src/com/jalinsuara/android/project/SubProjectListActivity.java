@@ -1,4 +1,4 @@
-package com.jalinsuara.android.projects;
+package com.jalinsuara.android.project;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.news.NewsListFragment.OnNewsItemClickListener;
-import com.jalinsuara.android.projects.SubProjectListFragment.OnSubProjectItemClickListener;
+import com.jalinsuara.android.project.SubProjectListFragment.OnSubProjectItemClickListener;
 import com.jalinsuara.android.projects.model.SubProject;
 import com.actionbarsherlock.view.MenuItem;
 

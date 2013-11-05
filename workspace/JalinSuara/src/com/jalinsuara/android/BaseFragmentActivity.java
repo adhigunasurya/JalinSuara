@@ -1,11 +1,11 @@
 package com.jalinsuara.android;
 
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.jalinsuara.android.projects.model.SubProject;
 
 /**
  * Base Activity used in the entire application
@@ -23,8 +22,8 @@ import com.jalinsuara.android.projects.model.SubProject;
  */
 public abstract class BaseFragmentActivity extends SherlockFragmentActivity {
 
-	public Logger log = LoggerFactory.getLogger(this.getClass()
-			.getSimpleName());
+	public Logger log = LoggerFactory
+			.getLogger(this.getClass().getSimpleName());
 
 	/*
 	 * initial -> error / progressing / content loaded
@@ -250,6 +249,14 @@ public abstract class BaseFragmentActivity extends SherlockFragmentActivity {
 	}
 
 	@Override
+	protected void onCreate(Bundle arg0) {
+		super.onCreate(arg0);		
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);  
+		setProgressBarIndeterminate(true);		
+		setProgressBarIndeterminateVisibility(true);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 		log.info("onResume()");
@@ -284,6 +291,5 @@ public abstract class BaseFragmentActivity extends SherlockFragmentActivity {
 	public synchronized void setStatusState(int statusState) {
 		mStatusState = statusState;
 	}
-
 
 }

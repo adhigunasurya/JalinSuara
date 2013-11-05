@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.jalinsuara.android.R;
-import com.jalinsuara.android.helpers.DateUtils;
+import com.jalinsuara.android.helper.DateUtils;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
 import com.jalinsuara.android.news.model.News;
 

@@ -1,4 +1,4 @@
-package com.jalinsuara.android.projects;
+package com.jalinsuara.android.project;
 
 import java.util.ArrayList;
 
@@ -7,19 +7,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
-import com.jalinsuara.android.projects.model.SubProject;
+import com.jalinsuara.android.profile.model.User;
+import com.jalinsuara.android.projects.model.Category;
 
-public class SubProjectAdapter extends BaseAdapter {
+public class CategoryAdapter extends BaseAdapter {
 
-	private ArrayList<SubProject> mList;
+	private ArrayList<Category> mList;
 	private ImageLoader mImageLoader;
 	private Context mContext;
 
-	public SubProjectAdapter(Context context, ArrayList<SubProject> list) {
+	public CategoryAdapter(Context context, ArrayList<Category> list) {
 		mList = list;
 		mImageLoader = new ImageLoader(context);
 		mContext = context;
@@ -42,25 +42,16 @@ public class SubProjectAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		SubProject object = mList.get(position);
+		Category object = mList.get(position);
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater) parent.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			convertView = inflater.inflate(R.layout.list_item_sub_project, null);
+			convertView = inflater.inflate(R.layout.list_item_news, null);
 
-		}		
-//		TextView namaPropinsi = ((TextView) convertView
-//				.findViewById(R.id.list_item_sub_project_propinsi_textview));
-//		TextView namaKecamatan = ((TextView) convertView
-//				.findViewById(R.id.list_item_sub_project_kecamatan_textview));
-		TextView deskripsiProyek = ((TextView) convertView
-				.findViewById(R.id.list_item_sub_project_title_textview));
-		
-//		namaPropinsi.setText("jawa");
-//		namaKecamatan.setText("bekasi");
-		deskripsiProyek.setText(object.getName());
-		//		TextView titleTextview = ((TextView) convertView
+		}
+
+//		TextView titleTextview = ((TextView) convertView
 //				.findViewById(R.id.list_item_news_title_textview));
 //		TextView descriptionTextview = ((TextView) convertView
 //				.findViewById(R.id.list_item_news_content_textview));

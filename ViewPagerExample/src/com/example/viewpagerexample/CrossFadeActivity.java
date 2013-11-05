@@ -3,10 +3,11 @@ package com.example.viewpagerexample;
 import android.R;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
-public class CrossFadeActivity {
+public class CrossFadeActivity extends Activity {
 	private View mContentView;
 	private View mLoadingView;
 	private int mShortAnimationDuration;

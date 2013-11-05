@@ -1,6 +1,9 @@
 package com.jalinsuara.android.projects.model;
 
 import java.util.Date;
+import java.util.HashMap;
+
+import com.google.gson.JsonObject;
 
 /**
  * Model for sub project
@@ -41,15 +44,15 @@ public class SubProject {
 	private int projectLength;
 	private int projectArea;
 	private int projectQuantity;
-	private int blmAmount;
-	private int selfFundAmount;
+	private long blmAmount;
+	private long selfFundAmount;
 	private int maleProposal;
 	private int maleBeneficiary;
-	private int femaleBeneficiary;
+	private int  femaleBeneficiary;
 	private int poorBeneficiary;
-	private int subdistrictId;
-	private int categoryId;
-	private String dynamicAttributes;
+	private long subdistrictId;
+	private long categoryId;
+	private HashMap<String, String> dynamicAttributes;
 
 	/**
 	 * @return the name
@@ -261,35 +264,9 @@ public class SubProject {
 		this.projectQuantity = projectQuantity;
 	}
 
-	/**
-	 * @return the blmAmount
-	 */
-	public int getBlmAmount() {
-		return blmAmount;
-	}
+	
 
-	/**
-	 * @param blmAmount
-	 *            the blmAmount to set
-	 */
-	public void setBlmAmount(int blmAmount) {
-		this.blmAmount = blmAmount;
-	}
 
-	/**
-	 * @return the selfFundAmount
-	 */
-	public int getSelfFundAmount() {
-		return selfFundAmount;
-	}
-
-	/**
-	 * @param selfFundAmount
-	 *            the selfFundAmount to set
-	 */
-	public void setSelfFundAmount(int selfFundAmount) {
-		this.selfFundAmount = selfFundAmount;
-	}
 
 	/**
 	 * @return the maleProposal
@@ -351,40 +328,67 @@ public class SubProject {
 		this.poorBeneficiary = poorBeneficiary;
 	}
 
+	
+	/**
+	 * @return the blmAmount
+	 */
+	public long getBlmAmount() {
+		return blmAmount;
+	}
+
+	/**
+	 * @param blmAmount the blmAmount to set
+	 */
+	public void setBlmAmount(long blmAmount) {
+		this.blmAmount = blmAmount;
+	}
+
+	/**
+	 * @return the selfFundAmount
+	 */
+	public long getSelfFundAmount() {
+		return selfFundAmount;
+	}
+
+	/**
+	 * @param selfFundAmount the selfFundAmount to set
+	 */
+	public void setSelfFundAmount(long selfFundAmount) {
+		this.selfFundAmount = selfFundAmount;
+	}
+
 	/**
 	 * @return the subdistrictId
 	 */
-	public int getSubdistrictId() {
+	public long getSubdistrictId() {
 		return subdistrictId;
 	}
 
 	/**
-	 * @param subdistrictId
-	 *            the subdistrictId to set
+	 * @param subdistrictId the subdistrictId to set
 	 */
-	public void setSubdistrictId(int subdistrictId) {
+	public void setSubdistrictId(long subdistrictId) {
 		this.subdistrictId = subdistrictId;
 	}
 
 	/**
 	 * @return the categoryId
 	 */
-	public int getCategoryId() {
+	public long getCategoryId() {
 		return categoryId;
 	}
 
 	/**
-	 * @param categoryId
-	 *            the categoryId to set
+	 * @param categoryId the categoryId to set
 	 */
-	public void setCategoryId(int categoryId) {
+	public void setCategoryId(long categoryId) {
 		this.categoryId = categoryId;
 	}
 
 	/**
 	 * @return the dynamicAttributes
 	 */
-	public String getDynamicAttributes() {
+	public HashMap<String, String> getDynamicAttributes() {
 		return dynamicAttributes;
 	}
 
@@ -392,7 +396,7 @@ public class SubProject {
 	 * @param dynamicAttributes
 	 *            the dynamicAttributes to set
 	 */
-	public void setDynamicAttributes(String dynamicAttributes) {
+	public void setDynamicAttributes( HashMap<String, String>  dynamicAttributes) {
 		this.dynamicAttributes = dynamicAttributes;
 	}
 

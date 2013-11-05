@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
-import com.jalinsuara.android.helpers.NetworkUtils;
+import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.NewsActivity;
 
 public class SearchableActivity extends BaseFragmentActivity {
