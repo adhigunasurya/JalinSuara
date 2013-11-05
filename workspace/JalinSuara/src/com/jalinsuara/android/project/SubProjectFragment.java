@@ -1,8 +1,14 @@
 package com.jalinsuara.android.project;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import android.os.Bundle;
 import android.text.Html;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
@@ -13,6 +19,7 @@ import com.jalinsuara.android.R;
 
 public class SubProjectFragment extends BaseFragment {
 
+	private static final String TAG = null;
 	private SubProject mSubProject;
 	private ImageView mImageView;
 	private TextView mTitleTextView;
@@ -30,7 +37,9 @@ public class SubProjectFragment extends BaseFragment {
 	private TextView mInformationContent24;
 	private TextView mInformationContent25;
 	private TextView mSubTitle2;
-
+	private TextView mSubTitle3;
+	private LinearLayout mAdditionalInformation;
+	private TextView mTextViewDynamic;
 	public SubProjectFragment(SubProject subproject) {
 		mSubProject = subproject;
 		log.info("project: " + mSubProject);
@@ -55,30 +64,31 @@ public class SubProjectFragment extends BaseFragment {
 			mInformationTitle1 = (TextView) getView().findViewById(
 					R.id.fragment_sub_project_information_title_textview);
 			mInformationContent1 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_1_textview);
+					R.id.fragment_sub_project_information_content_maleproposalquantity_textview);
 			mInformationContent2 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_2_textview);
+					R.id.fragment_sub_project_information_content_femaleproposalquantity_textview);
 			mInformationContent4 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_4_textview);
+					R.id.fragment_sub_project_information_content_projectlength_textview);
 			mInformationContent5 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_5_textview);
+					R.id.fragment_sub_project_information_content_projectarea_textview);
 			mInformationContent6 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_6_textview);
+					R.id.fragment_sub_project_information_content_projectquantity_textview);
 			mInformationTitle2 = (TextView) getView().findViewById(
 					R.id.fragment_sub_project_information_title_2_textview);
 			mInformationContent21 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_2_1_textview);
+					R.id.fragment_sub_project_information_content_BLM_textview);
 			mInformationContent22 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_2_2_textview);
+					R.id.fragment_sub_project_information_content_nongovernmental_textview);
 			mInformationContent23 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_2_3_textview);
+					R.id.fragment_sub_project_information_content_malebeneficiaries_textview);
 			mInformationContent24 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_2_4_textview);
+					R.id.fragment_sub_project_information_content_femalebeneficiaries_textview);
 			mInformationContent25 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_information_content_2_5_textview);
+					R.id.fragment_sub_project_information_content_poorbeneficiaries_textview);
 			mSubTitle2 = (TextView) getView().findViewById(
-					R.id.fragment_sub_project_sub_title_2_textview);
-
+					R.id.fragment_sub_project_information_title_additionalinfo_textview);
+			mSubTitle3= (TextView) getView().findViewById(
+					R.id.fragment_sub_project_sub_title_relatedstory_title_textview);
 			ImageLoader loader = new ImageLoader(getSherlockActivity());
 			// loader.DisplayImage(url, imageView);
 			mTitleTextView.setText(mSubProject.getName());
@@ -111,9 +121,25 @@ public class SubProjectFragment extends BaseFragment {
 
 				mInformationContent25.setText("Penerima Manfaat (Miskin): "
 						+ mSubProject.getPoorBeneficiary());
+				
+				if(mSubProject.getDynamicAttributes()!=null){
+					
+					mAdditionalInformation= (LinearLayout) getView().findViewById(
+							R.id.fragment_sub_project_information_additional_layout);
+					
+					mTextViewDynamic = new TextView(getSherlockActivity());
+					Set keys = mSubProject.getDynamicAttributes().keySet();
+					for(Iterator i = keys.iterator();i.hasNext();){
+						mTextViewDynamic.setText((String)i.next()+" : "+(String)mSubProject.getDynamicAttributes().get((String)i.next()));
+						mAdditionalInformation.addView(mTextViewDynamic);
+					}
+					
+				}else{
+					log.info("tak ada nilai dynamic attr");
+				}
 
 			}
-
+			
 			resetStatus();
 			setStatusShowContent();
 		} else {
