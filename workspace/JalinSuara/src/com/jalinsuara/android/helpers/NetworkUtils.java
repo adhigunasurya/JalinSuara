@@ -319,5 +319,66 @@ public class NetworkUtils {
 		return null;
 
 	}
+	
+	
+	/**
+	 * Get comment from server
+	 * 
+	 * @return
+	 */
+	public static ArrayList<SubProject> getSubProject() {
+		final HttpResponse resp;
+		String uri = BASE_URL + "/activities.json";
+
+		Log.i(TAG, "Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					Log.i(TAG, "Response: " + sb.toString());
+					ireader.close();
+					String response = sb.toString();
+					if (response.length() > 0) {
+						try {
+							Gson gson = JalinSuaraSingleton.getInstance()
+									.getGson();
+							Type collectionType = new TypeToken<ArrayList<SubProject>>() {
+							}.getType();
+							ArrayList<SubProject> retval = gson.fromJson(
+									response, collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
+	
 
 }
