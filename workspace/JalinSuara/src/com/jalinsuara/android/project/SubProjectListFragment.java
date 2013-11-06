@@ -68,7 +68,6 @@ public class SubProjectListFragment extends BaseListFragment {
 					.getSubProject(params[0]);
 			if (getSherlockActivity() != null) {
 				if (mAdapter == null) {
-
 					if (retval != null && retval.size() > 0) {
 						log.info("first load " + retval.size());
 						if (params[0] == 1) {
@@ -81,11 +80,8 @@ public class SubProjectListFragment extends BaseListFragment {
 								JalinSuaraSingleton.getInstance()
 										.getSubProjectList());
 					} else if (retval == null) {
-
 						return E_ERROR;
-
 					}
-
 				} else {
 					if (retval != null && retval.size() > 0) {
 						log.info("add new " + retval.size() + " items");
@@ -101,27 +97,30 @@ public class SubProjectListFragment extends BaseListFragment {
 			} else {
 				return E_ERROR;
 			}
-
 			return E_OK;
 		}
 
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
-			getSherlockActivity().setProgressBarIndeterminateVisibility(false);
-			setListAdapter(mAdapter);
-			if (result == E_OK) {
 
-				resetStatus();
-				setStatusShowContent();
+			if (getSherlockActivity() != null) {
+				getSherlockActivity().setProgressBarIndeterminateVisibility(
+						false);
+				setListAdapter(mAdapter);
+				if (result == E_OK) {
 
-			} else if (result == E_OK_CHANGED) {
-				mAdapter.notifyDataSetChanged();
-				getListView().setSelectionFromTop(mLastScrollY, 0);
-			} else {
-				loading = false;
-				resetStatus();
-				setStatusError(getString(R.string.error));
+					resetStatus();
+					setStatusShowContent();
+
+				} else if (result == E_OK_CHANGED) {
+					mAdapter.notifyDataSetChanged();
+					getListView().setSelectionFromTop(mLastScrollY, 0);
+				} else {
+					loading = false;
+					resetStatus();
+					setStatusError(getString(R.string.error));
+				}
 			}
 		}
 	}
@@ -168,6 +167,7 @@ public class SubProjectListFragment extends BaseListFragment {
 					currentPage++;
 				}
 			}
+			
 			// log.info("show index " + firstVisibleItem + "-"
 			// + (firstVisibleItem + visibleItemCount) + " :"
 			// + (firstVisibleItem + visibleItemCount) + "/"
