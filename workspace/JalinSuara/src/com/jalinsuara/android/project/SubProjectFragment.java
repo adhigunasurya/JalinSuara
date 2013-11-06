@@ -93,10 +93,11 @@ public class SubProjectFragment extends BaseFragment {
 			// loader.DisplayImage(url, imageView);
 			mTitleTextView.setText(mSubProject.getName());
 
-			if (mSubProject.getDescription() != null) {
-
-				mTitleTextView.setText(mSubProject.getName());
-
+		
+				if(mSubProject.getName()!=null){
+					mTitleTextView.setText(mSubProject.getName());
+				}
+				
 				mInformationContent1.setText("Jumlah Proposal(L): "
 						+ mSubProject.getMaleProposal());
 				mInformationContent2.setText("Jumlah Proposal(P): "
@@ -107,29 +108,22 @@ public class SubProjectFragment extends BaseFragment {
 						+ mSubProject.getProjectArea());
 				mInformationContent6.setText("Panjang Proyek: "
 						+ mSubProject.getProjectQuantity());
-
 				mInformationContent21.setText("BLM: "
 						+ mSubProject.getBlmAmount());
 				mInformationContent22.setText("Swadaya Masyarakat: "
 						+ mSubProject.getSelfFundAmount());
-
 				mInformationContent23.setText("Penerima Manfaat (L): "
 						+ mSubProject.getMaleBeneficiary());
-
 				mInformationContent24.setText("Penerima Manfaat (P): "
 						+ mSubProject.getFemaleBeneficiary());
-
 				mInformationContent25.setText("Penerima Manfaat (Miskin): "
 						+ mSubProject.getPoorBeneficiary());
-				
 				if(mSubProject.getDynamicAttributes()!=null){
-					
 					mAdditionalInformation= (LinearLayout) getView().findViewById(
 							R.id.fragment_sub_project_information_additional_layout);
-					
-					mTextViewDynamic = new TextView(getSherlockActivity());
 					Set keys = mSubProject.getDynamicAttributes().keySet();
 					for(Iterator i = keys.iterator();i.hasNext();){
+						mTextViewDynamic = new TextView(getSherlockActivity());
 						mTextViewDynamic.setText((String)i.next()+" : "+(String)mSubProject.getDynamicAttributes().get((String)i.next()));
 						mAdditionalInformation.addView(mTextViewDynamic);
 					}
@@ -138,7 +132,7 @@ public class SubProjectFragment extends BaseFragment {
 					log.info("tak ada nilai dynamic attr");
 				}
 
-			}
+		
 			
 			resetStatus();
 			setStatusShowContent();
