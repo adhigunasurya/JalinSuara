@@ -10,6 +10,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.search.SearchResult;
+import com.jalinsuara.android.projects.model.District;
+import com.jalinsuara.android.projects.model.Province;
 import com.jalinsuara.android.projects.model.SubProject;
 
 /**
@@ -55,6 +57,21 @@ public class JalinSuaraSingleton {
 	 * Sub project list
 	 */
 	private ArrayList<SubProject> mSubProjectList;
+
+	/**
+	 * Provinces list
+	 */
+	private ArrayList<Province> mProvincesList;
+
+	/**
+	 * Subdistricts list
+	 */
+	private ArrayList<Province> mSubDistrictsList;
+
+	/**
+	 * Districts lsit
+	 */
+	private ArrayList<District> mDistrictsList;
 
 	/**
 	 * Recent search list, always check for null value whenever using this field

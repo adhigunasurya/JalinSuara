@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,9 @@ import com.google.gson.reflect.TypeToken;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.news.model.Comment;
 import com.jalinsuara.android.news.model.News;
+import com.jalinsuara.android.projects.model.District;
+import com.jalinsuara.android.projects.model.Province;
+import com.jalinsuara.android.projects.model.SubDistrict;
 import com.jalinsuara.android.projects.model.SubProject;
 import com.jalinsuara.android.search.SearchResult;
 
@@ -270,7 +274,7 @@ public class NetworkUtils {
 	 *            if page == -1 no parameter
 	 * @return
 	 */
-	public static ArrayList<SubProject> getSubProject(int page) {
+	public static ArrayList<SubProject> getSubProjects(int page) {
 		final HttpResponse resp;
 		String uri = null;
 		if (page < 0) {
@@ -326,6 +330,221 @@ public class NetworkUtils {
 
 		return null;
 
+	}
+
+	/**
+	 * @param page
+	 * @return
+	 */
+	public static ArrayList<Province> getProvinces(int page) {
+		final HttpResponse resp;
+		String uri = null;
+		if (page < 0) {
+			uri = BASE_URL + "/provinces.json?";
+		} else {
+			uri = BASE_URL + "/provinces.json?page=" + page;
+		}
+
+		Log.i(TAG, "Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					Log.i(TAG, "Response retrieved");
+					ireader.close();
+					String response = sb.toString();
+					if (response.length() > 0) {
+						try {
+							Gson gson = JalinSuaraSingleton.getInstance()
+									.getGson();
+							Type collectionType = new TypeToken<ArrayList<Province>>() {
+							}.getType();
+							ArrayList<Province> retval = gson.fromJson(
+									response, collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	/**
+	 * Get districts
+	 * 
+	 * @param page
+	 * @return
+	 */
+	public static ArrayList<District> getDistricts(int page) {
+		final HttpResponse resp;
+		String uri = null;
+		if (page < 0) {
+			uri = BASE_URL + "/districts.json?";
+		} else {
+			uri = BASE_URL + "/districts.json?page=" + page;
+		}
+
+		Log.i(TAG, "Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					Log.i(TAG, "Response retrieved");
+					ireader.close();
+					String response = sb.toString();
+					if (response.length() > 0) {
+						try {
+							Gson gson = JalinSuaraSingleton.getInstance()
+									.getGson();
+							Type collectionType = new TypeToken<ArrayList<District>>() {
+							}.getType();
+							ArrayList<District> retval = gson.fromJson(
+									response, collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	/**
+	 * Get Subdistrict
+	 * 
+	 * @param page
+	 * @return
+	 */
+	public static ArrayList<SubDistrict> getSubdistricts(int page) {
+		final HttpResponse resp;
+		String uri = null;
+		if (page < 0) {
+			uri = BASE_URL + "/subdistricts.json?";
+		} else {
+			uri = BASE_URL + "/subdistricts.json?page=" + page;
+		}
+
+		Log.i(TAG, "Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					Log.i(TAG, "Response retrieved");
+					ireader.close();
+					String response = sb.toString();
+					if (response.length() > 0) {
+						try {
+							Gson gson = JalinSuaraSingleton.getInstance()
+									.getGson();
+							Type collectionType = new TypeToken<ArrayList<SubDistrict>>() {
+							}.getType();
+							ArrayList<SubDistrict> retval = gson.fromJson(
+									response, collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	/**
+	 * Load all provinces data from server
+	 * <p>
+	 * Assumption: provinces data are constants. So we can save it locally and
+	 * buffer it
+	 * 
+	 * @return
+	 */
+	public ArrayList<Province> getAllProvinces() {
+		ArrayList<Province> retval = new ArrayList<Province>();
+		int i = 1;
+		boolean cont = true;
+		do {
+			ArrayList<Province> fetchedData = NetworkUtils.getProvinces(i);
+			if (fetchedData.size() > 0) {
+				retval.addAll(fetchedData);
+				i++;
+			} else {
+				cont = false;
+				break;
+			}
+		} while (cont);
+		return retval;
 	}
 
 	/**

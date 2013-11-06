@@ -65,7 +65,7 @@ public class SubProjectListFragment extends BaseListFragment {
 		protected Integer doInBackground(Integer... params) {
 			loading = true;
 			ArrayList<SubProject> retval = NetworkUtils
-					.getSubProject(params[0]);
+					.getSubProjects(params[0]);
 			if (getSherlockActivity() != null) {
 				if (mAdapter == null) {
 					if (retval != null && retval.size() > 0) {
@@ -149,7 +149,7 @@ public class SubProjectListFragment extends BaseListFragment {
 
 	}
 
-	public class EndlessScrollListener implements OnScrollListener {
+	private class EndlessScrollListener implements OnScrollListener {
 
 		private int currentPage = 1;
 		private int previousTotal = 0;
