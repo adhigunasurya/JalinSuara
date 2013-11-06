@@ -145,7 +145,15 @@ public class SubProjectFragment extends BaseFragment {
 							TypedValue.COMPLEX_UNIT_DIP, 10,
 							r.getDisplayMetrics());
 
-					params.setMargins(px, 0, 0, px);
+					int px2 = (int) TypedValue.applyDimension(
+							TypedValue.COMPLEX_UNIT_DIP, 2,
+							r.getDisplayMetrics());
+
+					if (!i.hasNext()) {
+						params.setMargins(px, 0, 0, px);
+					} else {
+						params.setMargins(px, 0, 0, px2);
+					}
 
 					mTextViewDynamic.setLayoutParams(params);
 					mTextViewDynamic.setText(key.replace("field_", "").replace(
