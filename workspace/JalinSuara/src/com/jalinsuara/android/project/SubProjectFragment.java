@@ -3,21 +3,18 @@ package com.jalinsuara.android.project;
 import java.util.Iterator;
 import java.util.Set;
 
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.text.Html;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.jalinsuara.android.helpers.lazylist.ImageLoader;
-import com.jalinsuara.android.news.model.News;
-import com.jalinsuara.android.projects.model.SubProject;
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.helpers.lazylist.ImageLoader;
+import com.jalinsuara.android.projects.model.SubProject;
 
 public class SubProjectFragment extends BaseFragment {
 
@@ -139,10 +136,24 @@ public class SubProjectFragment extends BaseFragment {
 					String key = (String) i.next();
 					String value = mSubProject.getDynamicAttributes().get(key);
 					mTextViewDynamic = new TextView(getSherlockActivity());
-					mTextViewDynamic.setText(key.replace("field_", "").replace("_", " ") + " : " + value);
+
+					LayoutParams params = new LayoutParams(
+							LayoutParams.MATCH_PARENT,
+							LayoutParams.WRAP_CONTENT);
+					Resources r = getSherlockActivity().getResources();
+					int px = (int) TypedValue.applyDimension(
+							TypedValue.COMPLEX_UNIT_DIP, 10,
+							r.getDisplayMetrics());
+
+					params.setMargins(px, 0, 0, px);
+
+					mTextViewDynamic.setLayoutParams(params);
+					mTextViewDynamic.setText(key.replace("field_", "").replace(
+							"_", " ")
+							+ " : " + value);
 					// mTextViewDynamic.setText((String)i.next()+" : "+(String)mSubProject.getDynamicAttributes().get((String)i.next()));
 					mAdditionalInformation.addView(mTextViewDynamic);
-					
+
 				}
 
 			} else {
