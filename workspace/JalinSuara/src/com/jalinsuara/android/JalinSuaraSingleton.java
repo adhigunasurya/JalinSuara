@@ -99,11 +99,11 @@ public class JalinSuaraSingleton {
 		mGson = gson;
 	}
 
-	public ArrayList<News> getNewsList() {
+	public synchronized ArrayList<News> getNewsList() {
 		return mNewsList;
 	}
 
-	public void setNewsList(ArrayList<News> newsList) {
+	public synchronized void setNewsList(ArrayList<News> newsList) {
 		mNewsList = newsList;
 	}
 
@@ -113,7 +113,7 @@ public class JalinSuaraSingleton {
 	 * @param id
 	 * @return
 	 */
-	public News findNewsById(long id) {
+	public synchronized News findNewsById(long id) {
 		if (mNewsList == null) {
 			if (mRecentSearchResultList == null) {
 				return null;
@@ -146,11 +146,11 @@ public class JalinSuaraSingleton {
 		return null;
 	}
 
-	public ArrayList<SubProject> getSubProjectList() {
+	public synchronized ArrayList<SubProject> getSubProjectList() {
 		return mSubProjectList;
 	}
 
-	public void setSubProjectList(ArrayList<SubProject> subProject) {
+	public synchronized void setSubProjectList(ArrayList<SubProject> subProject) {
 		mSubProjectList = subProject;
 	}
 
@@ -160,7 +160,7 @@ public class JalinSuaraSingleton {
 	 * @param id
 	 * @return
 	 */
-	public SubProject findSubProjectById(long id) {
+	public synchronized SubProject findSubProjectById(long id) {
 		if (mSubProjectList == null) {
 			return null;
 		}
@@ -172,13 +172,30 @@ public class JalinSuaraSingleton {
 		return null;
 	}
 
-	public ArrayList<SearchResult> getRecentSearchResultList() {
+	public synchronized ArrayList<SearchResult> getRecentSearchResultList() {
 		return mRecentSearchResultList;
 	}
 
-	public void setRecentSearchResultList(
+	public synchronized void setRecentSearchResultList(
 			ArrayList<SearchResult> recentSearchResultList) {
 		mRecentSearchResultList = recentSearchResultList;
+	}
+
+	public synchronized ArrayList<Province> getSubDistrictsList() {
+		return mSubDistrictsList;
+	}
+
+	public synchronized void setSubDistrictsList(
+			ArrayList<Province> subDistrictsList) {
+		mSubDistrictsList = subDistrictsList;
+	}
+
+	public synchronized ArrayList<Province> getProvincesList() {
+		return mProvincesList;
+	}
+
+	public synchronized void setProvincesList(ArrayList<Province> provincesList) {
+		mProvincesList = provincesList;
 	}
 
 }
