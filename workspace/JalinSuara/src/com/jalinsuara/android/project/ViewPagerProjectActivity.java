@@ -1,5 +1,7 @@
 package com.jalinsuara.android.project;
 
+import com.jalinsuara.android.BaseFragment;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -33,7 +35,7 @@ public class ViewPagerProjectActivity extends FragmentActivity{
 		}
 
 		@Override
-		public BaseFragment getItem(int position) {
+		public SubProjectListActivity getItem(int position) {
 			switch (position) {
 			case 0:
 				return new SubProjectListActivity();
