@@ -459,6 +459,70 @@ public class NetworkUtils {
 	}
 
 	/**
+	 * Get districts by province_id
+	 * 
+	 * @param page
+	 * @return
+	 */
+	public static ArrayList<District> getDistrictsByProvinceId(int provinceId) {
+		final HttpResponse resp;
+		String uri = null;
+		if (provinceId < 0) {
+			return null;
+		} else {
+			uri = BASE_URL + "/districts.json?province_id=" + provinceId;
+		}
+
+		Log.i(TAG, "Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					Log.i(TAG, "Response retrieved");
+					ireader.close();
+					String response = sb.toString();
+					if (response.length() > 0) {
+						try {
+							Gson gson = JalinSuaraSingleton.getInstance()
+									.getGson();
+							Type collectionType = new TypeToken<ArrayList<District>>() {
+							}.getType();
+							ArrayList<District> retval = gson.fromJson(
+									response, collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+
+	/**
 	 * Get Subdistrict
 	 * 
 	 * @param page
@@ -473,6 +537,64 @@ public class NetworkUtils {
 			uri = BASE_URL + "/subdistricts.json?page=" + page;
 		}
 
+		Log.i(TAG, "Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					Log.i(TAG, "Response retrieved");
+					ireader.close();
+					String response = sb.toString();
+					if (response.length() > 0) {
+						try {
+							Gson gson = JalinSuaraSingleton.getInstance()
+									.getGson();
+							Type collectionType = new TypeToken<ArrayList<SubDistrict>>() {
+							}.getType();
+							ArrayList<SubDistrict> retval = gson.fromJson(
+									response, collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				Log.e(TAG, "Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
+	}
+	
+	public static ArrayList<SubDistrict> getSubdistrictsByDistrictId(int districtId) {
+		final HttpResponse resp;
+		String uri = null;
+		if (districtId < 0) {
+			return null;			
+		} else {
+			uri = BASE_URL + "/subdistricts.json?district_id=" + districtId;
+		
+		}
 		Log.i(TAG, "Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {

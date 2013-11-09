@@ -72,7 +72,10 @@
             android:label="@string/title_news" >
         </activity>
         <!-- projects -->
-
+        <activity
+            android:name="com.jalinsuara.android.project.ViewPagerProjectActivity"
+            android:label="@string/title_news" >
+        </activity>
         <activity
             android:name="com.jalinsuara.android.project.SubProjectActivity"
             android:label="@string/title_news" >
