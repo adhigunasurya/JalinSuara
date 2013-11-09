@@ -1,18 +1,13 @@
 package com.jalinsuara.android.project;
 
-<<<<<<< HEAD
-import com.jalinsuara.android.BaseFragment;
 
-=======
 import android.content.Intent;
->>>>>>> b0c306d8afb7cadd35d64bd08609629dfd672004
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
@@ -56,19 +51,6 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 		}
 
 		@Override
-<<<<<<< HEAD
-		public SubProjectListActivity getItem(int position) {
-			switch (position) {
-			case 0:
-				return new SubProjectListActivity();
-			case 1:
-				return new ImageFragment(R.drawable.ic_launcher);
-			case 2:
-				return new ImageFragment(R.drawable.ic_launcher);
-
-			default:
-				return null;
-=======
 		public Fragment getItem(int arg0) {
 			switch (arg0) {
 			case 0: {
@@ -79,7 +61,6 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 			}
 			case 1: {
 				// return new SubProvinceListFragment();
->>>>>>> b0c306d8afb7cadd35d64bd08609629dfd672004
 			}
 			case 2: {
 				// return new SubDistrictListFragment();
