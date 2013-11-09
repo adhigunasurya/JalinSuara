@@ -14,6 +14,7 @@ import com.jalinsuara.android.maps.ShowMapActivity;
 import com.jalinsuara.android.news.NewsListActivity;
 import com.jalinsuara.android.news.ShareNewsActivity;
 import com.jalinsuara.android.project.SubProjectListActivity;
+import com.jalinsuara.android.project.ViewPagerProjectActivity;
 
 /**
  * Fragment for showing menu in dashboard. Used in {@link DashboardActivity}
@@ -105,7 +106,8 @@ public class DashboardFragment extends BaseFragment {
 
 	protected void navigateToSubProjectList() {
 		Intent intent = new Intent(getSherlockActivity(),
-				SubProjectListActivity.class);
+//				SubProjectListActivity.class);
+				ViewPagerProjectActivity.class);			
 		startActivity(intent);
 
 	}
