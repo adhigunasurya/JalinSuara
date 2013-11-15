@@ -767,29 +767,29 @@ public class NetworkUtils {
 						line = ireader.readLine();
 					}
 					ireader.close();
-					String response = sb.toString();
-					if(response.length()>0){
-						try{
-							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
-							JsonParser parser = new JsonParser();
-							JsonElement resElmt = parser.parse(response);
-							if (resElmt.isJsonArray()) {
-								JsonArray resArr = resElmt.getAsJsonArray();
-								for (int i = 0; i < resArr.size(); i++) {
-									JsonElement elmt = resArr.get(i);
-									if (elmt.isJsonObject()) {
-										JsonObject obj = elmt.getAsJsonObject();
-										String objString = elmt.toString();
-										JsonElement blmAmountElmt = obj
-												.get("authentication_token");
-										
-									}
-								}
-							}
-						} catch(Exception e){
-							
-						}
-					}
+//					String response = sb.toString();
+//					if(response.length()>0){
+//						try{
+//							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
+//							JsonParser parser = new JsonParser();
+//							JsonElement resElmt = parser.parse(response);
+//							if (resElmt.isJsonArray()) {
+//								JsonArray resArr = resElmt.getAsJsonArray();
+//								for (int i = 0; i < resArr.size(); i++) {
+//									JsonElement elmt = resArr.get(i);
+//									if (elmt.isJsonObject()) {
+//										JsonObject obj = elmt.getAsJsonObject();
+//										String objString = elmt.toString();
+//										JsonElement blmAmountElmt = obj
+//												.get("authentication_token");
+//										
+//									}
+//								}
+//							}
+//						} catch(Exception e){
+//							
+//						}
+//					}
 				}
 				
 			}
@@ -806,7 +806,7 @@ public class NetworkUtils {
 	public static String getTokenLogin(String email, String email_password){
 		final HttpResponse resp;
 		String uri = null;
-		if(name!=null && email !=null && email_password!=null){
+		if(email !=null && email_password!=null){
 			uri = BASE_URL + "/sign_in.json";
 			
 		}
