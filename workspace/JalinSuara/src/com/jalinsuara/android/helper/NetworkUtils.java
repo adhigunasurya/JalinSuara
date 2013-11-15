@@ -733,5 +733,135 @@ public class NetworkUtils {
 		return null;
 
 	}
-
+	
+	/*
+	 * get token for register new user
+	 * */
+	public static String getTokenRegister(String name, String email, String email_password){
+		final HttpResponse resp;
+		String uri = null;
+		if(name!=null && email !=null && email_password!=null){
+			uri = BASE_URL + "/users.json";
+			
+		}
+		final HttpPost request = new HttpPost(uri);
+		try{
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			nameValuePairs.add(new BasicNameValuePair("user[email]","gabybongbong@gmail.com"));
+			nameValuePairs.add(new BasicNameValuePair("user[username]","gabrielle"));
+			nameValuePairs.add(new BasicNameValuePair("user[password]","1234"));
+			nameValuePairs.add(new BasicNameValuePair("user[password_confirmation]","1234"));
+			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			
+			resp = getHttpClient().execute(request);
+			if(resp.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if(istream != null){
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null){
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					ireader.close();
+					String response = sb.toString();
+					if(response.length()>0){
+						try{
+							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
+							JsonParser parser = new JsonParser();
+							JsonElement resElmt = parser.parse(response);
+							if (resElmt.isJsonArray()) {
+								JsonArray resArr = resElmt.getAsJsonArray();
+								for (int i = 0; i < resArr.size(); i++) {
+									JsonElement elmt = resArr.get(i);
+									if (elmt.isJsonObject()) {
+										JsonObject obj = elmt.getAsJsonObject();
+										String objString = elmt.toString();
+										JsonElement blmAmountElmt = obj
+												.get("authentication_token");
+										
+									}
+								}
+							}
+						} catch(Exception e){
+							
+						}
+					}
+				}
+				
+			}
+			
+		}catch(Exception ex){
+			
+		}
+		
+		return "";
+	}
+	/*
+	 * get Token from Login
+	 * */
+	public static String getTokenLogin(String email, String email_password){
+		final HttpResponse resp;
+		String uri = null;
+		if(name!=null && email !=null && email_password!=null){
+			uri = BASE_URL + "/sign_in.json";
+			
+		}
+		final HttpPost request = new HttpPost(uri);
+		try{
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			nameValuePairs.add(new BasicNameValuePair("user[email]","gabybongbong@gmail.com"));
+			nameValuePairs.add(new BasicNameValuePair("user[password]","1234"));
+			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			
+			resp = getHttpClient().execute(request);
+			if(resp.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if(istream != null){
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null){
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					ireader.close();
+					String response = sb.toString();
+					if(response.length()>0){
+						try{
+							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
+							JsonParser parser = new JsonParser();
+							JsonElement resElmt = parser.parse(response);
+							if (resElmt.isJsonArray()) {
+								JsonArray resArr = resElmt.getAsJsonArray();
+								for (int i = 0; i < resArr.size(); i++) {
+									JsonElement elmt = resArr.get(i);
+									if (elmt.isJsonObject()) {
+										JsonObject obj = elmt.getAsJsonObject();
+										String objString = elmt.toString();
+										JsonElement blmAmountElmt = obj
+												.get("authentication_token");
+										
+									}
+								}
+							}
+						} catch(Exception e){
+							
+						}
+					}
+				}
+				
+			}
+			
+		}catch(Exception ex){
+			
+		}
+		
+		return "";
+	}
 }
