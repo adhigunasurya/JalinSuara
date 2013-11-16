@@ -78,7 +78,7 @@ public class JalinSuaraSingleton {
 	 */
 	private ArrayList<SearchResult> mRecentSearchResultList;
 	private String mLoginToken;
-	
+	private String mEmailUser;
 	private JalinSuaraSingleton() {
 		log.info("JalinSuaraSingleton()");
 
@@ -114,6 +114,14 @@ public class JalinSuaraSingleton {
 	
 	public synchronized String getToken(){
 		return mLoginToken;
+	}
+	
+	public synchronized void setEmail(String email){
+		mEmailUser = email;
+	}
+	
+	public synchronized String getEmail(){
+		return mEmailUser;
 	}
 
 	/**

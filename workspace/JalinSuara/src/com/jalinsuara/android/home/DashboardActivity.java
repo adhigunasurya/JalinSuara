@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -16,8 +17,12 @@ import android.widget.TextView;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
+import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.auth.LoginActivity;
+import com.jalinsuara.android.auth.SignUpActivity;
 import com.jalinsuara.android.dialog.AboutDialog;
+import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.profile.ProfileActivity;
 
 /**
@@ -142,7 +147,11 @@ public class DashboardActivity extends BaseFragmentActivity {
 
 			return super.onOptionsItemSelected(item);
 		}
-
+		
+		
+		case R.id.action_sign_out: {
+			
+		}
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -205,5 +214,36 @@ public class DashboardActivity extends BaseFragmentActivity {
 
 		}
 	}
+	
+	private class SignOut extends AsyncTask<String, Integer, Integer> {
 
+		private final static int E_OK = 1;
+		private final static int E_ERROR = 2;
+
+		@Override
+		protected Integer doInBackground(String... params) {
+			boolean success = NetworkUtils.deleteTokenUser(JalinSuaraSingleton.getInstance().getEmail().toString());
+			if(success == true){
+
+				return E_OK;
+			}
+			return E_ERROR;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			super.onPostExecute(result);
+			if (!isFinishing()) {
+				if (result == E_OK) {
+					Intent intent = new Intent(getBaseContext(),
+							LoginActivity.class);				
+					startActivity(intent);
+					finish();
+				} else {
+					resetStatus();
+					setStatusError(getString(R.string.error));
+				}
+			}
+		}
+	}
 }

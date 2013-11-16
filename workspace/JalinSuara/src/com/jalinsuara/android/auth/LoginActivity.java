@@ -72,6 +72,7 @@ public class LoginActivity extends BaseFragmentActivity {
 			if(token!=null){
 				JalinSuaraSingleton.getInstance().setToken(token);
 				tokenLogin = token;
+				JalinSuaraSingleton.getInstance().setEmail(mEmailEditText.getText().toString());
 				return E_OK;
 			}
 			return E_ERROR;
