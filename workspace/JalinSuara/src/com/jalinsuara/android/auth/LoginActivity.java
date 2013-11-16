@@ -42,10 +42,8 @@ public class LoginActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				
-				Intent intent = new Intent(getBaseContext(),
-						DashboardActivity.class);
-				startActivity(intent);
-				finish();
+				LoadTokens token = new LoadTokens();
+				token.execute();
 
 			}
 		});
@@ -54,7 +52,8 @@ public class LoginActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				
+				LoadRegister register = new LoadRegister();
+				register.execute();
 			}
 		});
 		
@@ -63,6 +62,39 @@ public class LoginActivity extends BaseFragmentActivity {
 		setStatusShowContent();
 	}
 	private class LoadTokens extends AsyncTask<String, Integer, Integer> {
+
+		private final static int E_OK = 1;
+		private final static int E_ERROR = 2;
+
+		@Override
+		protected Integer doInBackground(String... params) {
+			String token = NetworkUtils.getTokenLogin(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
+			if(token!=null){
+				JalinSuaraSingleton.getInstance().setToken(token);
+				tokenLogin = token;
+				return E_OK;
+			}
+			return E_ERROR;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			super.onPostExecute(result);
+			if (!isFinishing()) {
+				if (result == E_OK) {
+					Intent intent = new Intent(getBaseContext(),
+							SignUpActivity.class);				
+					startActivity(intent);
+					finish();
+				} else {
+					resetStatus();
+					setStatusError(getString(R.string.error));
+				}
+			}
+		}
+	}
+	
+	private class LoadRegister extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;

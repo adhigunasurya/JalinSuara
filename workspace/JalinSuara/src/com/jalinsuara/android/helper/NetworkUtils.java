@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.params.ConnManagerParams;
@@ -828,7 +831,7 @@ public class NetworkUtils {
 		final HttpResponse resp;
 		String uri = BASE_URL + "/sign_in.json";
 		if (email != null && email_password != null) {
-
+				
 		}
 		final HttpPost request = new HttpPost(uri);
 		try {
@@ -891,5 +894,49 @@ public class NetworkUtils {
 
 		// return null because something error
 		return null;
+	}
+	
+	public boolean deleteTokenUser(String email){
+		final HttpResponse resp;
+		String uri = BASE_URL + "/sign_in.json";
+		if (email != null) {
+
+		}
+		final HttpDeleteWithBody request = new HttpDeleteWithBody(uri);
+		try {
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			nameValuePairs.add(new BasicNameValuePair("user[email]",
+					email));
+
+			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			Log.i(TAG, "request to " + request.getRequestLine());
+			resp = getHttpClient().execute(request);
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				return true;
+
+			} else {
+				// failed
+				Log.e(TAG, resp.getStatusLine().getStatusCode() + "");
+				return false;
+			}
+			
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
+	class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
+	    public static final String METHOD_NAME = "DELETE";
+	    public String getMethod() { return METHOD_NAME; }
+
+	    public HttpDeleteWithBody(final String uri) {
+	        super();
+	        setURI(URI.create(uri));
+	    }
+	    public HttpDeleteWithBody(final URI uri) {
+	        super();
+	        setURI(uri);
+	    }
+	    public HttpDeleteWithBody() { super(); }
 	}
 }
