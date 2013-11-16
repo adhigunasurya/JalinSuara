@@ -898,7 +898,7 @@ public class NetworkUtils {
 	
 	public boolean deleteTokenUser(String email){
 		final HttpResponse resp;
-		String uri = BASE_URL + "/sign_in.json";
+		String uri = BASE_URL + "/sign_out.json";
 		if (email != null) {
 
 		}

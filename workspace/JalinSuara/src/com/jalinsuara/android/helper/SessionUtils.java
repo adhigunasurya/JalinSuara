@@ -7,7 +7,7 @@ package com.jalinsuara.android.helper;
  * 
  */
 public class SessionUtils {
-	
+	private String token;
 	
 
 }
