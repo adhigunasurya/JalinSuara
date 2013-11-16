@@ -66,6 +66,15 @@ public class NetworkUtils {
 	/** Timeout (in ms) we specify for each http request */
 	public static final int HTTP_REQUEST_TIMEOUT_MS = 30 * 1000;
 
+	/**
+	 * without this params, it still returns about 30 item in one page
+	 */
+	public static final String PARAM_PER_PAGE = "per_page";
+	/**
+	 * Default value for {@link NetworkUtils#PARAM_PER_PAGE}
+	 */
+	public static final int DEFAULT_PER_PAGE = 30;
+
 	/** Base URL */
 	public static String BASE_URL = "http://jalinsuara.web.id/api/v1";
 
@@ -85,6 +94,12 @@ public class NetworkUtils {
 		return Formatter.formatIpAddress(info.getIpAddress());
 	}
 
+	/**
+	 * Check whether network is down
+	 * 
+	 * @param context
+	 * @return
+	 */
 	public static boolean isNetworkDown(Context context) {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -683,10 +698,8 @@ public class NetworkUtils {
 		} else {
 			id_page = Integer.toString(page);
 		}
-		String uri = BASE_URL + "/posts/" + post_id + "/comments/" + id_page
-				+ ".json";
-
-		Log.i(TAG, "Request: " + uri + "post_id" + post_id + "id_page"
+		String uri = BASE_URL + "/posts/" + post_id + "/comments";
+		Log.i(TAG, "Request: " + uri + ", post_id: " + post_id + ", id_page: "
 				+ id_page);
 		final HttpGet request = new HttpGet(uri);
 		try {
@@ -866,10 +879,10 @@ public class NetworkUtils {
 					}
 				}
 
-			}else{
+			} else {
 				// failed
-				Log.e(TAG, resp.getStatusLine().getStatusCode()+"");
-				
+				Log.e(TAG, resp.getStatusLine().getStatusCode() + "");
+
 			}
 
 		} catch (Exception ex) {
