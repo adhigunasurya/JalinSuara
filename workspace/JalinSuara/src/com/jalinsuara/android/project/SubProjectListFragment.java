@@ -33,6 +33,8 @@ public class SubProjectListFragment extends BaseListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		log.info("onActivityCreated");
+		
 		resetStatus();
 		setStatusProgress(getResources().getString(R.string.loading), false);
 
@@ -167,7 +169,7 @@ public class SubProjectListFragment extends BaseListFragment {
 					currentPage++;
 				}
 			}
-			
+
 			// log.info("show index " + firstVisibleItem + "-"
 			// + (firstVisibleItem + visibleItemCount) + " :"
 			// + (firstVisibleItem + visibleItemCount) + "/"

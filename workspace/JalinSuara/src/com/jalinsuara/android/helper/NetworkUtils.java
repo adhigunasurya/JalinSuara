@@ -67,7 +67,7 @@ public class NetworkUtils {
 	public static final int HTTP_REQUEST_TIMEOUT_MS = 30 * 1000;
 
 	/** Base URL */
-	public static String BASE_URL = "http://jalinsuara.web.id/en";
+	public static String BASE_URL = "http://jalinsuara.web.id/api/v1";
 
 	private static DefaultHttpClient mHttpClient;
 
@@ -585,15 +585,16 @@ public class NetworkUtils {
 		return null;
 
 	}
-	
-	public static ArrayList<SubDistrict> getSubdistrictsByDistrictId(int districtId) {
+
+	public static ArrayList<SubDistrict> getSubdistrictsByDistrictId(
+			int districtId) {
 		final HttpResponse resp;
 		String uri = null;
 		if (districtId < 0) {
-			return null;			
+			return null;
 		} else {
 			uri = BASE_URL + "/subdistricts.json?district_id=" + districtId;
-		
+
 		}
 		Log.i(TAG, "Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
@@ -733,107 +734,116 @@ public class NetworkUtils {
 		return null;
 
 	}
-	
+
 	/*
 	 * get token for register new user
-	 * */
-	public static String getTokenRegister(String name, String email, String email_password){
+	 */
+	public static String getTokenRegister(String name, String email,
+			String email_password) {
 		final HttpResponse resp;
 		String uri = null;
-		if(name!=null && email !=null && email_password!=null){
+		if (name != null && email != null && email_password != null) {
 			uri = BASE_URL + "/users.json";
-			
+
 		}
 		final HttpPost request = new HttpPost(uri);
-		try{
+		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			nameValuePairs.add(new BasicNameValuePair("user[email]","gabybongbong@gmail.com"));
-			nameValuePairs.add(new BasicNameValuePair("user[username]","gabrielle"));
-			nameValuePairs.add(new BasicNameValuePair("user[password]","1234"));
-			nameValuePairs.add(new BasicNameValuePair("user[password_confirmation]","1234"));
+			nameValuePairs.add(new BasicNameValuePair("user[email]",
+					"gabybongbong@gmail.com"));
+			nameValuePairs.add(new BasicNameValuePair("user[username]",
+					"gabrielle"));
+			nameValuePairs
+					.add(new BasicNameValuePair("user[password]", "1234"));
+			nameValuePairs.add(new BasicNameValuePair(
+					"user[password_confirmation]", "1234"));
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			
+
 			resp = getHttpClient().execute(request);
-			if(resp.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
-				if(istream != null){
+				if (istream != null) {
 					BufferedReader ireader = new BufferedReader(
 							new InputStreamReader(istream));
 					String line = ireader.readLine();
 					StringBuilder sb = new StringBuilder();
-					while (line != null){
+					while (line != null) {
 						sb.append(line);
 						line = ireader.readLine();
 					}
 					ireader.close();
-//					String response = sb.toString();
-//					if(response.length()>0){
-//						try{
-//							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
-//							JsonParser parser = new JsonParser();
-//							JsonElement resElmt = parser.parse(response);
-//							if (resElmt.isJsonArray()) {
-//								JsonArray resArr = resElmt.getAsJsonArray();
-//								for (int i = 0; i < resArr.size(); i++) {
-//									JsonElement elmt = resArr.get(i);
-//									if (elmt.isJsonObject()) {
-//										JsonObject obj = elmt.getAsJsonObject();
-//										String objString = elmt.toString();
-//										JsonElement blmAmountElmt = obj
-//												.get("authentication_token");
-//										
-//									}
-//								}
-//							}
-//						} catch(Exception e){
-//							
-//						}
-//					}
+					// String response = sb.toString();
+					// if(response.length()>0){
+					// try{
+					// ArrayList<SearchResult> retval = new
+					// ArrayList<SearchResult>();
+					// JsonParser parser = new JsonParser();
+					// JsonElement resElmt = parser.parse(response);
+					// if (resElmt.isJsonArray()) {
+					// JsonArray resArr = resElmt.getAsJsonArray();
+					// for (int i = 0; i < resArr.size(); i++) {
+					// JsonElement elmt = resArr.get(i);
+					// if (elmt.isJsonObject()) {
+					// JsonObject obj = elmt.getAsJsonObject();
+					// String objString = elmt.toString();
+					// JsonElement blmAmountElmt = obj
+					// .get("authentication_token");
+					//
+					// }
+					// }
+					// }
+					// } catch(Exception e){
+					//
+					// }
+					// }
 				}
-				
+
 			}
-			
-		}catch(Exception ex){
-			
+
+		} catch (Exception ex) {
+
 		}
-		
+
 		return "";
 	}
+
 	/*
 	 * get Token from Login
-	 * */
-	public static String getTokenLogin(String email, String email_password){
+	 */
+	public static String getTokenLogin(String email, String email_password) {
 		final HttpResponse resp;
-		String uri = null;
-		if(email !=null && email_password!=null){
-			uri = BASE_URL + "/sign_in.json";
-			
+		String uri = BASE_URL + "/sign_in.json";
+		if (email != null && email_password != null) {
+
 		}
 		final HttpPost request = new HttpPost(uri);
-		try{
+		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			nameValuePairs.add(new BasicNameValuePair("user[email]","gabybongbong@gmail.com"));
-			nameValuePairs.add(new BasicNameValuePair("user[password]","1234"));
+			nameValuePairs.add(new BasicNameValuePair("user[email]",
+					"gabybongbong@gmail.com"));
+			nameValuePairs
+					.add(new BasicNameValuePair("user[password]", "1234"));
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			
+			Log.i(TAG, "request to " + request.getRequestLine());
 			resp = getHttpClient().execute(request);
-			if(resp.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
-				if(istream != null){
+				if (istream != null) {
 					BufferedReader ireader = new BufferedReader(
 							new InputStreamReader(istream));
 					String line = ireader.readLine();
 					StringBuilder sb = new StringBuilder();
-					while (line != null){
+					while (line != null) {
 						sb.append(line);
 						line = ireader.readLine();
 					}
 					ireader.close();
 					String response = sb.toString();
-					if(response.length()>0){
-						try{
+					Log.i(TAG, response);
+					if (response.length() > 0) {
+						try {
 							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
 							JsonParser parser = new JsonParser();
 							JsonElement resElmt = parser.parse(response);
@@ -846,22 +856,27 @@ public class NetworkUtils {
 										String objString = elmt.toString();
 										JsonElement blmAmountElmt = obj
 												.get("authentication_token");
-										
+
 									}
 								}
 							}
-						} catch(Exception e){
-							
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
 					}
 				}
+
+			}else{
+				// failed
+				Log.e(TAG, resp.getStatusLine().getStatusCode()+"");
 				
 			}
-			
-		}catch(Exception ex){
-			
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-		
-		return "";
+
+		// return null because something error
+		return null;
 	}
 }

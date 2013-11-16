@@ -1,6 +1,5 @@
 package com.jalinsuara.android.project;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -32,7 +31,6 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 		mPager = (ViewPager) findViewById(R.id.view_pager);
 
 		mAdapter = new MyAdapter(getSupportFragmentManager());
-		
 
 		mPager.setAdapter(mAdapter);
 
@@ -54,8 +52,9 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 		public Fragment getItem(int arg0) {
 			switch (arg0) {
 			case 0: {
-				if (mSubProjectListFragment==null){
-					mSubProjectListFragment=new SubProjectListFragment(ViewPagerProjectActivity.this);
+				if (mSubProjectListFragment == null) {
+					mSubProjectListFragment = new SubProjectListFragment(
+							ViewPagerProjectActivity.this);
 				}
 				return mSubProjectListFragment;
 			}
