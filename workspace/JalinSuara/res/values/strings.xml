@@ -13,6 +13,7 @@
     <string name="action_comment">Lihat Komentar</string>
     <string name="action_search">Cari</string>
     <string name="action_profile">Profil</string>
+    <string name="action_sign_out">Sign Out</string>
     <string name="action_about">Tentang Aplikasi</string>
     <string name="see_license">Lihat License</string>
     <string name="about_content">${APP_NAME}\n${VERSION}\nAplikasi Android untuk Jalin Suara.\n

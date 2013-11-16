@@ -77,7 +77,8 @@ public class JalinSuaraSingleton {
 	 * Recent search list, always check for null value whenever using this field
 	 */
 	private ArrayList<SearchResult> mRecentSearchResultList;
-
+	private String mLoginToken;
+	
 	private JalinSuaraSingleton() {
 		log.info("JalinSuaraSingleton()");
 
@@ -105,6 +106,14 @@ public class JalinSuaraSingleton {
 
 	public synchronized void setNewsList(ArrayList<News> newsList) {
 		mNewsList = newsList;
+	}
+	
+	public synchronized void setToken(String token){
+		mLoginToken = token;
+	}
+	
+	public synchronized String getToken(){
+		return mLoginToken;
 	}
 
 	/**
