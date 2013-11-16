@@ -2,6 +2,7 @@ package com.jalinsuara.android.auth;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class LoginActivity extends BaseFragmentActivity {
 	private TextView mRegisterTextView;
 	private EditText mEmailEditText;
 	private EditText mPasswordEditText;
+	private String tokenLogin;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,9 +54,7 @@ public class LoginActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				LoadTokens task = new LoadTokens();
-				task.execute();
-
+				
 			}
 		});
 		
@@ -72,6 +72,7 @@ public class LoginActivity extends BaseFragmentActivity {
 			String token = NetworkUtils.getTokenLogin(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
 			if(token!=null){
 				JalinSuaraSingleton.getInstance().setToken(token);
+				tokenLogin = token;
 				return E_OK;
 			}
 			return E_ERROR;

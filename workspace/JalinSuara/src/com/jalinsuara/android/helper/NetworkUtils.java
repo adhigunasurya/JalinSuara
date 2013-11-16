@@ -821,9 +821,9 @@ public class NetworkUtils {
 		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 			nameValuePairs.add(new BasicNameValuePair("user[email]",
-					"gabybongbong@gmail.com"));
+					email));
 			nameValuePairs
-					.add(new BasicNameValuePair("user[password]", "1234"));
+					.add(new BasicNameValuePair("user[password]", email_password));
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			Log.i(TAG, "request to " + request.getRequestLine());
 			resp = getHttpClient().execute(request);
