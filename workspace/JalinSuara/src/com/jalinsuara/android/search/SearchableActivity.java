@@ -13,16 +13,17 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.jalinsuara.android.BaseFragmentActivity;
+import com.jalinsuara.android.BaseEndlessListFragmentActivity;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.NewsActivity;
 
-public class SearchableActivity extends BaseFragmentActivity {
+public class SearchableActivity extends BaseEndlessListFragmentActivity {
 
-	public SearchResultAdapter mAdapter;
-	public ListView mListView;
+	private SearchResultAdapter mAdapter;
+	private String mQuery;
+	private ListView mListView;
 	private TextView mEmptyTextView;
 	private TextView mStatusTextView;
 
@@ -34,7 +35,7 @@ public class SearchableActivity extends BaseFragmentActivity {
 		mListView = (ListView) findViewById(android.R.id.list);
 		mStatusTextView = (TextView) findViewById(R.id.activity_search_result_status_textview);
 		mEmptyTextView = (TextView) findViewById(android.R.id.empty);
-		
+
 		log.info("onCreate()");
 
 		// Get the intent, verify the action and get the query
@@ -52,6 +53,14 @@ public class SearchableActivity extends BaseFragmentActivity {
 					intent.putExtra(NewsActivity.EXTRA_ID, item.getId());
 					startActivity(intent);
 				}
+			}
+		});
+
+		mListView.setOnScrollListener(new EndlessScrollListener() {
+			@Override
+			public void load(int page) {
+				SearchTask task = new SearchTask(getBaseContext());
+				task.execute(mQuery, String.valueOf(page));
 			}
 		});
 	}
@@ -75,8 +84,9 @@ public class SearchableActivity extends BaseFragmentActivity {
 		setStatusProgress(
 				getString(R.string.searching_for, new Object[] { query }),
 				false);
+		mQuery = query;
 		SearchTask task = new SearchTask(this);
-		task.execute(query);
+		task.execute(query, String.valueOf(1));
 
 	}
 
@@ -109,8 +119,10 @@ public class SearchableActivity extends BaseFragmentActivity {
 		@Override
 		protected Integer doInBackground(String... params) {
 			query = params[0];
-			ArrayList<SearchResult> result = NetworkUtils.getSearch(params[0]);
-			JalinSuaraSingleton.getInstance().setRecentSearchResultList(result);
+			ArrayList<SearchResult> result = NetworkUtils.getSearch(params[0],
+					Integer.parseInt(params[1]));
+			JalinSuaraSingleton.getInstance(mContext)
+					.setRecentSearchResultList(result);
 			if (mContext != null) {
 
 				mAdapter = new SearchResultAdapter(mContext, result);

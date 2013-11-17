@@ -58,7 +58,7 @@ public class DashboardFragment extends BaseFragment {
 				R.id.fragment_dashboard_share_news_button);
 		mSubProjectsButton = (Button) getView().findViewById(
 				R.id.fragment_dashboard_sub_projects_button);
-		
+
 		mNewsButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -106,8 +106,8 @@ public class DashboardFragment extends BaseFragment {
 
 	protected void navigateToSubProjectList() {
 		Intent intent = new Intent(getSherlockActivity(),
-//				SubProjectListActivity.class);
-				ViewPagerProjectActivity.class);			
+		// SubProjectListActivity.class);
+				ViewPagerProjectActivity.class);
 		startActivity(intent);
 
 	}

@@ -23,7 +23,7 @@ public class SubProjectActivity extends BaseFragmentActivity {
 		setStatusProgress(getString(R.string.loading), false);
 		long id = getIntent().getLongExtra(EXTRA_ID, -1);
 		if (id != -1) {
-			SubProject subproject = JalinSuaraSingleton.getInstance()
+			SubProject subproject = JalinSuaraSingleton.getInstance(this)
 					.findSubProjectById(id);
 			if (subproject != null) {
 				mSubProjectFragment = new SubProjectFragment(subproject);

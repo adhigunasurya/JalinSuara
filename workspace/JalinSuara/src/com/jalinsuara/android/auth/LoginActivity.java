@@ -27,21 +27,21 @@ public class LoginActivity extends BaseFragmentActivity {
 	private EditText mEmailEditText;
 	private EditText mPasswordEditText;
 	private String tokenLogin;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		
 
 		mLoginButton = (Button) findViewById(R.id.activity_login_login_button);
 		mRegisterTextView = (TextView) findViewById(R.id.activity_login_sign_up_textview);
-		mEmailEditText = (EditText) findViewById (R.id.activity_login_email_edittext);
+		mEmailEditText = (EditText) findViewById(R.id.activity_login_email_edittext);
 		mPasswordEditText = (EditText) findViewById(R.id.activity_login_password_edittext);
 		mLoginButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				LoadTokens token = new LoadTokens();
 				token.execute();
 
@@ -56,11 +56,11 @@ public class LoginActivity extends BaseFragmentActivity {
 				register.execute();
 			}
 		});
-		
 
 		resetStatus();
 		setStatusShowContent();
 	}
+
 	private class LoadTokens extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
@@ -68,11 +68,14 @@ public class LoginActivity extends BaseFragmentActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-			String token = NetworkUtils.getTokenLogin(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
-			if(token!=null){
-				JalinSuaraSingleton.getInstance().setToken(token);
+			String token = NetworkUtils.signIn(mEmailEditText.getText()
+					.toString(), mPasswordEditText.getText().toString());
+			if (token != null) {
+				JalinSuaraSingleton.getInstance(getBaseContext()).setToken(
+						token);
 				tokenLogin = token;
-				JalinSuaraSingleton.getInstance().setEmail(mEmailEditText.getText().toString());
+				JalinSuaraSingleton.getInstance(getBaseContext()).setEmail(
+						mEmailEditText.getText().toString());
 				return E_OK;
 			}
 			return E_ERROR;
@@ -84,7 +87,7 @@ public class LoginActivity extends BaseFragmentActivity {
 			if (!isFinishing()) {
 				if (result == E_OK) {
 					Intent intent = new Intent(getBaseContext(),
-							SignUpActivity.class);				
+							SignUpActivity.class);
 					startActivity(intent);
 					finish();
 				} else {
@@ -94,7 +97,7 @@ public class LoginActivity extends BaseFragmentActivity {
 			}
 		}
 	}
-	
+
 	private class LoadRegister extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
@@ -102,9 +105,11 @@ public class LoginActivity extends BaseFragmentActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-			String token = NetworkUtils.getTokenLogin(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString());
-			if(token!=null){
-				JalinSuaraSingleton.getInstance().setToken(token);
+			String token = NetworkUtils.signIn(mEmailEditText.getText()
+					.toString(), mPasswordEditText.getText().toString());
+			if (token != null) {
+				JalinSuaraSingleton.getInstance(getBaseContext()).setToken(
+						token);
 				tokenLogin = token;
 				return E_OK;
 			}
@@ -117,7 +122,7 @@ public class LoginActivity extends BaseFragmentActivity {
 			if (!isFinishing()) {
 				if (result == E_OK) {
 					Intent intent = new Intent(getBaseContext(),
-							SignUpActivity.class);				
+							SignUpActivity.class);
 					startActivity(intent);
 					finish();
 				} else {

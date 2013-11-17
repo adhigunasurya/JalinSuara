@@ -147,10 +147,9 @@ public class DashboardActivity extends BaseFragmentActivity {
 
 			return super.onOptionsItemSelected(item);
 		}
-		
-		
+
 		case R.id.action_sign_out: {
-			
+
 		}
 		default:
 			return super.onOptionsItemSelected(item);
@@ -214,16 +213,23 @@ public class DashboardActivity extends BaseFragmentActivity {
 
 		}
 	}
-	
-	private class SignOut extends AsyncTask<String, Integer, Integer> {
+
+	/**
+	 * Sign out request to server
+	 * 
+	 * @author tonoman3g
+	 * @author gabriellewp
+	 */
+	private class SignOutTask extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;
 
 		@Override
 		protected Integer doInBackground(String... params) {
-			boolean success = NetworkUtils.deleteTokenUser(JalinSuaraSingleton.getInstance().getEmail().toString());
-			if(success == true){
+			boolean success = NetworkUtils.signOut(JalinSuaraSingleton
+					.getInstance(getBaseContext()).getEmail().toString());
+			if (success == true) {
 
 				return E_OK;
 			}
@@ -236,7 +242,7 @@ public class DashboardActivity extends BaseFragmentActivity {
 			if (!isFinishing()) {
 				if (result == E_OK) {
 					Intent intent = new Intent(getBaseContext(),
-							LoginActivity.class);				
+							LoginActivity.class);
 					startActivity(intent);
 					finish();
 				} else {

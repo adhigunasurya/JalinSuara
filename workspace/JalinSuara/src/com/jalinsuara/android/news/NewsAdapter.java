@@ -62,7 +62,7 @@ public class NewsAdapter extends BaseAdapter {
 		convertView.setTag(object.getId());
 		dateTextView.setText(DateUtils.toStringDateOnly(object.getUpdatedAt()));
 		titleTextview.setText(object.getTitle());
-		descriptionTextview.setText(Html.fromHtml(object.getDescription()));
+//		descriptionTextview.setText(Html.fromHtml(object.getDescription()));
 
 		return convertView;
 	}

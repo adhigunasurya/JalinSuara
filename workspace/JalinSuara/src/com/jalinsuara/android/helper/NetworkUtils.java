@@ -25,6 +25,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -34,7 +36,9 @@ import android.net.wifi.WifiManager;
 import android.text.format.Formatter;
 import android.util.Log;
 
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -50,7 +54,7 @@ import com.jalinsuara.android.projects.model.SubProject;
 import com.jalinsuara.android.search.SearchResult;
 
 /**
- * Helper for accessing network
+ * Helper for accessing web service API
  * 
  * @author tonoman3g
  * @author gabriellewp
@@ -58,11 +62,20 @@ import com.jalinsuara.android.search.SearchResult;
  */
 public class NetworkUtils {
 
-	/** The tag used to log to adb console. */
-	private static final String TAG = NetworkUtils.class.getSimpleName();
+	/**
+	 * Logger
+	 */
+	private static Logger log = LoggerFactory
+			.getLogger(JalinSuaraSingleton.class.getSimpleName());
+
+	/**
+	 * Gson for deserialize json response
+	 */
+	private static Gson mGson;
 
 	/** POST parameter name for the user's account name */
 	public static final String PARAM_USERNAME = "username";
+
 	/** POST parameter name for the user's password */
 	public static final String PARAM_PASSWORD = "password";
 
@@ -137,11 +150,19 @@ public class NetworkUtils {
 	 * 
 	 * @return
 	 */
-	public static ArrayList<News> getPosts() {
+	public static ArrayList<News> getPosts(int page) {
 		final HttpResponse resp;
 		String uri = BASE_URL + "/posts";
 
-		Log.i(TAG, "Request: " + uri);
+		if (page <= 0) {
+			uri = BASE_URL + "/posts?page=1&" + PARAM_PER_PAGE + "="
+					+ DEFAULT_PER_PAGE;
+		} else {
+			uri = BASE_URL + "/posts?page=" + page + "&" + PARAM_PER_PAGE + "="
+					+ DEFAULT_PER_PAGE;
+		}
+
+		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
 			resp = getHttpClient().execute(request);
@@ -154,33 +175,36 @@ public class NetworkUtils {
 							new InputStreamReader(istream));
 					String line = ireader.readLine();
 					StringBuilder sb = new StringBuilder();
+
 					while (line != null) {
 						sb.append(line);
 						line = ireader.readLine();
 					}
 
-					// Log.i(TAG, "Response: " + sb.toString());
+					if (sb.length() <= 30) {
+						log.info("Response: " + sb.toString());
+					} else {
+						log.info("Response: " + sb.toString().substring(0, 29));
+					}
 					ireader.close();
+
 					String response = sb.toString();
+
 					if (response.length() > 0) {
 						try {
-							Gson gson = JalinSuaraSingleton.getInstance()
-									.getGson();
 							Type collectionType = new TypeToken<ArrayList<News>>() {
 							}.getType();
-							ArrayList<News> retval = gson.fromJson(response,
-									collectionType);
+							ArrayList<News> retval = getGson().fromJson(
+									response, collectionType);
 							return retval;
-
 						} catch (Exception ex) {
 							ex.printStackTrace();
 						}
 						return null;
 					}
 				}
-
 			} else {
-				Log.e(TAG, "Error: " + resp.getStatusLine());
+				log.error("Error: " + resp.getStatusLine());
 				return null;
 			}
 		} catch (Exception ex) {
@@ -196,16 +220,24 @@ public class NetworkUtils {
 	 * @param query
 	 * @return
 	 */
-	public static ArrayList<SearchResult> getSearch(String query) {
+	public static ArrayList<SearchResult> getSearch(String query, int page) {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/home/search";
+		String uri = "http://jalinsuara.web.id/en" + "/home/search";
 
-		Log.i(TAG, "Request: " + uri);
+		if (page <= 0) {
+
+		} else {
+
+		}
+
+		log.info("Request: " + uri);
 		final HttpPost request = new HttpPost(uri);
 
 		try {
+
 			// add query
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+
 			nameValuePairs.add(new BasicNameValuePair("query", query));
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -214,19 +246,23 @@ public class NetworkUtils {
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
+
 				if (istream != null) {
 					BufferedReader ireader = new BufferedReader(
 							new InputStreamReader(istream));
 					String line = ireader.readLine();
 					StringBuilder sb = new StringBuilder();
+
 					while (line != null) {
 						sb.append(line);
 						line = ireader.readLine();
 					}
 
-					// Log.i(TAG, "Response: " + sb.toString());
+					log.info("Response: " + sb.toString());
 					ireader.close();
+
 					String response = sb.toString();
+
 					if (response.length() > 0) {
 						try {
 							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
@@ -245,20 +281,15 @@ public class NetworkUtils {
 										if (blmAmountElmt != null) {
 											retvalElmt.setNews(false);
 
-											SubProject project = JalinSuaraSingleton
-													.getInstance()
-													.getGson()
+											SubProject project = getGson()
 													.fromJson(objString,
 															SubProject.class);
 											retvalElmt.setProjects(project);
 
 										} else {
 											retvalElmt.setNews(true);
-											News news = JalinSuaraSingleton
-													.getInstance()
-													.getGson()
-													.fromJson(objString,
-															News.class);
+											News news = getGson().fromJson(
+													objString, News.class);
 											retvalElmt.setNews(news);
 										}
 										retval.add(retvalElmt);
@@ -275,7 +306,7 @@ public class NetworkUtils {
 				}
 
 			} else {
-				Log.e(TAG, "Error: " + resp.getStatusLine());
+				log.error("Error: " + resp.getStatusLine());
 				return null;
 			}
 		} catch (Exception ex) {
@@ -295,13 +326,15 @@ public class NetworkUtils {
 	public static ArrayList<SubProject> getSubProjects(int page) {
 		final HttpResponse resp;
 		String uri = null;
-		if (page < 0) {
-			uri = BASE_URL + "/activities.json?";
+		if (page <= 0) {
+			uri = BASE_URL + "/activities?page=1&" + PARAM_PER_PAGE + "="
+					+ DEFAULT_PER_PAGE;
 		} else {
-			uri = BASE_URL + "/activities.json?page=" + page;
+			uri = BASE_URL + "/activities?page=" + page + "&" + PARAM_PER_PAGE
+					+ "=" + DEFAULT_PER_PAGE;
 		}
 
-		Log.i(TAG, "Request: " + uri);
+		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
 			resp = getHttpClient().execute(request);
@@ -309,22 +342,26 @@ public class NetworkUtils {
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
+
 				if (istream != null) {
 					BufferedReader ireader = new BufferedReader(
 							new InputStreamReader(istream));
 					String line = ireader.readLine();
 					StringBuilder sb = new StringBuilder();
+
 					while (line != null) {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-					Log.i(TAG, "Response retrieved");
+
+					log.info("Response retrieved");
 					ireader.close();
+
 					String response = sb.toString();
+
 					if (response.length() > 0) {
 						try {
-							Gson gson = JalinSuaraSingleton.getInstance()
-									.getGson();
+							Gson gson = getGson();
 							Type collectionType = new TypeToken<ArrayList<SubProject>>() {
 							}.getType();
 							ArrayList<SubProject> retval = gson.fromJson(
@@ -339,81 +376,77 @@ public class NetworkUtils {
 				}
 
 			} else {
-				Log.e(TAG, "Error: " + resp.getStatusLine());
+				log.error("Error: " + resp.getStatusLine());
 				return null;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
 		return null;
-
 	}
 
 	/**
+	 * Retrieve all provinces
+	 * 
 	 * @param page
 	 * @return
 	 */
-	public static ArrayList<Province> getProvinces(int page) {
+	public static ArrayList<Province> getProvinces() {
 		final HttpResponse resp;
 		String uri = null;
-		if (page < 0) {
-			uri = BASE_URL + "/provinces.json?";
-		} else {
-			uri = BASE_URL + "/provinces.json?page=" + page;
-		}
+		uri = BASE_URL + "/provinces";
 
-		Log.i(TAG, "Request: " + uri);
+		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
-			resp = getHttpClient().execute(request);
 
+			resp = getHttpClient().execute(request);
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
+
 				if (istream != null) {
 					BufferedReader ireader = new BufferedReader(
 							new InputStreamReader(istream));
 					String line = ireader.readLine();
 					StringBuilder sb = new StringBuilder();
+
 					while (line != null) {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-					Log.i(TAG, "Response retrieved");
+					log.info("Response retrieved");
 					ireader.close();
+
 					String response = sb.toString();
+
 					if (response.length() > 0) {
 						try {
-							Gson gson = JalinSuaraSingleton.getInstance()
-									.getGson();
+							Gson gson = getGson();
 							Type collectionType = new TypeToken<ArrayList<Province>>() {
 							}.getType();
 							ArrayList<Province> retval = gson.fromJson(
 									response, collectionType);
 							return retval;
-
 						} catch (Exception ex) {
 							ex.printStackTrace();
 						}
 						return null;
 					}
 				}
-
 			} else {
-				Log.e(TAG, "Error: " + resp.getStatusLine());
+				log.error("Error: " + resp.getStatusLine());
 				return null;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
 		return null;
-
 	}
 
 	/**
-	 * Get districts
+	 * Get all districts
 	 * 
 	 * @param page
 	 * @return
@@ -421,42 +454,50 @@ public class NetworkUtils {
 	public static ArrayList<District> getDistricts(int page) {
 		final HttpResponse resp;
 		String uri = null;
-		if (page < 0) {
-			uri = BASE_URL + "/districts.json?";
+
+		if (page <= 0) {
+			uri = BASE_URL + "/districts?page=1&" + PARAM_PER_PAGE + "="
+					+ DEFAULT_PER_PAGE;
 		} else {
-			uri = BASE_URL + "/districts.json?page=" + page;
+			uri = BASE_URL + "/districts?page=" + page + "&" + PARAM_PER_PAGE
+					+ "=" + DEFAULT_PER_PAGE;
 		}
 
-		Log.i(TAG, "Request: " + uri);
+		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
+
 			resp = getHttpClient().execute(request);
 
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
+
 				if (istream != null) {
 					BufferedReader ireader = new BufferedReader(
 							new InputStreamReader(istream));
 					String line = ireader.readLine();
 					StringBuilder sb = new StringBuilder();
+
 					while (line != null) {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-					Log.i(TAG, "Response retrieved");
+
+					log.info("Response retrieved");
 					ireader.close();
+
 					String response = sb.toString();
+
 					if (response.length() > 0) {
 						try {
-							Gson gson = JalinSuaraSingleton.getInstance()
-									.getGson();
+							Gson gson = getGson();
 							Type collectionType = new TypeToken<ArrayList<District>>() {
 							}.getType();
 							ArrayList<District> retval = gson.fromJson(
 									response, collectionType);
 							return retval;
-
 						} catch (Exception ex) {
 							ex.printStackTrace();
 						}
@@ -465,15 +506,13 @@ public class NetworkUtils {
 				}
 
 			} else {
-				Log.e(TAG, "Error: " + resp.getStatusLine());
+				log.error("Error: " + resp.getStatusLine());
 				return null;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
 		return null;
-
 	}
 
 	/**
@@ -482,39 +521,54 @@ public class NetworkUtils {
 	 * @param page
 	 * @return
 	 */
-	public static ArrayList<District> getDistrictsByProvinceId(int provinceId) {
+	public static ArrayList<District> getDistricts(long provinceId, int page) {
 		final HttpResponse resp;
 		String uri = null;
-		if (provinceId < 0) {
+
+		if (provinceId <= 0) {
 			return null;
 		} else {
-			uri = BASE_URL + "/districts.json?province_id=" + provinceId;
+			if (page <= 0) {
+				uri = BASE_URL + "/provinces/" + provinceId + "/districts"
+						+ "?page=1&" + PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+			} else {
+				uri = BASE_URL + "/provinces/" + provinceId + "/districts"
+						+ "?page=" + page + "&" + PARAM_PER_PAGE + "="
+						+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+			}
 		}
 
-		Log.i(TAG, "Request: " + uri);
+		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
+
 		try {
 			resp = getHttpClient().execute(request);
 
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
+
 				if (istream != null) {
+
 					BufferedReader ireader = new BufferedReader(
 							new InputStreamReader(istream));
 					String line = ireader.readLine();
 					StringBuilder sb = new StringBuilder();
+
 					while (line != null) {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-					Log.i(TAG, "Response retrieved");
+
+					log.info("Response retrieved");
 					ireader.close();
+
 					String response = sb.toString();
+
 					if (response.length() > 0) {
 						try {
-							Gson gson = JalinSuaraSingleton.getInstance()
-									.getGson();
+							Gson gson = getGson();
 							Type collectionType = new TypeToken<ArrayList<District>>() {
 							}.getType();
 							ArrayList<District> retval = gson.fromJson(
@@ -529,15 +583,13 @@ public class NetworkUtils {
 				}
 
 			} else {
-				Log.e(TAG, "Error: " + resp.getStatusLine());
+				log.error("Error: " + resp.getStatusLine());
 				return null;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
 		return null;
-
 	}
 
 	/**
@@ -549,13 +601,15 @@ public class NetworkUtils {
 	public static ArrayList<SubDistrict> getSubdistricts(int page) {
 		final HttpResponse resp;
 		String uri = null;
-		if (page < 0) {
-			uri = BASE_URL + "/subdistricts.json?";
+		if (page <= 0) {
+			uri = BASE_URL + "/subdistricts?page=1&" + PARAM_PER_PAGE + "="
+					+ DEFAULT_PER_PAGE;
 		} else {
-			uri = BASE_URL + "/subdistricts.json?page=" + page;
+			uri = BASE_URL + "/subdistricts?page=" + page + "&"
+					+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
 		}
 
-		Log.i(TAG, "Request: " + uri);
+		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
 			resp = getHttpClient().execute(request);
@@ -572,13 +626,12 @@ public class NetworkUtils {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-					Log.i(TAG, "Response retrieved");
+					log.info("Response retrieved");
 					ireader.close();
 					String response = sb.toString();
 					if (response.length() > 0) {
 						try {
-							Gson gson = JalinSuaraSingleton.getInstance()
-									.getGson();
+							Gson gson = getGson();
 							Type collectionType = new TypeToken<ArrayList<SubDistrict>>() {
 							}.getType();
 							ArrayList<SubDistrict> retval = gson.fromJson(
@@ -593,66 +646,7 @@ public class NetworkUtils {
 				}
 
 			} else {
-				Log.e(TAG, "Error: " + resp.getStatusLine());
-				return null;
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		return null;
-
-	}
-
-	public static ArrayList<SubDistrict> getSubdistrictsByDistrictId(
-			int districtId) {
-		final HttpResponse resp;
-		String uri = null;
-		if (districtId < 0) {
-			return null;
-		} else {
-			uri = BASE_URL + "/subdistricts.json?district_id=" + districtId;
-
-		}
-		Log.i(TAG, "Request: " + uri);
-		final HttpGet request = new HttpGet(uri);
-		try {
-			resp = getHttpClient().execute(request);
-
-			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				InputStream istream = (resp.getEntity() != null) ? resp
-						.getEntity().getContent() : null;
-				if (istream != null) {
-					BufferedReader ireader = new BufferedReader(
-							new InputStreamReader(istream));
-					String line = ireader.readLine();
-					StringBuilder sb = new StringBuilder();
-					while (line != null) {
-						sb.append(line);
-						line = ireader.readLine();
-					}
-					Log.i(TAG, "Response retrieved");
-					ireader.close();
-					String response = sb.toString();
-					if (response.length() > 0) {
-						try {
-							Gson gson = JalinSuaraSingleton.getInstance()
-									.getGson();
-							Type collectionType = new TypeToken<ArrayList<SubDistrict>>() {
-							}.getType();
-							ArrayList<SubDistrict> retval = gson.fromJson(
-									response, collectionType);
-							return retval;
-
-						} catch (Exception ex) {
-							ex.printStackTrace();
-						}
-						return null;
-					}
-				}
-
-			} else {
-				Log.e(TAG, "Error: " + resp.getStatusLine());
+				log.error("Error: " + resp.getStatusLine());
 				return null;
 			}
 		} catch (Exception ex) {
@@ -664,28 +658,81 @@ public class NetworkUtils {
 	}
 
 	/**
-	 * Load all provinces data from server
-	 * <p>
-	 * Assumption: provinces data are constants. So we can save it locally and
-	 * buffer it
+	 * Get subdistricts by districtId
 	 * 
+	 * @param districtId
+	 * @param page
 	 * @return
 	 */
-	public ArrayList<Province> getAllProvinces() {
-		ArrayList<Province> retval = new ArrayList<Province>();
-		int i = 1;
-		boolean cont = true;
-		do {
-			ArrayList<Province> fetchedData = NetworkUtils.getProvinces(i);
-			if (fetchedData.size() > 0) {
-				retval.addAll(fetchedData);
-				i++;
+	public static ArrayList<SubDistrict> getSubdistricts(long districtId,
+			int page) {
+		final HttpResponse resp;
+		String uri = null;
+		if (districtId <= 0) {
+			return null;
+		} else {
+			if (page <= 0) {
+				uri = BASE_URL + "/districts/" + districtId + "/subdistricts"
+						+ "?page=1&" + PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
 			} else {
-				cont = false;
-				break;
+				uri = BASE_URL + "/districts/" + districtId + "/subdistricts"
+						+ "?page=" + page + "&" + PARAM_PER_PAGE + "="
+						+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
 			}
-		} while (cont);
-		return retval;
+
+		}
+
+		log.info("Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+
+					log.info("Response retrieved");
+					ireader.close();
+					String response = sb.toString();
+
+					if (response.length() > 0) {
+						try {
+							Gson gson = getGson();
+							Type collectionType = new TypeToken<ArrayList<SubDistrict>>() {
+							}.getType();
+							ArrayList<SubDistrict> retval = gson.fromJson(
+									response, collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				log.error("Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+
 	}
 
 	/**
@@ -693,39 +740,47 @@ public class NetworkUtils {
 	 * 
 	 * @return
 	 */
-	public static ArrayList<Comment> getComment(String post_id, int page) {
+	public static ArrayList<Comment> getComment(long postId, int page) {
 		final HttpResponse resp;
-		String id_page = "";
-		if (page == -1) {
-			id_page = "";
+
+		String uri = null;
+		if (page <= 0) {
+			uri = BASE_URL + "/posts/" + postId + "/comments?page=1&"
+					+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
 		} else {
-			id_page = Integer.toString(page);
+			uri = BASE_URL + "/posts/" + postId + "/comments?page=" + page
+					+ "&" + PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
 		}
-		String uri = BASE_URL + "/posts/" + post_id + "/comments";
-		Log.i(TAG, "Request: " + uri + ", post_id: " + post_id + ", id_page: "
-				+ id_page);
+
+		log.info("Request: " + uri + ", page: " + page);
 		final HttpGet request = new HttpGet(uri);
 		try {
 			resp = getHttpClient().execute(request);
+
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
+
 				if (istream != null) {
 					BufferedReader ireader = new BufferedReader(
 							new InputStreamReader(istream));
 					String line = ireader.readLine();
 					StringBuilder sb = new StringBuilder();
+
 					while (line != null) {
 						sb.append(line);
 						line = ireader.readLine();
 					}
-					Log.i(TAG, "Response: " + sb.toString());
+
+					log.info("Response: " + sb.toString());
 					ireader.close();
+
 					String response = sb.toString();
+
 					if (response.length() > 0) {
 						try {
-							Gson gson = JalinSuaraSingleton.getInstance()
-									.getGson();
+							Gson gson = getGson();
 							Type collectionType = new TypeToken<ArrayList<Comment>>() {
 							}.getType();
 							ArrayList<Comment> retval = gson.fromJson(response,
@@ -738,23 +793,20 @@ public class NetworkUtils {
 						return null;
 					}
 				}
-
 			} else {
-				Log.e(TAG, "Error: " + resp.getStatusLine());
+				log.error("Error: " + resp.getStatusLine());
 				return null;
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
-
 		return null;
-
 	}
 
 	/*
 	 * get token for register new user
 	 */
-	public static String getTokenRegister(String name, String email,
+	public static String registerNewUser(String name, String email,
 			String email_password) {
 		final HttpResponse resp;
 		String uri = null;
@@ -825,23 +877,23 @@ public class NetworkUtils {
 	}
 
 	/*
-	 * get Token from Login
+	 * Sign in to JalinSuara
 	 */
-	public static String getTokenLogin(String email, String email_password) {
+	public static String signIn(String email, String email_password) {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/sign_in";
+		String uri = BASE_URL + "/users/sign_in";
 		if (email != null && email_password != null) {
-				
+
 		}
 		final HttpPost request = new HttpPost(uri);
 		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			nameValuePairs.add(new BasicNameValuePair("user[email]",
+			nameValuePairs.add(new BasicNameValuePair("user_login[email]",
 					email));
-			nameValuePairs
-					.add(new BasicNameValuePair("user[password]", email_password));
+			nameValuePairs.add(new BasicNameValuePair("user_login[password]",
+					email_password));
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			Log.i(TAG, "request to " + request.getRequestLine());
+			log.info("request to " + request.getRequestLine());
 			resp = getHttpClient().execute(request);
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				InputStream istream = (resp.getEntity() != null) ? resp
@@ -857,7 +909,7 @@ public class NetworkUtils {
 					}
 					ireader.close();
 					String response = sb.toString();
-					Log.i(TAG, response);
+					log.info(response);
 					if (response.length() > 0) {
 						try {
 							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
@@ -884,7 +936,7 @@ public class NetworkUtils {
 
 			} else {
 				// failed
-				Log.e(TAG, resp.getStatusLine().getStatusCode() + "");
+				log.error(resp.getStatusLine().getStatusCode() + "");
 
 			}
 
@@ -895,35 +947,55 @@ public class NetworkUtils {
 		// return null because something error
 		return null;
 	}
-	
-	public static boolean deleteTokenUser(String email){
+
+	/**
+	 * Sign out from JalinSuara
+	 * 
+	 * @param email
+	 * @return
+	 */
+	public static boolean signOut(String email) {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/sign_out";
+		String uri = BASE_URL + "/users/sign_out";
 		if (email != null) {
 
 		}
 		final HttpDeleteWithBody request = new HttpDeleteWithBody(uri);
 		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			nameValuePairs.add(new BasicNameValuePair("user[email]",
+			nameValuePairs.add(new BasicNameValuePair("user_login[email]",
 					email));
 
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			Log.i(TAG, "request to " + request.getRequestLine());
+			log.info("request to " + request.getRequestLine());
 			resp = getHttpClient().execute(request);
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				return true;
 
 			} else {
 				// failed
-				Log.e(TAG, resp.getStatusLine().getStatusCode() + "");
+				log.error(resp.getStatusLine().getStatusCode() + "");
 				return false;
 			}
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Get gson
+	 * 
+	 * @return
+	 */
+	public static Gson getGson() {
+		if (mGson == null) {
+			GsonBuilder builder = new GsonBuilder();
+			builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+			mGson = builder.create();
+		}
+		return mGson;
+	}
+
 }

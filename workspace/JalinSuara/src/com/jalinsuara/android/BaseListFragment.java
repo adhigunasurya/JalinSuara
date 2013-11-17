@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockListFragment;
 
 /**
@@ -22,8 +23,8 @@ import com.actionbarsherlock.app.SherlockListFragment;
  */
 public abstract class BaseListFragment extends SherlockListFragment {
 
-	public Logger log = LoggerFactory.getLogger(this.getClass()
-			.getSimpleName());
+	public Logger log = LoggerFactory
+			.getLogger(this.getClass().getSimpleName());
 
 	/*
 	 * initial -> error / progressing / content loaded
@@ -57,6 +58,8 @@ public abstract class BaseListFragment extends SherlockListFragment {
 	 * Progress for determinate progress bar
 	 */
 	protected int mProgress = 0;
+
+	
 
 	public abstract int getLayoutId();
 
@@ -266,4 +269,6 @@ public abstract class BaseListFragment extends SherlockListFragment {
 	public void setLastUpdatedNow() {
 		mLastUpdatedDate = System.currentTimeMillis();
 	}
+
+	
 }
