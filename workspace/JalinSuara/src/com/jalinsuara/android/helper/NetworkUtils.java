@@ -139,7 +139,7 @@ public class NetworkUtils {
 	 */
 	public static ArrayList<News> getPosts() {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/posts.json";
+		String uri = BASE_URL + "/posts";
 
 		Log.i(TAG, "Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
@@ -198,7 +198,7 @@ public class NetworkUtils {
 	 */
 	public static ArrayList<SearchResult> getSearch(String query) {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/home/search.json";
+		String uri = BASE_URL + "/home/search";
 
 		Log.i(TAG, "Request: " + uri);
 		final HttpPost request = new HttpPost(uri);
@@ -759,7 +759,7 @@ public class NetworkUtils {
 		final HttpResponse resp;
 		String uri = null;
 		if (name != null && email != null && email_password != null) {
-			uri = BASE_URL + "/users.json";
+			uri = BASE_URL + "/users";
 
 		}
 		final HttpPost request = new HttpPost(uri);
@@ -829,7 +829,7 @@ public class NetworkUtils {
 	 */
 	public static String getTokenLogin(String email, String email_password) {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/sign_in.json";
+		String uri = BASE_URL + "/sign_in";
 		if (email != null && email_password != null) {
 				
 		}
@@ -898,7 +898,7 @@ public class NetworkUtils {
 	
 	public static boolean deleteTokenUser(String email){
 		final HttpResponse resp;
-		String uri = BASE_URL + "/sign_out.json";
+		String uri = BASE_URL + "/sign_out";
 		if (email != null) {
 
 		}
