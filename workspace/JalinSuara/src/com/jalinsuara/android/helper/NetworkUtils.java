@@ -962,8 +962,78 @@ public class NetworkUtils {
 		// return null because something error
 		return null;
 	}
+	/*
+	 * share news 
+	 * */
+	public static String postShareNews(String title, String description, String postable_type, String postable_id, String user_id, String auth_token){
+		final HttpResponse resp;
+		String uri = null;
+		
+		uri = BASE_URL + "/posts";
+		
+		final HttpPost request = new HttpPost(uri);
+		try {
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			nameValuePairs.add(new BasicNameValuePair("post[title]",
+					title));
+			nameValuePairs.add(new BasicNameValuePair("post[description]",
+					description));
+			nameValuePairs
+					.add(new BasicNameValuePair("post[postable_type]", postable_type));
+			nameValuePairs.add(new BasicNameValuePair(
+					"post[postable_id]", postable_id));
+			nameValuePairs.add(new BasicNameValuePair(
+					"post[user_id]", user_id));
+			nameValuePairs.add(new BasicNameValuePair(
+					"auth_token", auth_token));
 
+			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+			resp = getHttpClient().execute(request);
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+					ireader.close();
+					String response = sb.toString();
+
+					log.info("Response :" + response);
+					if (response.length() > 0) {
+						try {
+							JsonParser parser = new JsonParser();
+							JsonElement resElmt = parser.parse(response);
+							if (resElmt.isJsonObject()) {
+								JsonObject obj = resElmt.getAsJsonObject();
+								boolean success = obj.get("success").getAsBoolean();
+										
+								if (success) {
+									String message  = obj.get("message").getAsString();
+								} else {
+									String message  = obj.get("message").getAsString();
+									return null;
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+			}
+
+		} catch (Exception ex) {
+
+		}
+		return "";
+	}
 	/**
 	 * Sign out from JalinSuara
 	 * 
