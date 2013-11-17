@@ -896,7 +896,7 @@ public class NetworkUtils {
 		return null;
 	}
 	
-	public boolean deleteTokenUser(String email){
+	public static boolean deleteTokenUser(String email){
 		final HttpResponse resp;
 		String uri = BASE_URL + "/sign_out.json";
 		if (email != null) {
@@ -925,18 +925,5 @@ public class NetworkUtils {
 		}
 		return false;
 	}
-	class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
-	    public static final String METHOD_NAME = "DELETE";
-	    public String getMethod() { return METHOD_NAME; }
-
-	    public HttpDeleteWithBody(final String uri) {
-	        super();
-	        setURI(URI.create(uri));
-	    }
-	    public HttpDeleteWithBody(final URI uri) {
-	        super();
-	        setURI(uri);
-	    }
-	    public HttpDeleteWithBody() { super(); }
-	}
+	
 }
