@@ -13,49 +13,31 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal" >
 
-        <TextView
-            android:id="@+id/activity_profile_name_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="Nama: " />
+        <!-- <TextView -->
+        <!-- android:id="@+id/activity_profile_name_textview" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:layout_alignParentLeft="true" -->
+        <!-- android:layout_alignParentTop="true" -->
+        <!-- android:text="Nama: " /> -->
 
-        <TextView
-            android:id="@+id/activity_profile_nameContent_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/activity_profile_name_textview"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:text="Gabrielle " />
 
-        <TextView
-            android:id="@+id/activity_profile_address_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/activity_profile_nameContent_textview"
-            android:layout_marginTop="20dp"
-            android:text="Alamat: " />
-
-        <TextView
-            android:id="@+id/activity_profile_addressContent_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/activity_profile_address_textview"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:text="Surabaya Indonesia " />
+        <!-- <TextView -->
+        <!-- android:id="@+id/activity_profile_nameContent_textview" -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:layout_below="@+id/activity_profile_name_textview" -->
+        <!-- android:layout_marginLeft="10dp" -->
+        <!-- android:layout_marginTop="20dp" -->
+        <!-- android:text="Gabrielle " /> -->
 
         <TextView
             android:id="@+id/activity_profile_email_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/activity_profile_addressContent_textview"
             android:layout_marginTop="20dp"
-            android:text="Email: " />
+            android:text="Email " />
 
         <TextView
             android:id="@+id/activity_profile_emailContent_textview"
@@ -64,7 +46,7 @@
             android:layout_below="@+id/activity_profile_email_textview"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
-            android:text="Surabaya Indonesia " />
+            android:text="Email " />
     </RelativeLayout>
 
 </ScrollView>

@@ -243,6 +243,12 @@ public class DashboardActivity extends BaseFragmentActivity {
 		private final static int E_ERROR = 2;
 
 		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			setProgressBarIndeterminateVisibility(true);
+		}
+
+		@Override
 		protected Integer doInBackground(String... params) {
 			boolean success = NetworkUtils.signOut(JalinSuaraSingleton
 					.getInstance(getBaseContext()).getEmail().toString());
@@ -256,6 +262,7 @@ public class DashboardActivity extends BaseFragmentActivity {
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
+				setProgressBarIndeterminateVisibility(false);
 				if (result == E_OK) {
 
 					Toast.makeText(getBaseContext(),

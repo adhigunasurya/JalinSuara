@@ -108,7 +108,7 @@ public class LoginActivity extends BaseFragmentActivity {
 
 		@Override
 		protected void onPreExecute() {
-			super.onPreExecute();
+			super.onPreExecute();			
 			resetStatus();
 			setStatusProgress(getString(R.string.loading), false);
 		}
@@ -139,8 +139,9 @@ public class LoginActivity extends BaseFragmentActivity {
 				} else {
 					resetStatus();
 					setStatusShowContent();
-					Toast.makeText(getBaseContext(), R.string.error_login_failed,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(getBaseContext(),
+							R.string.error_login_failed, Toast.LENGTH_SHORT)
+							.show();
 
 				}
 			}

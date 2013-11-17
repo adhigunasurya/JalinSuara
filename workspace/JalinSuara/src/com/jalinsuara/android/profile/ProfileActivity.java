@@ -2,10 +2,12 @@ package com.jalinsuara.android.profile;
 
 import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
+import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.R.layout;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 /**
  * Profile activity to show user's profile.
@@ -16,6 +18,8 @@ import android.os.Bundle;
  */
 public class ProfileActivity extends BaseFragmentActivity {
 
+	private TextView mEmailTextView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -25,6 +29,10 @@ public class ProfileActivity extends BaseFragmentActivity {
 
 		resetStatus();
 		setStatusShowContent();
+
+		mEmailTextView = (TextView) findViewById(R.id.activity_profile_emailContent_textview);
+		mEmailTextView
+				.setText(JalinSuaraSingleton.getInstance(this).getEmail());
 
 	}
 
