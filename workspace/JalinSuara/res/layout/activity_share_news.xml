@@ -167,6 +167,15 @@
             android:layout_alignLeft="@+id/activity_share_post_sisipGambarButton"
             android:layout_below="@+id/activity_share_post_saraCheckBox"
             android:text="Bertanggung jawab atas isi berita" />
+        
+        <Button
+            android:id="@+id/activity_share_post_submitButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/activity_share_post_isi_edittext"
+            android:layout_below="@+id/activity_share_post_responsibleCheckBox"
+            android:text="Submit" />
 
     </RelativeLayout>
 
