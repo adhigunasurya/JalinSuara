@@ -222,9 +222,9 @@ public class NetworkUtils {
 	 */
 	public static ArrayList<SearchResult> getSearch(String query, int page) {
 		final HttpResponse resp;
-<<<<<<< HEAD
-		String uri = BASE_URL + "/home/search.json";
-=======
+
+		//String uri = BASE_URL + "/home/search.json";
+
 		String uri = "http://jalinsuara.web.id/en" + "/home/search.json";
 
 		if (page <= 0) {
@@ -232,7 +232,7 @@ public class NetworkUtils {
 		} else {
 
 		}
->>>>>>> 068e0118fe58f5c2a57ef4d04f627339e8d39ed7
+
 
 		log.info("Request: " + uri);
 		final HttpPost request = new HttpPost(uri);
@@ -815,7 +815,7 @@ public class NetworkUtils {
 		final HttpResponse resp;
 		String uri = null;
 		if (name != null && email != null && email_password != null) {
-			uri = BASE_URL + "/users.json";
+			uri = BASE_URL + "/users";
 
 		}
 		final HttpPost request = new HttpPost(uri);
@@ -845,30 +845,37 @@ public class NetworkUtils {
 						line = ireader.readLine();
 					}
 					ireader.close();
-					// String response = sb.toString();
-					// if(response.length()>0){
-					// try{
-					// ArrayList<SearchResult> retval = new
-					// ArrayList<SearchResult>();
-					// JsonParser parser = new JsonParser();
-					// JsonElement resElmt = parser.parse(response);
-					// if (resElmt.isJsonArray()) {
-					// JsonArray resArr = resElmt.getAsJsonArray();
-					// for (int i = 0; i < resArr.size(); i++) {
-					// JsonElement elmt = resArr.get(i);
-					// if (elmt.isJsonObject()) {
-					// JsonObject obj = elmt.getAsJsonObject();
-					// String objString = elmt.toString();
-					// JsonElement blmAmountElmt = obj
-					// .get("authentication_token");
-					//
-					// }
-					// }
-					// }
-					// } catch(Exception e){
-					//
-					// }
-					// }
+					String response = sb.toString();
+
+					log.info("Response :" + response);
+					if (response.length() > 0) {
+						try {
+							JsonParser parser = new JsonParser();
+							JsonElement resElmt = parser.parse(response);
+							if (resElmt.isJsonObject()) {
+								JsonObject obj = resElmt.getAsJsonObject();
+								String email_response = obj.get("email").getAsString();
+										
+								if (email_response.equals(email)) {
+									String created_at = obj.get("created_at")
+											.getAsString();
+									String id = obj.get("id").getAsString();
+									String picture_content_type = obj.get("picture_content_type").getAsString();
+									String picture_file_name = obj.get("picture_file_name").getAsString();
+									String picture_file_size =obj.get("picture_file_size").getAsString();
+									String updated_at = obj.get("updated_at").getAsString();
+									String picture_update_at = obj.get("picture_update_at").getAsString();
+									String username = obj.get("username").getAsString();
+					
+									return username;
+								} else {
+									return null;
+								}
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
 				}
 
 			}
@@ -885,11 +892,10 @@ public class NetworkUtils {
 	 */
 	public static String signIn(String email, String email_password) {
 		final HttpResponse resp;
-<<<<<<< HEAD
-		String uri = BASE_URL + "/sign_in.json";
-=======
+
+		//String uri = BASE_URL + "/sign_in.json";
+
 		String uri = BASE_URL + "/users/sign_in";
->>>>>>> 068e0118fe58f5c2a57ef4d04f627339e8d39ed7
 		if (email != null && email_password != null) {
 
 		}
@@ -956,12 +962,7 @@ public class NetworkUtils {
 		// return null because something error
 		return null;
 	}
-<<<<<<< HEAD
-	
-	public boolean deleteTokenUser(String email){
-		final HttpResponse resp;
-		String uri = BASE_URL + "/sign_out.json";
-=======
+
 
 	/**
 	 * Sign out from JalinSuara
@@ -972,7 +973,7 @@ public class NetworkUtils {
 	public static boolean signOut(String email) {
 		final HttpResponse resp;
 		String uri = BASE_URL + "/users/sign_out";
->>>>>>> 068e0118fe58f5c2a57ef4d04f627339e8d39ed7
+
 		if (email != null) {
 
 		}
@@ -1014,22 +1015,7 @@ public class NetworkUtils {
 		}
 		return false;
 	}
-<<<<<<< HEAD
-	class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
-	    public static final String METHOD_NAME = "DELETE";
-	    public String getMethod() { return METHOD_NAME; }
 
-	    public HttpDeleteWithBody(final String uri) {
-	        super();
-	        setURI(URI.create(uri));
-	    }
-	    public HttpDeleteWithBody(final URI uri) {
-	        super();
-	        setURI(uri);
-	    }
-	    public HttpDeleteWithBody() { super(); }
-	}
-=======
 
 	/**
 	 * Get gson
@@ -1072,5 +1058,5 @@ public class NetworkUtils {
 		return null;
 	}
 
->>>>>>> 068e0118fe58f5c2a57ef4d04f627339e8d39ed7
+
 }
