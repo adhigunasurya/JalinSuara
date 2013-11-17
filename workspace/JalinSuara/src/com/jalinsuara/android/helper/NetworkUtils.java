@@ -139,7 +139,7 @@ public class NetworkUtils {
 	 */
 	public static ArrayList<News> getPosts() {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/posts";
+		String uri = BASE_URL + "/posts.json";
 
 		Log.i(TAG, "Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
@@ -198,7 +198,7 @@ public class NetworkUtils {
 	 */
 	public static ArrayList<SearchResult> getSearch(String query) {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/home/search";
+		String uri = BASE_URL + "/home/search.json";
 
 		Log.i(TAG, "Request: " + uri);
 		final HttpPost request = new HttpPost(uri);
@@ -759,7 +759,7 @@ public class NetworkUtils {
 		final HttpResponse resp;
 		String uri = null;
 		if (name != null && email != null && email_password != null) {
-			uri = BASE_URL + "/users";
+			uri = BASE_URL + "/users.json";
 
 		}
 		final HttpPost request = new HttpPost(uri);
@@ -829,7 +829,7 @@ public class NetworkUtils {
 	 */
 	public static String getTokenLogin(String email, String email_password) {
 		final HttpResponse resp;
-		String uri = BASE_URL + "/sign_in";
+		String uri = BASE_URL + "/sign_in.json";
 		if (email != null && email_password != null) {
 				
 		}
@@ -896,9 +896,9 @@ public class NetworkUtils {
 		return null;
 	}
 	
-	public static boolean deleteTokenUser(String email){
+	public boolean deleteTokenUser(String email){
 		final HttpResponse resp;
-		String uri = BASE_URL + "/sign_out";
+		String uri = BASE_URL + "/sign_out.json";
 		if (email != null) {
 
 		}
@@ -925,5 +925,18 @@ public class NetworkUtils {
 		}
 		return false;
 	}
-	
+	class HttpDeleteWithBody extends HttpEntityEnclosingRequestBase {
+	    public static final String METHOD_NAME = "DELETE";
+	    public String getMethod() { return METHOD_NAME; }
+
+	    public HttpDeleteWithBody(final String uri) {
+	        super();
+	        setURI(URI.create(uri));
+	    }
+	    public HttpDeleteWithBody(final URI uri) {
+	        super();
+	        setURI(uri);
+	    }
+	    public HttpDeleteWithBody() { super(); }
+	}
 }
