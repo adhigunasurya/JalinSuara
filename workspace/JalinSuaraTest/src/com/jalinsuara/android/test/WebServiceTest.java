@@ -19,7 +19,7 @@ public class WebServiceTest extends TestCase {
 	private static String TAG = WebServiceTest.class.getSimpleName();
 
 	public void testGetPosts() {
-		ArrayList<News> list = NetworkUtils.getPosts();
+		ArrayList<News> list = NetworkUtils.getPosts(1);
 		assertTrue(list != null);
 		if (list != null) {
 			assertTrue(list.size() > 0);
@@ -50,7 +50,7 @@ public class WebServiceTest extends TestCase {
 	}
 
 	public void testGetSearch() {
-		ArrayList<SearchResult> list = NetworkUtils.getSearch("air");
+		ArrayList<SearchResult> list = NetworkUtils.getSearch("air", 1);
 		assertTrue(list != null);
 		if (list != null) {
 			assertTrue(list.size() > 0);
@@ -65,7 +65,7 @@ public class WebServiceTest extends TestCase {
 	}
 
 	public void testGetComment() {
-		ArrayList<Comment> list = NetworkUtils.getComment("15", 1);
+		ArrayList<Comment> list = NetworkUtils.getComment(15, 1);
 		assertTrue(list != null);
 		if (list != null) {
 			assertTrue(list.size() > 0);
@@ -79,7 +79,7 @@ public class WebServiceTest extends TestCase {
 	}
 
 	public void testGetProvince() {
-		ArrayList<Province> list = NetworkUtils.getProvinces(1);
+		ArrayList<Province> list = NetworkUtils.getProvinces();
 		assertTrue(list != null);
 		if (list != null) {
 			assertTrue(list.size() > 0);

@@ -14,6 +14,6 @@ public class JalinSuara extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		JalinSuaraSingleton.initialize();
+		JalinSuaraSingleton.initialize(this);
 	}
 }

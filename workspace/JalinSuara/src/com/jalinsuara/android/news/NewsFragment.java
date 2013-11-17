@@ -52,9 +52,11 @@ public class NewsFragment extends BaseFragment {
 			mMapView = (MapView) getView().findViewById(
 					R.id.fragment_news_map_mapview);
 
-			ImageLoader loader = new ImageLoader(getSherlockActivity());
-
-			// loader.DisplayImage(url, imageView);
+			if (mNews.getPictureUrl() != null
+					&& mNews.getPictureUrl().length() > 0) {
+				ImageLoader loader = new ImageLoader(getSherlockActivity());
+				loader.DisplayImage(mNews.getPictureUrl(), mImageView);
+			}
 			mMapView.onCreate(savedInstanceState);
 			mTitleTextView.setText(mNews.getTitle());
 			mDateUpdatedView.setText(com.jalinsuara.android.helper.DateUtils

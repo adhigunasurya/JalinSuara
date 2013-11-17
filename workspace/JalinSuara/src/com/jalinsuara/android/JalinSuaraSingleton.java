@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,31 +27,48 @@ import com.jalinsuara.android.projects.model.SubProject;
  */
 public class JalinSuaraSingleton {
 
+	/**
+	 * Shared preference name for session
+	 */
+	private static final String SESSION = "session";
+
+	private static final String KEY_TOKEN = "token";
+	private static final String KEY_EMAIL = "email";
+
 	private static Logger log = LoggerFactory
 			.getLogger(JalinSuaraSingleton.class.getSimpleName());
 
 	private static JalinSuaraSingleton ourInstance;
 
-	public static void initialize() {
-		getInstance();
+	/**
+	 * Initialize the singleton, should called in {@link Application}
+	 * 
+	 * @param context
+	 */
+	public static void initialize(Context context) {
+		getInstance(context);
 	}
 
+	/**
+	 * Uninitialize the singleton
+	 */
 	public static void uninitialize() {
 		ourInstance = null;
 	}
 
-	public static synchronized JalinSuaraSingleton getInstance() {
+	public static synchronized JalinSuaraSingleton getInstance(Context context) {
 		if (ourInstance == null) {
 			log.info("JalinSuaraSingleton null, initialize it.");
-			ourInstance = new JalinSuaraSingleton();
+			ourInstance = new JalinSuaraSingleton(context);
+		} else {
+			if (ourInstance.getContext() == null) {
+				ourInstance = new JalinSuaraSingleton(context);
+			}
 		}
 		return ourInstance;
 	}
 
-	/**
-	 * Gson for deserialize and serialize json
-	 */
-	private Gson mGson;
+	private Context mContext;
 
 	/**
 	 * News list
@@ -77,27 +99,30 @@ public class JalinSuaraSingleton {
 	 * Recent search list, always check for null value whenever using this field
 	 */
 	private ArrayList<SearchResult> mRecentSearchResultList;
-	private String mLoginToken;
-	private String mEmailUser;
-	private JalinSuaraSingleton() {
-		log.info("JalinSuaraSingleton()");
 
-		// init gson
-		GsonBuilder builder = new GsonBuilder();
-		builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
-		setGson(builder.create());
+	/**
+	 * User token for authenticated user
+	 */
+	private String mToken;
+
+	/**
+	 * User email
+	 */
+	private String mEmailUser;
+
+	private JalinSuaraSingleton(Context context) {
+		log.info("JalinSuaraSingleton()");
+		setContext(context);
+
+		// load token
+		SharedPreferences pref = context.getSharedPreferences(SESSION,
+				Context.MODE_PRIVATE);
+		setToken(pref.getString(KEY_TOKEN, null));
+		setEmail(pref.getString(KEY_EMAIL, null));
 
 		// init news list
 		setNewsList(new ArrayList<News>());
 		setSubProjectList(new ArrayList<SubProject>());
-	}
-
-	public Gson getGson() {
-		return mGson;
-	}
-
-	public void setGson(Gson gson) {
-		mGson = gson;
 	}
 
 	public synchronized ArrayList<News> getNewsList() {
@@ -107,20 +132,20 @@ public class JalinSuaraSingleton {
 	public synchronized void setNewsList(ArrayList<News> newsList) {
 		mNewsList = newsList;
 	}
-	
-	public synchronized void setToken(String token){
-		mLoginToken = token;
+
+	public synchronized void setToken(String token) {
+		mToken = token;
 	}
-	
-	public synchronized String getToken(){
-		return mLoginToken;
+
+	public synchronized String getToken() {
+		return mToken;
 	}
-	
-	public synchronized void setEmail(String email){
+
+	public synchronized void setEmail(String email) {
 		mEmailUser = email;
 	}
-	
-	public synchronized String getEmail(){
+
+	public synchronized String getEmail() {
 		return mEmailUser;
 	}
 
@@ -215,4 +240,44 @@ public class JalinSuaraSingleton {
 		mProvincesList = provincesList;
 	}
 
+	public Context getContext() {
+		return mContext;
+	}
+
+	public void setContext(Context context) {
+		mContext = context;
+	}
+
+	public boolean isAuthenticated() {
+		return getToken() != null;
+	}
+
+	/**
+	 * Sign out, clear token in local app
+	 */
+	public void signOut() {
+		setToken(null);
+		setEmail(null);
+		SharedPreferences pref = mContext.getSharedPreferences(SESSION,
+				Context.MODE_PRIVATE);
+		pref.edit().clear().commit();
+	}
+
+	/**
+	 * Sign in to local app
+	 * 
+	 * @param token
+	 * @param email
+	 */
+	public void signIn(String token, String email) {
+		setToken(token);
+		setEmail(email);
+		SharedPreferences pref = mContext.getSharedPreferences(SESSION,
+				Context.MODE_PRIVATE);
+		Editor editor = pref.edit();
+		editor.putString(KEY_TOKEN, token);
+		editor.putString(KEY_EMAIL, email);
+		editor.commit();
+
+	}
 }

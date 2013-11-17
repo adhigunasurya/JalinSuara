@@ -14,11 +14,12 @@
     <string name="action_search">Cari</string>
     <string name="action_profile">Profil</string>
     <string name="action_sign_out">Sign Out</string>
+    <string name="action_sign_in">Sign In</string>
     <string name="action_about">Tentang Aplikasi</string>
     <string name="see_license">Lihat License</string>
     <string name="about_content">${APP_NAME}\n${VERSION}\nAplikasi Android untuk Jalin Suara.\n
         Website dapat diakses pada http://jalinsuara.web.id\n                
-        \u00A9 2013</string>    
+        \u00A9 2013</string>
     <string name="pnpm_mandiri">PNPM Mandiri</string>
     <string name="loading">Sedang menunggu</string>
     <string name="error">Maaf, terdapat kesalahan</string>
@@ -47,6 +48,10 @@
     <string name="title_maps">Peta</string>
     <string name="title_profile">Profil</string>
     <string name="title_license">License</string>
+    <string name="error_fill_all_fields">Isi semua fields</string>
+    <string name="error_logout_failed">Logout gagal</string>
+    <string name="error_login_failed">Login gagal, periksa email dan password kembali</string>
+    <string name="msg_logout_success">Logout berhasil</string>
     <string name="see_google_maps_legal_notice">Lihat Legal Notices</string>
     <string name="legal_notice">Legal Notices</string>
     <string name="register">Belum punya akun? silakan daftar disini..</string>

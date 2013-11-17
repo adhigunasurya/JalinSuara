@@ -36,6 +36,7 @@ public class SubProject {
 	private Date createdAt;
 	private Date updatedAt;
 	private String pictureFileName;
+	private String pictureUrl;
 	private String pictureContentType;
 	private long pictureFileSize;
 	private Date pictureUpdatedAt;
@@ -48,7 +49,7 @@ public class SubProject {
 	private long selfFundAmount;
 	private int maleProposal;
 	private int maleBeneficiary;
-	private int  femaleBeneficiary;
+	private int femaleBeneficiary;
 	private int poorBeneficiary;
 	private long subdistrictId;
 	private long categoryId;
@@ -264,10 +265,6 @@ public class SubProject {
 		this.projectQuantity = projectQuantity;
 	}
 
-	
-
-
-
 	/**
 	 * @return the maleProposal
 	 */
@@ -328,7 +325,6 @@ public class SubProject {
 		this.poorBeneficiary = poorBeneficiary;
 	}
 
-	
 	/**
 	 * @return the blmAmount
 	 */
@@ -337,7 +333,8 @@ public class SubProject {
 	}
 
 	/**
-	 * @param blmAmount the blmAmount to set
+	 * @param blmAmount
+	 *            the blmAmount to set
 	 */
 	public void setBlmAmount(long blmAmount) {
 		this.blmAmount = blmAmount;
@@ -351,7 +348,8 @@ public class SubProject {
 	}
 
 	/**
-	 * @param selfFundAmount the selfFundAmount to set
+	 * @param selfFundAmount
+	 *            the selfFundAmount to set
 	 */
 	public void setSelfFundAmount(long selfFundAmount) {
 		this.selfFundAmount = selfFundAmount;
@@ -365,7 +363,8 @@ public class SubProject {
 	}
 
 	/**
-	 * @param subdistrictId the subdistrictId to set
+	 * @param subdistrictId
+	 *            the subdistrictId to set
 	 */
 	public void setSubdistrictId(long subdistrictId) {
 		this.subdistrictId = subdistrictId;
@@ -379,7 +378,8 @@ public class SubProject {
 	}
 
 	/**
-	 * @param categoryId the categoryId to set
+	 * @param categoryId
+	 *            the categoryId to set
 	 */
 	public void setCategoryId(long categoryId) {
 		this.categoryId = categoryId;
@@ -396,7 +396,7 @@ public class SubProject {
 	 * @param dynamicAttributes
 	 *            the dynamicAttributes to set
 	 */
-	public void setDynamicAttributes( HashMap<String, String>  dynamicAttributes) {
+	public void setDynamicAttributes(HashMap<String, String> dynamicAttributes) {
 		this.dynamicAttributes = dynamicAttributes;
 	}
 
@@ -422,6 +422,14 @@ public class SubProject {
 				+ ", poorBeneficiary=" + poorBeneficiary + ", subdistrictId="
 				+ subdistrictId + ", categoryId=" + categoryId
 				+ ", dynamicAttributes=" + dynamicAttributes + "]";
+	}
+
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
+
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
 	}
 
 }

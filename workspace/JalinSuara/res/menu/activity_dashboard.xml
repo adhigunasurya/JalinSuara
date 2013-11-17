@@ -31,4 +31,8 @@
           android:icon="@drawable/ic_sign_out"
           android:showAsAction="ifRoom"
            />
+	<item android:id="@+id/action_sign_in"
+          android:title="@string/action_sign_in"          
+          android:showAsAction="ifRoom"
+           />
 </menu>

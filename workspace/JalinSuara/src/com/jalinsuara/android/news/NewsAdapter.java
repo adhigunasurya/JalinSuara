@@ -3,11 +3,13 @@ package com.jalinsuara.android.news;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.provider.ContactsContract.CommonDataKinds.Im;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jalinsuara.android.R;
@@ -54,15 +56,20 @@ public class NewsAdapter extends BaseAdapter {
 
 		TextView titleTextview = ((TextView) convertView
 				.findViewById(R.id.list_item_news_title_textview));
-		TextView descriptionTextview = ((TextView) convertView
-				.findViewById(R.id.list_item_news_content_textview));
+//		TextView descriptionTextview = ((TextView) convertView
+//				.findViewById(R.id.list_item_news_content_textview));
 		TextView dateTextView = ((TextView) convertView
-				.findViewById(R.id.list_item_news_date_textview));
+				.findViewById(R.id.list_item_news_date_textview));		
+		ImageView imageView = (ImageView) convertView.findViewById(R.id.list_item_news_imageview);
+				
+		if (object.getPictureUrl()!=null && object.getPictureUrl().length()>0){
+			mImageLoader.DisplayImage(object.getPictureUrl(), imageView);
+		}
 		
 		convertView.setTag(object.getId());
 		dateTextView.setText(DateUtils.toStringDateOnly(object.getUpdatedAt()));
 		titleTextview.setText(object.getTitle());
-		descriptionTextview.setText(Html.fromHtml(object.getDescription()));
+//		descriptionTextview.setText(Html.fromHtml(object.getDescription()));
 
 		return convertView;
 	}

@@ -28,7 +28,7 @@ public class NewsActivity extends BaseFragmentActivity {
 		setStatusProgress(getString(R.string.loading), false);
 		long id = getIntent().getLongExtra(EXTRA_ID, -1);
 		if (id != -1) {
-			mNews = JalinSuaraSingleton.getInstance().findNewsById(id);
+			mNews = JalinSuaraSingleton.getInstance(this).findNewsById(id);
 			if (mNews != null) {
 				mNewsFragment = new NewsFragment(mNews);
 				getSupportFragmentManager()
