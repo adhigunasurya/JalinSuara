@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
@@ -55,12 +56,16 @@ public class DashboardActivity extends BaseFragmentActivity {
 	 */
 	private TextView mTwitterPnpm;
 
+	private DashboardFragment mDashboardFragment;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_dashboard);
 		setTitle(R.string.title_dashboard);
+
+		mDashboardFragment = new DashboardFragment();
 
 		mSlidingLayout = (SlidingPaneLayout) findViewById(R.id.sliding_pane_layout);
 		mSlidingLayout.setPanelSlideListener(new SliderListener());
@@ -72,7 +77,7 @@ public class DashboardActivity extends BaseFragmentActivity {
 		setStatusShowContent();
 
 		getSupportFragmentManager().beginTransaction()
-				.replace(R.id.content_frame, new DashboardFragment()).commit();
+				.replace(R.id.content_frame, mDashboardFragment).commit();
 
 		mFbJalinSuara = (TextView) findViewById(R.id.link_fb_jalin_suara);
 		mFbPsf = (TextView) findViewById(R.id.link_fb_psf);
@@ -145,11 +150,18 @@ public class DashboardActivity extends BaseFragmentActivity {
 			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB)
 				onSearchRequested();
 
-			return super.onOptionsItemSelected(item);
+			return true;
 		}
 
 		case R.id.action_sign_out: {
-
+			SignOutTask task = new SignOutTask();
+			task.execute();
+			return true;
+		}
+		case R.id.action_sign_in: {
+			Intent intent = new Intent(this, LoginActivity.class);
+			startActivity(intent);
+			return true;
 		}
 		default:
 			return super.onOptionsItemSelected(item);
@@ -177,10 +189,15 @@ public class DashboardActivity extends BaseFragmentActivity {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// boolean drawerOpen = isDrawerOpen();
-		// showMenuItem(!drawerOpen, menu, R.id.action_settings);
-		// showMenuItem(!drawerOpen, menu, R.id.action_about);
-		// showMenuItem(!drawerOpen, menu, R.id.action_profile);
+		if (JalinSuaraSingleton.getInstance(this).isAuthenticated()) {
+			showMenuItem(true, menu, R.id.action_profile);
+			showMenuItem(true, menu, R.id.action_sign_out);
+			showMenuItem(false, menu, R.id.action_sign_in);
+		} else {
+			showMenuItem(false, menu, R.id.action_profile);
+			showMenuItem(false, menu, R.id.action_sign_out);
+			showMenuItem(true, menu, R.id.action_sign_in);
+		}
 		return super.onPrepareOptionsMenu(menu);
 	}
 
@@ -230,7 +247,6 @@ public class DashboardActivity extends BaseFragmentActivity {
 			boolean success = NetworkUtils.signOut(JalinSuaraSingleton
 					.getInstance(getBaseContext()).getEmail().toString());
 			if (success == true) {
-
 				return E_OK;
 			}
 			return E_ERROR;
@@ -241,15 +257,26 @@ public class DashboardActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
 				if (result == E_OK) {
-					Intent intent = new Intent(getBaseContext(),
-							LoginActivity.class);
-					startActivity(intent);
-					finish();
+
+					Toast.makeText(getBaseContext(),
+							R.string.msg_logout_success, Toast.LENGTH_SHORT)
+							.show();
+					JalinSuaraSingleton.getInstance(getBaseContext()).signOut();
+					refreshOptionMenu();
+					mDashboardFragment.refreshState();
 				} else {
-					resetStatus();
-					setStatusError(getString(R.string.error));
+					Toast.makeText(getBaseContext(),
+							R.string.error_logout_failed, Toast.LENGTH_SHORT)
+							.show();
 				}
 			}
 		}
 	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		refreshOptionMenu();
+	}
+
 }

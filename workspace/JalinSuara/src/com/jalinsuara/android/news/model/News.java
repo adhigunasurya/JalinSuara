@@ -44,6 +44,8 @@ public class News {
 
 	private String pictureFileName;
 
+	private String pictureUrl;
+
 	private long pictureFileSize;
 
 	private Date pictureUpdatedAt;
@@ -366,6 +368,14 @@ public class News {
 
 	public void setActivityId(long activityId) {
 		this.activityId = activityId;
+	}
+
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
+
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
 	}
 
 }

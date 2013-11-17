@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -24,6 +26,14 @@ import com.jalinsuara.android.projects.model.SubProject;
  * 
  */
 public class JalinSuaraSingleton {
+
+	/**
+	 * Shared preference name for session
+	 */
+	private static final String SESSION = "session";
+
+	private static final String KEY_TOKEN = "token";
+	private static final String KEY_EMAIL = "email";
 
 	private static Logger log = LoggerFactory
 			.getLogger(JalinSuaraSingleton.class.getSimpleName());
@@ -103,6 +113,12 @@ public class JalinSuaraSingleton {
 	private JalinSuaraSingleton(Context context) {
 		log.info("JalinSuaraSingleton()");
 		setContext(context);
+
+		// load token
+		SharedPreferences pref = context.getSharedPreferences(SESSION,
+				Context.MODE_PRIVATE);
+		setToken(pref.getString(KEY_TOKEN, null));
+		setEmail(pref.getString(KEY_EMAIL, null));
 
 		// init news list
 		setNewsList(new ArrayList<News>());
@@ -236,4 +252,32 @@ public class JalinSuaraSingleton {
 		return getToken() != null;
 	}
 
+	/**
+	 * Sign out, clear token in local app
+	 */
+	public void signOut() {
+		setToken(null);
+		setEmail(null);
+		SharedPreferences pref = mContext.getSharedPreferences(SESSION,
+				Context.MODE_PRIVATE);
+		pref.edit().clear().commit();
+	}
+
+	/**
+	 * Sign in to local app
+	 * 
+	 * @param token
+	 * @param email
+	 */
+	public void signIn(String token, String email) {
+		setToken(token);
+		setEmail(email);
+		SharedPreferences pref = mContext.getSharedPreferences(SESSION,
+				Context.MODE_PRIVATE);
+		Editor editor = pref.edit();
+		editor.putString(KEY_TOKEN, token);
+		editor.putString(KEY_EMAIL, email);
+		editor.commit();
+
+	}
 }

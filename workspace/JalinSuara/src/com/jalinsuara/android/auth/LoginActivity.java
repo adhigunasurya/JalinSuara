@@ -11,7 +11,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
@@ -20,18 +22,30 @@ import com.jalinsuara.android.home.DashboardActivity;
 import com.jalinsuara.android.news.CommentAdapter;
 import com.jalinsuara.android.news.model.Comment;
 
+/**
+ * Login to server
+ * 
+ * @author tonoman3g
+ * @author gabriellewp
+ */
 public class LoginActivity extends BaseFragmentActivity {
 
 	private Button mLoginButton;
+
 	private TextView mRegisterTextView;
+
 	private EditText mEmailEditText;
+
 	private EditText mPasswordEditText;
+
 	private String tokenLogin;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mLoginButton = (Button) findViewById(R.id.activity_login_login_button);
 		mRegisterTextView = (TextView) findViewById(R.id.activity_login_sign_up_textview);
@@ -42,8 +56,15 @@ public class LoginActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 
-				LoadTokens token = new LoadTokens();
-				token.execute();
+				if (mEmailEditText.getText().toString().length() > 0
+						&& mPasswordEditText.getText().toString().length() > 0) {
+					LoadTokens token = new LoadTokens();
+					token.execute();
+				} else {
+					Toast.makeText(getBaseContext(),
+							getString(R.string.error_fill_all_fields),
+							Toast.LENGTH_SHORT).show();
+				}
 
 			}
 		});
@@ -52,8 +73,9 @@ public class LoginActivity extends BaseFragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				LoadRegister register = new LoadRegister();
-				register.execute();
+				Intent intent = new Intent(getBaseContext(),
+						SignUpActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -61,21 +83,42 @@ public class LoginActivity extends BaseFragmentActivity {
 		setStatusShowContent();
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home: {
+			finish();
+			return true;
+		}
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Sign in request
+	 * 
+	 * @author tonoman3g
+	 * @author gabriellewp
+	 * 
+	 */
 	private class LoadTokens extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;
 
 		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			resetStatus();
+			setStatusProgress(getString(R.string.loading), false);
+		}
+
+		@Override
 		protected Integer doInBackground(String... params) {
 			String token = NetworkUtils.signIn(mEmailEditText.getText()
 					.toString(), mPasswordEditText.getText().toString());
 			if (token != null) {
-				JalinSuaraSingleton.getInstance(getBaseContext()).setToken(
-						token);
 				tokenLogin = token;
-				JalinSuaraSingleton.getInstance(getBaseContext()).setEmail(
-						mEmailEditText.getText().toString());
 				return E_OK;
 			}
 			return E_ERROR;
@@ -86,13 +129,19 @@ public class LoginActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
 				if (result == E_OK) {
-					Intent intent = new Intent(getBaseContext(),
-							SignUpActivity.class);
-					startActivity(intent);
+					resetStatus();
+					setStatusShowContent();
+
+					JalinSuaraSingleton.getInstance(getBaseContext()).signIn(
+							tokenLogin, mEmailEditText.getText().toString());
+
 					finish();
 				} else {
 					resetStatus();
-					setStatusError(getString(R.string.error));
+					setStatusShowContent();
+					Toast.makeText(getBaseContext(), R.string.error_login_failed,
+							Toast.LENGTH_SHORT).show();
+
 				}
 			}
 		}
@@ -121,9 +170,6 @@ public class LoginActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
 				if (result == E_OK) {
-					Intent intent = new Intent(getBaseContext(),
-							SignUpActivity.class);
-					startActivity(intent);
 					finish();
 				} else {
 					resetStatus();

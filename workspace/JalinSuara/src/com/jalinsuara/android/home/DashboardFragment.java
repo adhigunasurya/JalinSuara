@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.jalinsuara.android.BaseFragment;
+import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.maps.ShowMapActivity;
 import com.jalinsuara.android.news.NewsListActivity;
@@ -88,9 +89,10 @@ public class DashboardFragment extends BaseFragment {
 			}
 		});
 
+		refreshState();
+
 		resetStatus();
 		setStatusShowContent();
-
 	}
 
 	protected void navigateToNewsList() {
@@ -123,4 +125,22 @@ public class DashboardFragment extends BaseFragment {
 		return R.layout.fragment_dashboard;
 	}
 
+	/**
+	 * Refresh dashboard state and menu
+	 */
+	public void refreshState() {
+		if (JalinSuaraSingleton.getInstance(getSherlockActivity())
+				.isAuthenticated()) {
+			mShareNewsButton.setVisibility(View.VISIBLE);
+		} else {
+			mShareNewsButton.setVisibility(View.GONE);
+		}
+
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		refreshState();
+	}
 }

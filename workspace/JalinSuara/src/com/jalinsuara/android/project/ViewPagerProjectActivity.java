@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
+import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
@@ -81,5 +83,16 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 		intent.putExtra(SubProjectActivity.EXTRA_ID, subproject.getId());
 		startActivity(intent);
 
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home: {
+			finish();
+			return true;
+		}
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

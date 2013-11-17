@@ -893,7 +893,8 @@ public class NetworkUtils {
 			nameValuePairs.add(new BasicNameValuePair("user_login[password]",
 					email_password));
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			log.info("request to " + request.getRequestLine());
+
+			log.info("Request :" + request.getRequestLine());
 			resp = getHttpClient().execute(request);
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 				InputStream istream = (resp.getEntity() != null) ? resp
@@ -909,23 +910,23 @@ public class NetworkUtils {
 					}
 					ireader.close();
 					String response = sb.toString();
-					log.info(response);
+
+					log.info("Response :" + response);
 					if (response.length() > 0) {
 						try {
-							ArrayList<SearchResult> retval = new ArrayList<SearchResult>();
 							JsonParser parser = new JsonParser();
 							JsonElement resElmt = parser.parse(response);
-							if (resElmt.isJsonArray()) {
-								JsonArray resArr = resElmt.getAsJsonArray();
-								for (int i = 0; i < resArr.size(); i++) {
-									JsonElement elmt = resArr.get(i);
-									if (elmt.isJsonObject()) {
-										JsonObject obj = elmt.getAsJsonObject();
-										String objString = elmt.toString();
-										JsonElement blmAmountElmt = obj
-												.get("authentication_token");
-
-									}
+							if (resElmt.isJsonObject()) {
+								JsonObject obj = resElmt.getAsJsonObject();
+								boolean success = obj.get("success")
+										.getAsBoolean();
+								if (success) {
+									String token = obj.get("auth_token")
+											.getAsString();
+									log.info("token:" + token);
+									return token;
+								} else {
+									return null;
 								}
 							}
 						} catch (Exception e) {
@@ -933,10 +934,10 @@ public class NetworkUtils {
 						}
 					}
 				}
-
 			} else {
 				// failed
-				log.error(resp.getStatusLine().getStatusCode() + "");
+				log.error("Error :" + resp.getStatusLine().getStatusCode()
+						+ ", body: " + processResponseStream(resp));
 
 			}
 
@@ -970,7 +971,22 @@ public class NetworkUtils {
 			log.info("request to " + request.getRequestLine());
 			resp = getHttpClient().execute(request);
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-				return true;
+				String response = NetworkUtils.processResponseStream(resp);
+				log.info("Response: " + response);
+
+				if (response != null) {
+					JsonParser parser = new JsonParser();
+					JsonElement resElmt = parser.parse(response);
+					if (resElmt.isJsonObject()) {
+						JsonObject obj = resElmt.getAsJsonObject();
+						boolean success = obj.get("success").getAsBoolean();
+						return success;
+					}
+					return false;
+
+				} else {
+					return false;
+				}
 
 			} else {
 				// failed
@@ -996,6 +1012,33 @@ public class NetworkUtils {
 			mGson = builder.create();
 		}
 		return mGson;
+	}
+
+	/**
+	 * parse httpresponse to string
+	 * 
+	 * @param resp
+	 * @return null if no resposne
+	 * @throws IOException
+	 */
+	public static String processResponseStream(HttpResponse resp)
+			throws IOException {
+		InputStream istream = (resp.getEntity() != null) ? resp.getEntity()
+				.getContent() : null;
+		if (istream != null) {
+			BufferedReader ireader = new BufferedReader(new InputStreamReader(
+					istream));
+
+			String line = ireader.readLine();
+			StringBuilder sb = new StringBuilder();
+			while (line != null) {
+				sb.append(line);
+				line = ireader.readLine();
+			}
+			ireader.close();
+			return sb.toString();
+		}
+		return null;
 	}
 
 }

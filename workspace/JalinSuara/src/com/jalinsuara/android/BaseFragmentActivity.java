@@ -3,6 +3,7 @@ package com.jalinsuara.android;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -250,9 +251,9 @@ public abstract class BaseFragmentActivity extends SherlockFragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);		
-		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);  
-		setProgressBarIndeterminate(true);		
+		super.onCreate(arg0);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+		setProgressBarIndeterminate(true);
 		setProgressBarIndeterminateVisibility(true);
 	}
 
@@ -290,6 +291,12 @@ public abstract class BaseFragmentActivity extends SherlockFragmentActivity {
 	 */
 	public synchronized void setStatusState(int statusState) {
 		mStatusState = statusState;
+	}
+
+	public void refreshOptionMenu() {
+		if (Build.VERSION.SDK_INT >= 11) {
+			invalidateOptionsMenu();
+		}
 	}
 
 }
