@@ -82,8 +82,8 @@ public class SearchResultAdapter extends BaseAdapter {
 			dateTextView.setText(DateUtils.toStringDateOnly(object.getNews()
 					.getUpdatedAt()));
 			titleTextview.setText(object.getNews().getTitle());
-			descriptionTextview.setText(Html.fromHtml(object.getNews()
-					.getDescription()));
+//			descriptionTextview.setText(Html.fromHtml(object.getNews()
+//					.getDescription()));
 		} else {
 			TextView titleTextview = ((TextView) convertView
 					.findViewById(R.id.list_item_sub_project_title_textview));

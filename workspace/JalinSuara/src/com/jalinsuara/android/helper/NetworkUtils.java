@@ -222,7 +222,7 @@ public class NetworkUtils {
 	 */
 	public static ArrayList<SearchResult> getSearch(String query, int page) {
 		final HttpResponse resp;
-		String uri = "http://jalinsuara.web.id/en" + "/home/search";
+		String uri = "http://jalinsuara.web.id/en" + "/home/search.json";
 
 		if (page <= 0) {
 
