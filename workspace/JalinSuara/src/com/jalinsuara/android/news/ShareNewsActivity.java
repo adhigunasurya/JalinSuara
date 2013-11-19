@@ -1,23 +1,18 @@
 package com.jalinsuara.android.news;
 
-import com.actionbarsherlock.view.MenuItem;
-import com.jalinsuara.android.BaseFragmentActivity;
-import com.jalinsuara.android.R;
-import com.jalinsuara.android.R.layout;
-import com.jalinsuara.android.helper.NetworkUtils;
-
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.actionbarsherlock.view.MenuItem;
+import com.jalinsuara.android.BaseFragmentActivity;
+import com.jalinsuara.android.R;
+import com.jalinsuara.android.helper.NetworkUtils;
 
 /**
  * Share news activity
@@ -50,15 +45,15 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 		resetStatus();
 		setStatusShowContent();
 		
-		mjudulPost = (EditText).findViewById(R.id.activity_share_post_judul_edittext);
-		mbudgetPost = (EditText).findViewById(R.id.activity_share_post_judul_edittext);
-		mdimensiPost = (EditText).findViewById(R.id.activity_share_post_judul_edittext);
-		mmanfaatPost = (EditText).findViewById(R.id.activity_share_post_judul_edittext);
-		misiPost  = (EditText).findViewById(R.id.activity_share_post_judul_edittext);
-		mpropinsiPost = (Spinner).findViewById(R.id.activity_share_post_judul_edittext);
-		mkecamatanPost = (Spinner).findViewById(R.id.activity_share_post_judul_edittext);
-		mjejaringsosialPost = (Spinner).findViewById(R.id.activity_share_post_judul_edittext);
-		msubmitButton = (Button).findViewById(R.id.activity_share_post_judul_edittext);
+		mjudulPost = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
+		mbudgetPost = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
+		mdimensiPost = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
+		mmanfaatPost = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
+		misiPost  = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
+		mpropinsiPost = (Spinner)findViewById(R.id.activity_share_post_judul_edittext);
+		mkecamatanPost = (Spinner)findViewById(R.id.activity_share_post_judul_edittext);
+		mjejaringsosialPost = (Spinner)findViewById(R.id.activity_share_post_judul_edittext);
+		msubmitButton = (Button)findViewById(R.id.activity_share_post_judul_edittext);
 		
 		msubmitButton.setOnClickListener(new View.OnClickListener() {
 			
