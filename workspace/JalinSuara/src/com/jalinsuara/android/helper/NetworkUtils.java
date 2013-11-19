@@ -884,7 +884,7 @@ public class NetworkUtils {
 
 		}
 
-		return "";
+		return null;
 	}
 
 	/*

@@ -39,7 +39,9 @@ public class LoginActivity extends BaseFragmentActivity {
 	private EditText mPasswordEditText;
 
 	private String tokenLogin;
-
+	
+	private TextView mRegisterButton;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -51,8 +53,19 @@ public class LoginActivity extends BaseFragmentActivity {
 		mRegisterTextView = (TextView) findViewById(R.id.activity_login_sign_up_textview);
 		mEmailEditText = (EditText) findViewById(R.id.activity_login_email_edittext);
 		mPasswordEditText = (EditText) findViewById(R.id.activity_login_password_edittext);
+		mRegisterButton =(TextView)findViewById(R.id.activity_login_sign_up_textview);
+		mRegisterButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(getBaseContext(), SignUpActivity.class);
+	            startActivity(intent);
+			}
+		});
+		
 		mLoginButton.setOnClickListener(new OnClickListener() {
-
+		
 			@Override
 			public void onClick(View v) {
 
@@ -148,35 +161,5 @@ public class LoginActivity extends BaseFragmentActivity {
 		}
 	}
 
-	private class LoadRegister extends AsyncTask<String, Integer, Integer> {
 
-		private final static int E_OK = 1;
-		private final static int E_ERROR = 2;
-
-		@Override
-		protected Integer doInBackground(String... params) {
-			String token = NetworkUtils.signIn(mEmailEditText.getText()
-					.toString(), mPasswordEditText.getText().toString());
-			if (token != null) {
-				JalinSuaraSingleton.getInstance(getBaseContext()).setToken(
-						token);
-				tokenLogin = token;
-				return E_OK;
-			}
-			return E_ERROR;
-		}
-
-		@Override
-		protected void onPostExecute(Integer result) {
-			super.onPostExecute(result);
-			if (!isFinishing()) {
-				if (result == E_OK) {
-					finish();
-				} else {
-					resetStatus();
-					setStatusError(getString(R.string.error));
-				}
-			}
-		}
-	}
 }
