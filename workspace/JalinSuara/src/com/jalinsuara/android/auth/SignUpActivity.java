@@ -55,6 +55,9 @@ public class SignUpActivity extends BaseFragmentActivity {
 							&& password.length() > 0) {
 						LoadRegister register = new LoadRegister();
 						register.execute();
+
+						resetStatus();
+						setStatusProgress(getString(R.string.loading), false);
 					} else {
 						Toast.makeText(getBaseContext(), "Invalid fields",
 								Toast.LENGTH_SHORT).show();
@@ -82,6 +85,7 @@ public class SignUpActivity extends BaseFragmentActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
+			log.info("register new user");
 			String username = NetworkUtils.registerNewUser(mCompleteName
 					.getText().toString(), mNewEmail.getText().toString(),
 					mNewPassword.getText().toString());
@@ -90,9 +94,11 @@ public class SignUpActivity extends BaseFragmentActivity {
 						.getInstance(getBaseContext());
 				if (singleton != null) {
 				}
+				log.info("success: " + username + " is registered");
 				return E_OK;
 
 			}
+			log.info("registration failed");
 			return E_ERROR;
 		}
 
@@ -103,7 +109,7 @@ public class SignUpActivity extends BaseFragmentActivity {
 				if (result == E_OK) {
 					LoadTokens token = new LoadTokens();
 					token.execute();
-
+					log.info("User is signing in..");
 				} else {
 					resetStatus();
 					setStatusError(getString(R.string.error));
@@ -135,7 +141,7 @@ public class SignUpActivity extends BaseFragmentActivity {
 		protected Integer doInBackground(String... params) {
 			String token = NetworkUtils.signIn(mNewEmail.getText().toString(),
 					mNewPassword.getText().toString());
-			if (token != null) {
+			if (token != null) {				
 				return E_OK;
 			}
 			return E_ERROR;

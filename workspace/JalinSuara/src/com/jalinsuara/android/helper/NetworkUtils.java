@@ -806,9 +806,9 @@ public class NetworkUtils {
 		return null;
 	}
 
-	
 	/**
 	 * Register new user
+	 * 
 	 * @param name
 	 * @param email
 	 * @param emailPassword
@@ -832,18 +832,17 @@ public class NetworkUtils {
 		final HttpPost request = new HttpPost(uri);
 		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			nameValuePairs.add(new BasicNameValuePair("user[email]",
-					email));
-			nameValuePairs.add(new BasicNameValuePair("user[username]",
-					name));
-			nameValuePairs
-					.add(new BasicNameValuePair("user[password]", emailPassword));
+			nameValuePairs.add(new BasicNameValuePair("user[email]", email));
+			nameValuePairs.add(new BasicNameValuePair("user[username]", name));
+			nameValuePairs.add(new BasicNameValuePair("user[password]",
+					emailPassword));
 			nameValuePairs.add(new BasicNameValuePair(
 					"user[password_confirmation]", emailPassword));
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+			log.info("Request: " + uri);
 			resp = getHttpClient().execute(request);
-			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED) {
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
 				if (istream != null) {
@@ -897,10 +896,13 @@ public class NetworkUtils {
 					}
 				}
 
+			}else{
+				// failed
+				log.error("Error "+resp.getStatusLine().toString());
 			}
 
 		} catch (Exception ex) {
-
+			ex.printStackTrace();
 		}
 
 		return null;
