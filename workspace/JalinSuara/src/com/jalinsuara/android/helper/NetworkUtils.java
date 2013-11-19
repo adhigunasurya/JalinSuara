@@ -223,7 +223,7 @@ public class NetworkUtils {
 	public static ArrayList<SearchResult> getSearch(String query, int page) {
 		final HttpResponse resp;
 
-		//String uri = BASE_URL + "/home/search.json";
+		// String uri = BASE_URL + "/home/search.json";
 
 		String uri = "http://jalinsuara.web.id/en" + "/home/search.json";
 
@@ -232,7 +232,6 @@ public class NetworkUtils {
 		} else {
 
 		}
-
 
 		log.info("Request: " + uri);
 		final HttpPost request = new HttpPost(uri);
@@ -807,14 +806,26 @@ public class NetworkUtils {
 		return null;
 	}
 
-	/*
-	 * get token for register new user
+	
+	/**
+	 * Register new user
+	 * @param name
+	 * @param email
+	 * @param emailPassword
+	 * 
+	 * @return
+	 * 
+	 *         json result
+	 *         {"created_at":"2013-11-19T16:34:21Z","email":"student1@gmail.com"
+	 *         ,"id":10,"picture_content_type":null,"picture_file_name":null,
+	 *         "picture_file_size":null,"picture_updated_at":null,"updated_at":
+	 *         "2013-11-19T16:34:21Z","username":"student1"}
 	 */
 	public static String registerNewUser(String name, String email,
-			String email_password) {
+			String emailPassword) {
 		final HttpResponse resp;
 		String uri = null;
-		if (name != null && email != null && email_password != null) {
+		if (name != null && email != null && emailPassword != null) {
 			uri = BASE_URL + "/users";
 
 		}
@@ -822,13 +833,13 @@ public class NetworkUtils {
 		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 			nameValuePairs.add(new BasicNameValuePair("user[email]",
-					"gabybongbong@gmail.com"));
+					email));
 			nameValuePairs.add(new BasicNameValuePair("user[username]",
-					"gabrielle"));
+					name));
 			nameValuePairs
-					.add(new BasicNameValuePair("user[password]", "1234"));
+					.add(new BasicNameValuePair("user[password]", emailPassword));
 			nameValuePairs.add(new BasicNameValuePair(
-					"user[password_confirmation]", "1234"));
+					"user[password_confirmation]", emailPassword));
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 			resp = getHttpClient().execute(request);
@@ -854,19 +865,27 @@ public class NetworkUtils {
 							JsonElement resElmt = parser.parse(response);
 							if (resElmt.isJsonObject()) {
 								JsonObject obj = resElmt.getAsJsonObject();
-								String email_response = obj.get("email").getAsString();
-										
+								String email_response = obj.get("email")
+										.getAsString();
+
 								if (email_response.equals(email)) {
 									String created_at = obj.get("created_at")
 											.getAsString();
 									String id = obj.get("id").getAsString();
-									String picture_content_type = obj.get("picture_content_type").getAsString();
-									String picture_file_name = obj.get("picture_file_name").getAsString();
-									String picture_file_size =obj.get("picture_file_size").getAsString();
-									String updated_at = obj.get("updated_at").getAsString();
-									String picture_update_at = obj.get("picture_update_at").getAsString();
-									String username = obj.get("username").getAsString();
-					
+									String picture_content_type = obj.get(
+											"picture_content_type")
+											.getAsString();
+									String picture_file_name = obj.get(
+											"picture_file_name").getAsString();
+									String picture_file_size = obj.get(
+											"picture_file_size").getAsString();
+									String updated_at = obj.get("updated_at")
+											.getAsString();
+									String picture_update_at = obj.get(
+											"picture_update_at").getAsString();
+									String username = obj.get("username")
+											.getAsString();
+
 									return username;
 								} else {
 									return null;
@@ -893,7 +912,7 @@ public class NetworkUtils {
 	public static String signIn(String email, String email_password) {
 		final HttpResponse resp;
 
-		//String uri = BASE_URL + "/sign_in.json";
+		// String uri = BASE_URL + "/sign_in.json";
 
 		String uri = BASE_URL + "/users/sign_in";
 		if (email != null && email_password != null) {
@@ -962,30 +981,32 @@ public class NetworkUtils {
 		// return null because something error
 		return null;
 	}
+
 	/*
-	 * share news 
-	 * */
-	public static String postShareNews(String title, String description, String postable_type, String postable_id, String user_id, String auth_token){
+	 * share news
+	 */
+	public static String postShareNews(String title, String description,
+			String postable_type, String postable_id, String user_id,
+			String auth_token) {
 		final HttpResponse resp;
 		String uri = null;
-		
+
 		uri = BASE_URL + "/posts";
-		
+
 		final HttpPost request = new HttpPost(uri);
 		try {
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			nameValuePairs.add(new BasicNameValuePair("post[title]",
-					title));
+			nameValuePairs.add(new BasicNameValuePair("post[title]", title));
 			nameValuePairs.add(new BasicNameValuePair("post[description]",
 					description));
+			nameValuePairs.add(new BasicNameValuePair("post[postable_type]",
+					postable_type));
+			nameValuePairs.add(new BasicNameValuePair("post[postable_id]",
+					postable_id));
 			nameValuePairs
-					.add(new BasicNameValuePair("post[postable_type]", postable_type));
-			nameValuePairs.add(new BasicNameValuePair(
-					"post[postable_id]", postable_id));
-			nameValuePairs.add(new BasicNameValuePair(
-					"post[user_id]", user_id));
-			nameValuePairs.add(new BasicNameValuePair(
-					"auth_token", auth_token));
+					.add(new BasicNameValuePair("post[user_id]", user_id));
+			nameValuePairs
+					.add(new BasicNameValuePair("auth_token", auth_token));
 
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -1012,13 +1033,16 @@ public class NetworkUtils {
 							JsonElement resElmt = parser.parse(response);
 							if (resElmt.isJsonObject()) {
 								JsonObject obj = resElmt.getAsJsonObject();
-								boolean success = obj.get("success").getAsBoolean();
-										
+								boolean success = obj.get("success")
+										.getAsBoolean();
+
 								if (success) {
-									String message  = obj.get("message").getAsString();
+									String message = obj.get("message")
+											.getAsString();
 									return message;
 								} else {
-									String message  = obj.get("message").getAsString();
+									String message = obj.get("message")
+											.getAsString();
 									return message;
 								}
 							}
@@ -1035,6 +1059,7 @@ public class NetworkUtils {
 		}
 		return "";
 	}
+
 	/**
 	 * Sign out from JalinSuara
 	 * 
@@ -1087,7 +1112,6 @@ public class NetworkUtils {
 		return false;
 	}
 
-
 	/**
 	 * Get gson
 	 * 
@@ -1128,6 +1152,5 @@ public class NetworkUtils {
 		}
 		return null;
 	}
-
 
 }

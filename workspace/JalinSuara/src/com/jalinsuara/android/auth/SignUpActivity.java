@@ -19,14 +19,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class SignUpActivity extends BaseFragmentActivity {
-	
+
 	private EditText mNewEmail;
-	
+
 	private EditText mCompleteName;
-	
+
 	private EditText mNewPassword;
-	
+
 	private Button mSignUp;
+
+	public String tokenLogin;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,23 +37,44 @@ public class SignUpActivity extends BaseFragmentActivity {
 		setTitle(R.string.title_register);
 		resetStatus();
 		setStatusShowContent();
-		mNewEmail = (EditText)findViewById(R.id.editNewEmail);
-		mCompleteName = (EditText)findViewById(R.id.editTextCompleteName);
-		mNewPassword = (EditText)findViewById(R.id.editNewPassword);
+		mNewEmail = (EditText) findViewById(R.id.editNewEmail);
+		mCompleteName = (EditText) findViewById(R.id.editTextCompleteName);
+		mNewPassword = (EditText) findViewById(R.id.editNewPassword);
 		mSignUp = (Button) findViewById(R.id.buttonSignUp);
 		mSignUp.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				if(mNewEmail!=null && mCompleteName != null && mNewPassword!=null){
-					LoadRegister register = new LoadRegister();
-					register.execute();
-				}else {
-					Toast.makeText(getBaseContext(),"complete your biodata",Toast.LENGTH_SHORT).show();
+				if (mNewEmail != null && mCompleteName != null
+						&& mNewPassword != null) {
+					String email = mNewEmail.getText().toString();
+					String name = mCompleteName.getText().toString();
+					String password = mNewPassword.getText().toString();
+					if (email.length() > 0 && !email.contains(" ")
+							&& name.length() > 0 && !name.contains(" ")
+							&& password.length() > 0) {
+						LoadRegister register = new LoadRegister();
+						register.execute();
+					} else {
+						Toast.makeText(getBaseContext(), "Invalid fields",
+								Toast.LENGTH_SHORT).show();
+					}
+				} else {
+					Toast.makeText(getBaseContext(), "Complete all fields",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
 	}
+
+	/**
+	 * Register task to server. automatically load token after registration is
+	 * success
+	 * 
+	 * @author tonoman3g
+	 * @author gabriellewp
+	 * 
+	 */
 	private class LoadRegister extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
@@ -58,11 +82,16 @@ public class SignUpActivity extends BaseFragmentActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-			String username = NetworkUtils.registerNewUser(mCompleteName.getText()
-					.toString(), mNewEmail.getText().toString(),mNewPassword.getText().toString());
+			String username = NetworkUtils.registerNewUser(mCompleteName
+					.getText().toString(), mNewEmail.getText().toString(),
+					mNewPassword.getText().toString());
 			if (username != null) {
-				LoadTokens token = new LoadTokens();
-				token.execute();
+				JalinSuaraSingleton singleton = JalinSuaraSingleton
+						.getInstance(getBaseContext());
+				if (singleton != null) {
+				}
+				return E_OK;
+
 			}
 			return E_ERROR;
 		}
@@ -72,7 +101,9 @@ public class SignUpActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
 				if (result == E_OK) {
-					finish();
+					LoadTokens token = new LoadTokens();
+					token.execute();
+
 				} else {
 					resetStatus();
 					setStatusError(getString(R.string.error));
@@ -80,7 +111,14 @@ public class SignUpActivity extends BaseFragmentActivity {
 			}
 		}
 	}
-	
+
+	/**
+	 * Login / load token after sign up is success
+	 * 
+	 * @author tonoman3g
+	 * @author gabriellewp
+	 * 
+	 */
 	private class LoadTokens extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
@@ -88,16 +126,16 @@ public class SignUpActivity extends BaseFragmentActivity {
 
 		@Override
 		protected void onPreExecute() {
-			super.onPreExecute();			
+			super.onPreExecute();
 			resetStatus();
 			setStatusProgress(getString(R.string.loading), false);
 		}
 
 		@Override
 		protected Integer doInBackground(String... params) {
-			String token = NetworkUtils.signIn(mNewEmail.getText().toString(), mNewPassword.getText().toString());
+			String token = NetworkUtils.signIn(mNewEmail.getText().toString(),
+					mNewPassword.getText().toString());
 			if (token != null) {
-
 				return E_OK;
 			}
 			return E_ERROR;
@@ -111,11 +149,18 @@ public class SignUpActivity extends BaseFragmentActivity {
 					resetStatus();
 					setStatusShowContent();
 
+					JalinSuaraSingleton singleton = JalinSuaraSingleton
+							.getInstance(getBaseContext());
+					if (singleton != null) {
+						singleton.signIn(tokenLogin, mNewEmail.getText()
+								.toString());
+					}
 
-					finish();
 					Intent intent = new Intent(getBaseContext(),
 							DashboardActivity.class);
 					startActivity(intent);
+
+					finish();
 				} else {
 					resetStatus();
 					setStatusShowContent();

@@ -23,15 +23,15 @@ import com.jalinsuara.android.news.model.News;
 
 /**
  * Show comments of a news
+ * 
  * @author tonoman3g
- *
+ * 
  */
 public class CommentActivity extends BaseEndlessListFragmentActivity {
 
 	public final static String EXTRA_ID = "news_id";
 
 	private ListView mListView;
-	
 
 	private ArrayList<Comment> mList;
 
@@ -46,7 +46,7 @@ public class CommentActivity extends BaseEndlessListFragmentActivity {
 
 		mListView = (ListView) findViewById(android.R.id.list);
 		mEmptyTextView = (TextView) findViewById(android.R.id.empty);
-		
+
 		mList = new ArrayList<Comment>();
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,7 +58,7 @@ public class CommentActivity extends BaseEndlessListFragmentActivity {
 		if (id != -1) {
 			mNews = JalinSuaraSingleton.getInstance(this).findNewsById(id);
 			if (mNews != null) {
-				setTitle(mNews.getTitle());				
+				setTitle(mNews.getTitle());
 			} else {
 				resetStatus();
 				setStatusError(getString(R.string.error));
@@ -109,8 +109,7 @@ public class CommentActivity extends BaseEndlessListFragmentActivity {
 
 		@Override
 		public void onFirstLoad() {
-			mAdapter = new CommentAdapter(getBaseContext(),
-					mList);
+			mAdapter = new CommentAdapter(getBaseContext(), mList);
 		}
 
 		@Override
