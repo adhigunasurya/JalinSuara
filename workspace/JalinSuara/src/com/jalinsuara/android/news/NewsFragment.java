@@ -27,6 +27,10 @@ public class NewsFragment extends BaseFragment {
 	private TextView mDescriptionTextView;
 	private MapView mMapView;
 
+	public NewsFragment() {
+		
+	}
+
 	public NewsFragment(News news) {
 		mNews = news;
 	}

@@ -139,6 +139,12 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 
 	}
 
+	/**
+	 * Load item task abstract class,used for load data from server
+	 * @author tonoman3g
+	 *
+	 * @param <T>
+	 */
 	public abstract class LoadItemTask<T> extends
 			AsyncTask<Object, Integer, Integer> {
 

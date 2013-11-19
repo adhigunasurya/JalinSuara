@@ -58,6 +58,10 @@ public abstract class BaseFragment extends SherlockFragment {
 	protected int mProgress = 0;
 
 	public abstract int getLayoutId();
+	
+	public BaseFragment() {
+		
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
