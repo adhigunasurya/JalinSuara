@@ -20,4 +20,25 @@
         android:minHeight="200dp"
         android:singleLine="false" />
 
+    <EditText
+        android:id="@+id/activity_reply_comment_name_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/activity_reply_comment_email_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10" />
+
+    <Button
+        android:id="@+id/activity_reply_comment_submit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
 </LinearLayout>

@@ -1154,5 +1154,79 @@ public class NetworkUtils {
 		}
 		return null;
 	}
+	
+	public static String postNewComment (String username, String email, String comment,String token, boolean isAuthenticated){
+		final HttpResponse resp;
+		String uri = null;
 
+		uri = BASE_URL + "/posts/2/comments";
+		final HttpPost request = new HttpPost(uri);
+		
+		try {
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			if(isAuthenticated){
+				nameValuePairs.add(new BasicNameValuePair("auth_token", token));
+				nameValuePairs.add(new BasicNameValuePair("comment[body]", comment));
+				nameValuePairs.add(new BasicNameValuePair("comment[commentable_type]", "Post"));
+				request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			}else {
+				nameValuePairs.add(new BasicNameValuePair("comment[guest_name]", username));
+				nameValuePairs.add(new BasicNameValuePair("comment[guest_email]", email));
+				nameValuePairs.add(new BasicNameValuePair("comment[body]", comment));
+				nameValuePairs.add(new BasicNameValuePair("comment[commentable_type]", "Post"));
+				request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			}
+			
+			if(request.getEntity()!=null){
+				resp = getHttpClient().execute(request);
+				if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+					InputStream istream = (resp.getEntity() != null) ? resp
+							.getEntity().getContent() : null;
+					if (istream != null) {
+						BufferedReader ireader = new BufferedReader(
+								new InputStreamReader(istream));
+						String line = ireader.readLine();
+						StringBuilder sb = new StringBuilder();
+						while (line != null) {
+							sb.append(line);
+							line = ireader.readLine();
+						}
+						ireader.close();
+						String response = sb.toString();
+
+						log.info("Response :" + response);
+						if (response.length() > 0) {
+							try {
+//								JsonParser parser = new JsonParser();
+//								JsonElement resElmt = parser.parse(response);
+//								if (resElmt.isJsonObject()) {
+//									JsonObject obj = resElmt.getAsJsonObject();
+//									boolean success = obj.get("success")
+//											.getAsBoolean();
+//
+//									if (success) {
+//										String message = obj.get("message")
+//												.getAsString();
+//										return message;
+//									} else {
+//										String message = obj.get("message")
+//												.getAsString();
+//										return message;
+//									}
+//								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+
+				}
+			}
+
+			return "asfasd";
+		} catch (Exception ex) {
+
+		}
+		return "";
+	}
 }
