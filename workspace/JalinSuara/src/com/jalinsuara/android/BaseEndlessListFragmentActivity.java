@@ -166,11 +166,10 @@ public abstract class BaseEndlessListFragmentActivity extends
 
 			if (getBaseContext() != null) {
 				if (getAdapter() == null) {
+					onFirstLoad();
 					if (retval != null && retval.size() > 0) {
 						getList().clear();
-						getList().addAll(retval);
-
-						onFirstLoad();
+						getList().addAll(retval);						
 					} else if (retval == null) {
 						return E_ERROR;
 					}
