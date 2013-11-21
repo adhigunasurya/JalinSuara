@@ -896,9 +896,9 @@ public class NetworkUtils {
 					}
 				}
 
-			}else{
+			} else {
 				// failed
-				log.error("Error "+resp.getStatusLine().toString());
+				log.error("Error " + resp.getStatusLine().toString());
 			}
 
 		} catch (Exception ex) {
