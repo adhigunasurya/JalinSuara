@@ -1155,4 +1155,109 @@ public class NetworkUtils {
 		return null;
 	}
 
+	/**
+	 * 
+	 * 
+	 * 
+	 * {"body":"Coba-coba","commentable_id":16,"commentable_type":"Post",
+	 * "created_at"
+	 * :"2013-11-21T01:49:19Z","guest_email":"hartono.sulaiman@gmail.com"
+	 * ,"guest_name"
+	 * :"Tono","id":12,"owner_id":4,"updated_at":"2013-11-21T01:49:19Z"}
+	 * 
+	 * @param postId
+	 * @param username
+	 * @param email
+	 * @param comment
+	 * @param token
+	 * @param isAuthenticated
+	 * @return
+	 */
+	public static String postNewComment(long postId, String username,
+			String email, String comment, String token, boolean isAuthenticated) {
+		final HttpResponse resp;
+		String uri = null;
+
+		uri = BASE_URL + "/posts/" + postId + "/comments";
+		final HttpPost request = new HttpPost(uri);
+
+		try {
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+			if (isAuthenticated) {
+				nameValuePairs.add(new BasicNameValuePair("auth_token", token));
+				nameValuePairs.add(new BasicNameValuePair("comment[body]",
+						comment));
+				nameValuePairs.add(new BasicNameValuePair(
+						"comment[commentable_type]", "Post"));
+				nameValuePairs.add(new BasicNameValuePair(
+						"comment[commentable_id]", String.valueOf(postId)));
+				request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			} else {
+				nameValuePairs.add(new BasicNameValuePair(
+						"comment[guest_name]", username));
+				nameValuePairs.add(new BasicNameValuePair(
+						"comment[guest_email]", email));
+				nameValuePairs.add(new BasicNameValuePair("comment[body]",
+						comment));
+				nameValuePairs.add(new BasicNameValuePair(
+						"comment[commentable_type]", "Post"));
+				nameValuePairs.add(new BasicNameValuePair(
+						"comment[commentable_id]", String.valueOf(postId)));
+				request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			}
+
+			if (request.getEntity() != null) {
+				resp = getHttpClient().execute(request);
+				if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED) {
+					InputStream istream = (resp.getEntity() != null) ? resp
+							.getEntity().getContent() : null;
+					if (istream != null) {
+						BufferedReader ireader = new BufferedReader(
+								new InputStreamReader(istream));
+						String line = ireader.readLine();
+						StringBuilder sb = new StringBuilder();
+						while (line != null) {
+							sb.append(line);
+							line = ireader.readLine();
+						}
+						ireader.close();
+						String response = sb.toString();
+
+						log.info("Response :" + response);
+						if (response.length() > 0) {
+							try {
+								// JsonParser parser = new JsonParser();
+								// JsonElement resElmt = parser.parse(response);
+								// if (resElmt.isJsonObject()) {
+								// JsonObject obj = resElmt.getAsJsonObject();
+								// boolean success = obj.get("success")
+								// .getAsBoolean();
+								//
+								// if (success) {
+								// String message = obj.get("message")
+								// .getAsString();
+								// return message;
+								// } else {
+								// String message = obj.get("message")
+								// .getAsString();
+								// return message;
+								// }
+								// }
+								return "success";
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}
+
+				}else{
+					log.error("Failed to create");
+				}
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
 }

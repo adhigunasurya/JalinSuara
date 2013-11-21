@@ -114,7 +114,7 @@ public class LoginActivity extends BaseFragmentActivity {
 	 * @author gabriellewp
 	 * 
 	 */
-	private class LoadTokens extends AsyncTask<String, Integer, Integer> {
+	public class LoadTokens extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;

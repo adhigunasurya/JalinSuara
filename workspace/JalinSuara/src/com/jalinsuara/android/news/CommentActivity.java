@@ -76,6 +76,22 @@ public class CommentActivity extends BaseEndlessListFragmentActivity {
 			}
 		});
 	}
+	
+	@Override
+	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
+		super.onActivityResult(arg0, arg1, arg2);
+		if (arg0==ReplyCommentActivity.ACTIVITY_REQUEST && arg1==ReplyCommentActivity.ACTIVITY_COMPLETE){
+			mList.clear();		
+			mAdapter=null;
+			mListView.setOnScrollListener(new EndlessScrollListener() {
+				@Override
+				public void load(int page) {
+					LoadComments task = new LoadComments();
+					task.execute(page);
+				}
+			});
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,7 +108,8 @@ public class CommentActivity extends BaseEndlessListFragmentActivity {
 		}
 		case R.id.action_reply: {
 			Intent intent = new Intent(this, ReplyCommentActivity.class);
-			startActivity(intent);
+			intent.putExtra(ReplyCommentActivity.EXTRA_NEWS_ID, mNews.getId());
+			startActivityForResult(intent,ReplyCommentActivity.ACTIVITY_REQUEST);
 			return true;
 		}
 		}
