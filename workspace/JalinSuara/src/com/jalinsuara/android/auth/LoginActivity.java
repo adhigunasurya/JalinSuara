@@ -145,6 +145,7 @@ public class LoginActivity extends BaseFragmentActivity {
 					resetStatus();
 					setStatusShowContent();
 
+					log.info("Signed in: "+tokenLogin, mEmailEditText.getText().toString());
 					JalinSuaraSingleton.getInstance(getBaseContext()).signIn(
 							tokenLogin, mEmailEditText.getText().toString());
 

@@ -119,6 +119,8 @@ public class JalinSuaraSingleton {
 				Context.MODE_PRIVATE);
 		setToken(pref.getString(KEY_TOKEN, null));
 		setEmail(pref.getString(KEY_EMAIL, null));
+		log.info("Load email: "+getEmail());
+		log.info("Load token: "+getToken());
 
 		// init news list
 		setNewsList(new ArrayList<News>());
@@ -270,6 +272,7 @@ public class JalinSuaraSingleton {
 	 * @param email
 	 */
 	public void signIn(String token, String email) {
+		log.info("sign in "+token+", "+email);
 		setToken(token);
 		setEmail(email);
 		SharedPreferences pref = mContext.getSharedPreferences(SESSION,

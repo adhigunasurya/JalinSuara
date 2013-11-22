@@ -82,6 +82,11 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 			return mAdapter;
 		}
 
+		@Override
+		public ListView getListView() {
+			return SubProjectListFragment.this.getListView();
+		}
+
 	}
 
 	// private class LoadProject extends AsyncTask<Integer, Integer, Integer> {

@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -141,8 +142,9 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 
 	/**
 	 * Load item task abstract class,used for load data from server
+	 * 
 	 * @author tonoman3g
-	 *
+	 * 
 	 * @param <T>
 	 */
 	public abstract class LoadItemTask<T> extends
@@ -150,6 +152,7 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 
 		protected final static int E_OK = 1;
 		protected final static int E_OK_CHANGED = 3;
+		protected final static int E_OK_NO_CHANGES = 4;
 		protected final static int E_ERROR = 2;
 
 		@Override
@@ -181,11 +184,10 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 						getList().addAll(retval);
 						return E_OK_CHANGED;
 					} else if (retval != null && retval.size() == 0) {
-						mLastScrollY = getListView().getFirstVisiblePosition();
 						loading = false;
-						return E_OK;
+						return E_OK_NO_CHANGES;
 					} else {
-						loading = false;						
+						loading = false;
 					}
 				}
 			} else {
@@ -205,17 +207,19 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 
 		public abstract BaseAdapter getAdapter();
 
+		public abstract ListView getListView();
+
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
 			if (getSherlockActivity() != null) {
-				getSherlockActivity().setProgressBarIndeterminateVisibility(
-						false);
+				getSherlockActivity().setProgressBarIndeterminateVisibility(false);
 
 				if (result == E_OK) {
 					log.info("result ok");
 					if (!isAdapterSet()) {
-						setListAdapter(getAdapter());
+						setAdapterSet(true);
+						getListView().setAdapter(getAdapter());						
 					} else {
 						getListView().setSelectionFromTop(mLastScrollY, 0);
 					}
@@ -227,6 +231,8 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 					getAdapter().notifyDataSetChanged();
 					log.info("set selection from top " + mLastScrollY);
 					getListView().setSelectionFromTop(mLastScrollY, 0);
+				} else if (result == E_OK_NO_CHANGES) {
+
 				} else {
 					loading = false;
 					resetStatus();

@@ -72,7 +72,13 @@ public class CommentAdapter extends BaseAdapter {
 
 		dateTextview.setText(DateUtils.toStringDateOnly(object.getCreatedAt()));
 		convertView.setTag(object.getId());
-		usernameTextview.setText(object.getGuestName());
+		if (object.getGuestName()==null){
+			// FIXME add username to this text view. 
+			usernameTextview.setText(object.getGuestName());
+		}else{
+			usernameTextview.setText(object.getGuestName());
+		}
+		
 		bodyTextView.setText(object.getBody());
 
 		return convertView;

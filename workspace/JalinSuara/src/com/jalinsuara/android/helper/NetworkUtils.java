@@ -148,7 +148,8 @@ public class NetworkUtils {
 	/**
 	 * Get post from server
 	 * 
-	 * @return
+	 * @param page
+	 * @return null if error
 	 */
 	public static ArrayList<News> getPosts(int page) {
 		final HttpResponse resp;
@@ -218,7 +219,8 @@ public class NetworkUtils {
 	 * Search for news or sub projects by a certain query
 	 * 
 	 * @param query
-	 * @return
+	 * @param page
+	 * @return null if error
 	 */
 	public static ArrayList<SearchResult> getSearch(String query, int page) {
 		final HttpResponse resp;
@@ -324,7 +326,7 @@ public class NetworkUtils {
 	 * 
 	 * @param page
 	 *            if page == -1 no parameter
-	 * @return
+	 * @return null if error
 	 */
 	public static ArrayList<SubProject> getSubProjects(int page) {
 		final HttpResponse resp;
@@ -391,8 +393,7 @@ public class NetworkUtils {
 	/**
 	 * Retrieve all provinces
 	 * 
-	 * @param page
-	 * @return
+	 * @return null if error
 	 */
 	public static ArrayList<Province> getProvinces() {
 		final HttpResponse resp;
@@ -452,7 +453,7 @@ public class NetworkUtils {
 	 * Get all districts
 	 * 
 	 * @param page
-	 * @return
+	 * @return null if error
 	 */
 	public static ArrayList<District> getDistricts(int page) {
 		final HttpResponse resp;
@@ -521,8 +522,9 @@ public class NetworkUtils {
 	/**
 	 * Get districts by province_id
 	 * 
+	 * @param provinceId
 	 * @param page
-	 * @return
+	 * @return null if error
 	 */
 	public static ArrayList<District> getDistricts(long provinceId, int page) {
 		final HttpResponse resp;
@@ -599,7 +601,7 @@ public class NetworkUtils {
 	 * Get Subdistrict
 	 * 
 	 * @param page
-	 * @return
+	 * @return null if error
 	 */
 	public static ArrayList<SubDistrict> getSubdistricts(int page) {
 		final HttpResponse resp;
@@ -665,7 +667,7 @@ public class NetworkUtils {
 	 * 
 	 * @param districtId
 	 * @param page
-	 * @return
+	 * @return null if error
 	 */
 	public static ArrayList<SubDistrict> getSubdistricts(long districtId,
 			int page) {
@@ -741,7 +743,9 @@ public class NetworkUtils {
 	/**
 	 * Get comment from server
 	 * 
-	 * @return
+	 * @param postId
+	 * @param page
+	 * @return null if error
 	 */
 	public static ArrayList<Comment> getComment(long postId, int page) {
 		final HttpResponse resp;
@@ -813,7 +817,7 @@ public class NetworkUtils {
 	 * @param email
 	 * @param emailPassword
 	 * 
-	 * @return
+	 * @return null if error <br/>
 	 * 
 	 *         json result
 	 *         {"created_at":"2013-11-19T16:34:21Z","email":"student1@gmail.com"
@@ -908,13 +912,21 @@ public class NetworkUtils {
 		return null;
 	}
 
-	/*
-	 * Sign in to JalinSuara
+	/**
+	 * Sign in to JalinSuara <br/>
+	 * success response: {"success":true,"auth_token":"RwVBVHsFtF1VezDEVtDq"
+	 * ,"email":"tonoman3g@gmail.com"}
+	 * 
+	 * <br/>
+	 * error response: <br/>
+	 * {"success":false,"message":"Error with your login or password"}
+	 * 
+	 * @param email
+	 * @param email_password
+	 * @return null if error
 	 */
 	public static String signIn(String email, String email_password) {
 		final HttpResponse resp;
-
-		// String uri = BASE_URL + "/sign_in.json";
 
 		String uri = BASE_URL + "/users/sign_in";
 		if (email != null && email_password != null) {
@@ -984,8 +996,16 @@ public class NetworkUtils {
 		return null;
 	}
 
-	/*
-	 * share news
+	/**
+	 * Share news
+	 * 
+	 * @param title
+	 * @param description
+	 * @param postable_type
+	 * @param postable_id
+	 * @param user_id
+	 * @param auth_token
+	 * @return null if there is error
 	 */
 	public static String postShareNews(String title, String description,
 			String postable_type, String postable_id, String user_id,
@@ -1012,8 +1032,10 @@ public class NetworkUtils {
 
 			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
+			log.info("Request: " + uri);
 			resp = getHttpClient().execute(request);
-			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED) {
 				InputStream istream = (resp.getEntity() != null) ? resp
 						.getEntity().getContent() : null;
 				if (istream != null) {
@@ -1054,19 +1076,21 @@ public class NetworkUtils {
 					}
 				}
 
+			} else {
+				log.error("Error: " + resp.getStatusLine());
 			}
 
 		} catch (Exception ex) {
-
+			ex.printStackTrace();
 		}
-		return "";
+		return null;
 	}
 
 	/**
 	 * Sign out from JalinSuara
 	 * 
 	 * @param email
-	 * @return
+	 * @return null if error
 	 */
 	public static boolean signOut(String email) {
 		final HttpResponse resp;
@@ -1156,7 +1180,7 @@ public class NetworkUtils {
 	}
 
 	/**
-	 * 
+	 * Post a comment to a news / post
 	 * 
 	 * 
 	 * {"body":"Coba-coba","commentable_id":16,"commentable_type":"Post",
@@ -1171,7 +1195,7 @@ public class NetworkUtils {
 	 * @param comment
 	 * @param token
 	 * @param isAuthenticated
-	 * @return
+	 * @return null if error
 	 */
 	public static String postNewComment(long postId, String username,
 			String email, String comment, String token, boolean isAuthenticated) {
@@ -1250,7 +1274,7 @@ public class NetworkUtils {
 						}
 					}
 
-				}else{
+				} else {
 					log.error("Failed to create");
 				}
 			}

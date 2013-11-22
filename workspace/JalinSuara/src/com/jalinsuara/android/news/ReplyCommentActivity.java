@@ -40,7 +40,7 @@ public class ReplyCommentActivity extends BaseFragmentActivity {
 		mEmailEditText = (EditText) findViewById(R.id.activity_reply_comment_email_edittext);
 
 		if (JalinSuaraSingleton.getInstance(this).isAuthenticated()) {
-			mNameEditText.setVisibility(View.GONE);			
+			mNameEditText.setVisibility(View.GONE);
 			mEmailEditText.setVisibility(View.GONE);
 		}
 		resetStatus();
@@ -81,8 +81,20 @@ public class ReplyCommentActivity extends BaseFragmentActivity {
 			}
 			if (valid) {
 				// send data
-				PostCommentTask comment = new PostCommentTask();
-				comment.execute();
+				String name = mNameEditText.getText().toString();
+				String email = mEmailEditText.getText().toString();
+				String comment = mCommentEditText.getText().toString();
+
+				if (JalinSuaraSingleton.getInstance(this).isAuthenticated()) {
+					email = JalinSuaraSingleton.getInstance(this).getEmail();
+					PostCommentTask commentTask = new PostCommentTask();
+					commentTask.execute(String.valueOf(mNewsId), email, email,
+							comment);
+				} else {
+					PostCommentTask commentTask = new PostCommentTask();
+					commentTask.execute(String.valueOf(mNewsId), name, email,
+							comment);
+				}
 			} else {
 				Toast.makeText(getBaseContext(),
 						getString(R.string.error_fill_all_fields),
@@ -116,14 +128,20 @@ public class ReplyCommentActivity extends BaseFragmentActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-			String token = NetworkUtils.postNewComment(mNewsId, mNameEditText
-					.getText().toString(), mEmailEditText.getText().toString(),
-					mCommentEditText.getText().toString(), JalinSuaraSingleton
-							.getInstance(getBaseContext()).getToken(),
-					JalinSuaraSingleton.getInstance(getBaseContext())
-							.isAuthenticated());
-			if (token != null) {
-				return E_OK;
+			String postId = params[0];
+			String name = params[1];
+			String email = params[2];
+			String comment = params[3];
+			if (params.length == 4) {
+				String token = NetworkUtils.postNewComment(Long
+						.parseLong(postId), name, email, comment,
+						JalinSuaraSingleton.getInstance(getBaseContext())
+								.getToken(),
+						JalinSuaraSingleton.getInstance(getBaseContext())
+								.isAuthenticated());
+				if (token != null) {
+					return E_OK;
+				}
 			}
 			return E_ERROR;
 		}
