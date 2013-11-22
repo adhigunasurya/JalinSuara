@@ -8,26 +8,23 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".BaseActivity" >
 
         <TextView
             android:id="@+id/activity_share_post_title_textview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content"            
             android:text="Berbagi Cerita"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/activity_share_post_judul_textview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_title_textview"
-            android:layout_below="@+id/activity_share_post_title_textview"
+            android:layout_height="wrap_content"            
             android:layout_marginTop="16dp"
             android:text="Judul" />
 
@@ -35,16 +32,12 @@
             android:id="@+id/activity_share_post_judul_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_judul_textview"
-            android:layout_below="@+id/activity_share_post_judul_textview"
             android:ems="10" />
 
         <EditText
             android:id="@+id/activity_share_post_budget_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_budget_textview"
-            android:layout_below="@+id/activity_share_post_budget_textview"
             android:ems="10" >
 
             <requestFocus />
@@ -54,56 +47,42 @@
             android:id="@+id/activity_share_post_budget_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_judul_edittext"
-            android:layout_below="@+id/activity_share_post_judul_edittext"
             android:text="Budget" />
 
         <TextView
             android:id="@+id/activity_share_post_dimensi_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_budget_edittext"
-            android:layout_below="@+id/activity_share_post_budget_edittext"
             android:text="Dimensi" />
 
         <EditText
             android:id="@+id/activity_share_post_dimensi_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_dimensi_textview"
-            android:layout_below="@+id/activity_share_post_dimensi_textview"
             android:ems="10" />
 
         <TextView
             android:id="@+id/activity_share_post_manfaat_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_dimensi_edittext"
-            android:layout_below="@+id/activity_share_post_dimensi_edittext"
             android:text="Manfaat" />
 
         <EditText
             android:id="@+id/activity_share_post_manfaat_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_manfaat_textview"
-            android:layout_below="@+id/activity_share_post_manfaat_textview"
             android:ems="10" />
 
         <TextView
             android:id="@+id/activity_share_post_isi_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_manfaat_edittext"
-            android:layout_below="@+id/activity_share_post_manfaat_edittext"
             android:text="Isi" />
 
         <EditText
             android:id="@+id/activity_share_post_isi_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_isi_textview"
-            android:layout_below="@+id/activity_share_post_isi_textview"
             android:ems="10"
             android:inputType="textMultiLine" />
 
@@ -112,16 +91,12 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_isi_edittext"
-            android:layout_below="@+id/activity_share_post_isi_edittext"
             android:text="Sisipkan Gambar" />
 
         <Spinner
             android:id="@+id/activity_share_post_propinsiSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_sisipGambarButton"
-            android:layout_below="@+id/activity_share_post_sisipGambarButton"
             android:entries="@array/propinsi_arrays"
             android:prompt="@string/propinsi_prompt" />
 
@@ -129,8 +104,6 @@
             android:id="@+id/activity_share_post_kabupatenSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_sisipGambarButton"
-            android:layout_below="@+id/activity_share_post_propinsiSpinner"
             android:entries="@array/kabupaten_arrays"
             android:prompt="@string/kabupaten_prompt" />
 
@@ -138,8 +111,6 @@
             android:id="@+id/activity_share_post_kecamatanSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_sisipGambarButton"
-            android:layout_below="@+id/activity_share_post_kabupatenSpinner"
             android:entries="@array/kecamatan_arrays"
             android:prompt="@string/kecamatan_prompt" />
 
@@ -147,8 +118,6 @@
             android:id="@+id/activity_share_post_jejaringSosialSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_sisipGambarButton"
-            android:layout_below="@+id/activity_share_post_kecamatanSpinner"
             android:entries="@array/jejaring_arrays"
             android:prompt="@string/jejaring_prompt" />
 
@@ -156,27 +125,13 @@
             android:id="@+id/activity_share_post_saraCheckBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_sisipGambarButton"
-            android:layout_below="@+id/activity_share_post_jejaringSosialSpinner"
             android:text="Tidak Mengandung SARA" />
 
         <CheckBox
             android:id="@+id/activity_share_post_responsibleCheckBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_sisipGambarButton"
-            android:layout_below="@+id/activity_share_post_saraCheckBox"
             android:text="Bertanggung jawab atas isi berita" />
-        
-        <Button
-            android:id="@+id/activity_share_post_submitButton"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/activity_share_post_isi_edittext"
-            android:layout_below="@+id/activity_share_post_responsibleCheckBox"
-            android:text="Submit" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </ScrollView>

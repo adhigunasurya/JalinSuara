@@ -80,6 +80,11 @@ public class NewsListFragment extends BaseEndlessListFragment {
 			return mAdapter;
 		}
 
+		@Override
+		public ListView getListView() {
+			return NewsListFragment.this.getListView();
+		}
+
 	}
 //
 //	private class LoadPosts extends AsyncTask<Integer, Integer, Integer> {

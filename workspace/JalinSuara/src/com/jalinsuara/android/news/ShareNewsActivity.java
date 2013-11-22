@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
+import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 
@@ -24,17 +27,20 @@ import com.jalinsuara.android.helper.NetworkUtils;
 public class ShareNewsActivity extends BaseFragmentActivity {
 
 	protected static final int PICKFILE_RESULT_CODE = 0;
-	private Button minsertPic;
-	private EditText mjudulPost;
-	private EditText mbudgetPost;
-	private EditText mdimensiPost;
-	private EditText mmanfaatPost;
-	private EditText misiPost;
-	private Spinner mpropinsiPost;
-	private Spinner mkabupatenPost;
-	private Spinner mkecamatanPost;
-	private Spinner mjejaringsosialPost;
-	private Button msubmitButton;
+
+	private Button mInsertPictureButton;
+	private EditText mPostTitleEditText;
+	private EditText mPostBudgetEditText;
+	private EditText mPostDimensionEditText;
+	private EditText mPostManfaatEditText;
+	private EditText mPostContentEditText;
+	private Spinner mPostProvinceSpinner;
+	private Spinner mPostDistrictSpinner;
+	private Spinner mPostSubDistrictSpinner;
+	private Spinner mPostSocialMediaSpinner;
+	private CheckBox mSaraCheckBox;
+	private CheckBox mResponsibleCheckBox;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,32 +50,27 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 		resetStatus();
 		setStatusShowContent();
-		
-		mjudulPost = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
-		mbudgetPost = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
-		mdimensiPost = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
-		mmanfaatPost = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
-		misiPost  = (EditText)findViewById(R.id.activity_share_post_judul_edittext);
-		mpropinsiPost = (Spinner)findViewById(R.id.activity_share_post_judul_edittext);
-		mkecamatanPost = (Spinner)findViewById(R.id.activity_share_post_judul_edittext);
-		mjejaringsosialPost = (Spinner)findViewById(R.id.activity_share_post_judul_edittext);
-		msubmitButton = (Button)findViewById(R.id.activity_share_post_judul_edittext);
-		
-		msubmitButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				onSubmit();
-			}
-		});
-		minsertPic = (Button) findViewById(R.id.activity_share_post_sisipGambarButton);
-		
-		minsertPic.setOnClickListener(new View.OnClickListener() {
-		
+
+		mPostTitleEditText = (EditText) findViewById(R.id.activity_share_post_judul_edittext);
+		mPostBudgetEditText = (EditText) findViewById(R.id.activity_share_post_budget_edittext);
+		mPostDimensionEditText = (EditText) findViewById(R.id.activity_share_post_dimensi_edittext);
+		mPostManfaatEditText = (EditText) findViewById(R.id.activity_share_post_manfaat_edittext);
+		mPostContentEditText = (EditText) findViewById(R.id.activity_share_post_isi_edittext);
+
+		mPostProvinceSpinner = (Spinner) findViewById(R.id.activity_share_post_propinsiSpinner);
+		mPostDistrictSpinner = (Spinner) findViewById(R.id.activity_share_post_kabupatenSpinner);
+		mPostSubDistrictSpinner = (Spinner) findViewById(R.id.activity_share_post_kecamatanSpinner);
+		mPostSocialMediaSpinner = (Spinner) findViewById(R.id.activity_share_post_jejaringSosialSpinner);
+
+		mSaraCheckBox = (CheckBox) findViewById(R.id.activity_share_post_saraCheckBox);
+		mResponsibleCheckBox = (CheckBox) findViewById(R.id.activity_share_post_responsibleCheckBox);
+
+		mInsertPictureButton = (Button) findViewById(R.id.activity_share_post_sisipGambarButton);
+
+		mInsertPictureButton.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 				intent.setType("file/*");
 				startActivityForResult(intent, PICKFILE_RESULT_CODE);
@@ -134,22 +135,77 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	 * On submit button click
 	 */
 	private void onSubmit() {
-		if(mjudulPost.getText().toString()!=null && misiPost.getText().toString()!=null){
-			LoadNewPost newpost = new LoadNewPost();
-			newpost.execute();
+		String title = mPostTitleEditText.getText().toString();
+		String description = mPostContentEditText.getText().toString();
+		String postable_type = ShareNewPost.POSTABLE_ACTIVITY;
+		String postable_id = "5";
+		// FIXME
+		String user_id = "5";
+		String auth_token = JalinSuaraSingleton.getInstance(this).getToken();
+		boolean valid = true;
+
+		if (mSaraCheckBox.isChecked() && mResponsibleCheckBox.isChecked()) {
+			if (title.length() > 0 && description.length() > 0) {
+				valid = true;
+			} else {
+				valid = false;
+			}
+
+			if (valid) {
+				ShareNewPost newpost = new ShareNewPost();
+				newpost.execute(title, description, postable_type, postable_id,
+						user_id, auth_token);
+			} else {
+				Toast.makeText(this, "Isi semua fields", Toast.LENGTH_SHORT)
+						.show();
+			}
+		} else {
+			valid = false;
+			Toast.makeText(
+					this,
+					"Kontent tidak boleh mengandung SARA dan penulis harus bertanggung jawab terhadap isi konten.",
+					Toast.LENGTH_SHORT).show();
 		}
 	}
-	
-	private class LoadNewPost extends AsyncTask<String, Integer, Integer> {
+
+	/**
+	 * Share new post
+	 * 
+	 * @author hartono parameters: title, description postable_type,
+	 *         postable_id, user_id, auth_token
+	 * 
+	 */
+	private class ShareNewPost extends AsyncTask<String, Integer, Integer> {
+
+		/**
+		 * Constant used for postable
+		 */
+		public final static String POSTABLE_ACTIVITY = "Activity";
+
+		/**
+		 * Constant used for postable
+		 */
+		public final static String POSTABLE_SUB_DISTRICT = "Subdistrict";
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;
-		
+
 		@Override
 		protected Integer doInBackground(String... params) {
-			String token = NetworkUtils.postShareNews(mjudulPost.getText().toString(), misiPost.getText().toString(), "Activity","1228", "5", "yiXpsRyidaqWjq89JgGX");
-			if (token != null) {
-				return E_OK;
+			String title = params[0];
+			String description = params[1];
+			String postable_type = params[2];
+			String postable_id = params[3];
+			String user_id = params[4];
+			String auth_token = params[5];
+
+			if (params.length == 6) {
+				String retval = NetworkUtils.postShareNews(title, description,
+						postable_type, postable_id, user_id, auth_token);
+
+				if (retval != null) {
+					return E_OK;
+				}
 			}
 			return E_ERROR;
 		}
