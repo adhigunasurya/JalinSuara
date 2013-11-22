@@ -15,16 +15,9 @@
         tools:context=".BaseActivity" >
 
         <TextView
-            android:id="@+id/activity_share_post_title_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"            
-            android:text="Berbagi Cerita"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
             android:id="@+id/activity_share_post_judul_textview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"            
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Judul" />
 
@@ -34,6 +27,12 @@
             android:layout_height="wrap_content"
             android:ems="10" />
 
+        <TextView
+            android:id="@+id/activity_share_post_budget_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Budget" />
+
         <EditText
             android:id="@+id/activity_share_post_budget_edittext"
             android:layout_width="match_parent"
@@ -42,12 +41,6 @@
 
             <requestFocus />
         </EditText>
-
-        <TextView
-            android:id="@+id/activity_share_post_budget_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Budget" />
 
         <TextView
             android:id="@+id/activity_share_post_dimensi_textview"
