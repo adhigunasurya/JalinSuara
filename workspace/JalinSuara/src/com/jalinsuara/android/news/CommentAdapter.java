@@ -20,10 +20,10 @@ import com.jalinsuara.android.news.model.Comment;
 import com.jalinsuara.android.news.model.News;
 
 /**
- * Comment adapter
+ * Comment adapter for list of comments a post
  * 
  * @author tonoman3g
- *
+ * 
  */
 public class CommentAdapter extends BaseAdapter {
 
@@ -72,13 +72,15 @@ public class CommentAdapter extends BaseAdapter {
 
 		dateTextview.setText(DateUtils.toStringDateOnly(object.getCreatedAt()));
 		convertView.setTag(object.getId());
-		if (object.getGuestName()==null){
-			// FIXME add username to this text view. 
-			usernameTextview.setText(object.getGuestName());
-		}else{
+		
+		if (object.getGuestName() == null) {
+			if (object.getCommenterName() != null) {
+				usernameTextview.setText(object.getCommenterName());
+			}
+		} else {
 			usernameTextview.setText(object.getGuestName());
 		}
-		
+
 		bodyTextView.setText(object.getBody());
 
 		return convertView;

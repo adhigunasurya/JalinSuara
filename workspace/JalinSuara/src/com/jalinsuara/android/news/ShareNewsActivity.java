@@ -1,9 +1,11 @@
 package com.jalinsuara.android.news;
 
+import java.io.File;
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,6 +18,7 @@ import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
+import com.jalinsuara.android.news.model.News;
 
 /**
  * Share news activity
@@ -26,20 +29,39 @@ import com.jalinsuara.android.helper.NetworkUtils;
  */
 public class ShareNewsActivity extends BaseFragmentActivity {
 
+	/**
+	 * Code for starting activity to pick picture
+	 */
 	protected static final int PICKFILE_RESULT_CODE = 0;
 
+	/**
+	 * Upload picture for news
+	 */
 	private Button mInsertPictureButton;
+
 	private EditText mPostTitleEditText;
+
 	private EditText mPostBudgetEditText;
+
 	private EditText mPostDimensionEditText;
+
 	private EditText mPostManfaatEditText;
+
 	private EditText mPostContentEditText;
+
 	private Spinner mPostProvinceSpinner;
+
 	private Spinner mPostDistrictSpinner;
+
 	private Spinner mPostSubDistrictSpinner;
+
 	private Spinner mPostSocialMediaSpinner;
+
 	private CheckBox mSaraCheckBox;
+
 	private CheckBox mResponsibleCheckBox;
+
+	private String mFilePath;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +94,7 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-				intent.setType("file/*");
+				intent.setType("image/*");
 				startActivityForResult(intent, PICKFILE_RESULT_CODE);
 			}
 		});
@@ -81,7 +103,12 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == PICKFILE_RESULT_CODE) {
-			Log.d("sukses", "---" + data.getData().getLastPathSegment());
+			Uri uri = data.getData();
+			log.info( "File Uri: " + uri.toString());
+			// Get the path
+			File file =new File(uri.getPath());
+			log.info(  "File Path: " + file.toString());
+			mFilePath = file.toString();
 
 		}
 		// int targetW = mImageView.getWidth();
@@ -137,7 +164,7 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	private void onSubmit() {
 		String title = mPostTitleEditText.getText().toString();
 		String description = mPostContentEditText.getText().toString();
-		String postable_type = ShareNewPost.POSTABLE_ACTIVITY;
+		String postable_type = News.POSTABLE_ACTIVITY;
 		String postable_id = "5";
 		// FIXME
 		String user_id = "5";
@@ -154,7 +181,7 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 			if (valid) {
 				ShareNewPost newpost = new ShareNewPost();
 				newpost.execute(title, description, postable_type, postable_id,
-						user_id, auth_token);
+						user_id, auth_token, mFilePath);
 			} else {
 				Toast.makeText(this, "Isi semua fields", Toast.LENGTH_SHORT)
 						.show();
@@ -172,20 +199,10 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	 * Share new post
 	 * 
 	 * @author hartono parameters: title, description postable_type,
-	 *         postable_id, user_id, auth_token
+	 *         postable_id, auth_token,file
 	 * 
 	 */
 	private class ShareNewPost extends AsyncTask<String, Integer, Integer> {
-
-		/**
-		 * Constant used for postable
-		 */
-		public final static String POSTABLE_ACTIVITY = "Activity";
-
-		/**
-		 * Constant used for postable
-		 */
-		public final static String POSTABLE_SUB_DISTRICT = "Subdistrict";
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;
@@ -198,10 +215,11 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 			String postable_id = params[3];
 			String user_id = params[4];
 			String auth_token = params[5];
+			String file = params[6];
 
 			if (params.length == 6) {
 				String retval = NetworkUtils.postShareNews(title, description,
-						postable_type, postable_id, user_id, auth_token);
+						postable_type, postable_id, auth_token, file);
 
 				if (retval != null) {
 					return E_OK;

@@ -9,6 +9,8 @@ import java.util.Date;
  * 
  */
 public class Comment {
+	
+	public final static String COMMENTABLE_TYPE_POST = "Post";
 
 	private long id;
 
@@ -24,9 +26,19 @@ public class Comment {
 
 	private Date updatedAt;
 
+	/**
+	 * null if the owner is a registered user
+	 */
 	private String guestName;
 
 	private String guestEmail;
+	
+	/**
+	 * null if the owner is a guest user
+	 */
+	private String commenterName;
+	
+	private String commenterEmail;
 
 	/**
 	 * @return the id
@@ -163,9 +175,7 @@ public class Comment {
 		this.guestEmail = guestEmail;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -174,7 +184,24 @@ public class Comment {
 				+ ", commentableId=" + commentableId + ", commentableType="
 				+ commentableType + ", body=" + body + ", createdAt="
 				+ createdAt + ", updatedAt=" + updatedAt + ", guestName="
-				+ guestName + ", guestEmail=" + guestEmail + "]";
+				+ guestName + ", guestEmail=" + guestEmail + ", commenterName="
+				+ commenterName + ", commenterEmail=" + commenterEmail + "]";
+	}
+
+	public String getCommenterEmail() {
+		return commenterEmail;
+	}
+
+	public void setCommenterEmail(String commenterEmail) {
+		this.commenterEmail = commenterEmail;
+	}
+
+	public String getCommenterName() {
+		return commenterName;
+	}
+
+	public void setCommenterName(String commenterName) {
+		this.commenterName = commenterName;
 	}
 
 }

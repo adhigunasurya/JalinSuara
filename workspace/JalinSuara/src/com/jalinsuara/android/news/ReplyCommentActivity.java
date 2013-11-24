@@ -15,14 +15,31 @@ import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 
+/**
+ * Reply comment to a post as registered user and not registered user.
+ * 
+ * @author tonoman3g
+ * 
+ * 
+ */
 public class ReplyCommentActivity extends BaseFragmentActivity {
+
 	public static final String EXTRA_NEWS_ID = "news_id";
+
+	/**
+	 * startActivityForResult , after reply comment, calling activity should
+	 * update the state
+	 */
 	public static final int ACTIVITY_REQUEST = 0;
 
 	public static final int ACTIVITY_COMPLETE = 1;
+
 	private EditText mCommentEditText;
+
 	private EditText mNameEditText;
+
 	private EditText mEmailEditText;
+
 	private long mNewsId;
 
 	@Override

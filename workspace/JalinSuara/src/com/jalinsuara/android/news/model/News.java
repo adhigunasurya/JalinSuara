@@ -10,6 +10,16 @@ import java.util.Date;
  */
 public class News {
 
+	/**
+	 * Constant used for postable
+	 */
+	public final static String POSTABLE_ACTIVITY = "Activity";
+
+	/**
+	 * Constant used for postable
+	 */
+	public final static String POSTABLE_SUB_DISTRICT = "Subdistrict";
+	
 	private long id;
 
 	private long activityId;

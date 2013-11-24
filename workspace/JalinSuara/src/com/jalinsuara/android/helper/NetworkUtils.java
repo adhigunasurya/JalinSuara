@@ -1,26 +1,27 @@
 package com.jalinsuara.android.helper;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
 import java.lang.reflect.Type;
-import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.params.ConnManagerParams;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
@@ -34,7 +35,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.text.format.Formatter;
-import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -1008,8 +1009,8 @@ public class NetworkUtils {
 	 * @return null if there is error
 	 */
 	public static String postShareNews(String title, String description,
-			String postable_type, String postable_id, String user_id,
-			String auth_token) {
+			String postable_type, String postable_id, String auth_token,
+			String image) {
 		final HttpResponse resp;
 		String uri = null;
 
@@ -1017,20 +1018,26 @@ public class NetworkUtils {
 
 		final HttpPost request = new HttpPost(uri);
 		try {
-			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-			nameValuePairs.add(new BasicNameValuePair("post[title]", title));
-			nameValuePairs.add(new BasicNameValuePair("post[description]",
-					description));
-			nameValuePairs.add(new BasicNameValuePair("post[postable_type]",
-					postable_type));
-			nameValuePairs.add(new BasicNameValuePair("post[postable_id]",
-					postable_id));
-			nameValuePairs
-					.add(new BasicNameValuePair("post[user_id]", user_id));
-			nameValuePairs
-					.add(new BasicNameValuePair("auth_token", auth_token));
+			MultipartEntity entity = new MultipartEntity(
+					HttpMultipartMode.BROWSER_COMPATIBLE);
 
-			request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			// For File parameters
+			if (image != null) {
+				String mimeType = MimeTypeMap.getSingleton()
+						.getMimeTypeFromExtension(image.toString());
+				File file = new File(image);
+				entity.addPart("post[picture]", new FileBody(((File) file),
+						mimeType));
+			}
+
+			// For usual String parameters
+			entity.addPart("post[title]", new StringBody(title));
+			entity.addPart("post[description]", new StringBody(description));
+			entity.addPart("post[postable_type]", new StringBody(postable_type));
+			entity.addPart("post[postable_id]", new StringBody(postable_id));
+			entity.addPart("auth_token", new StringBody(auth_token));
+
+			request.setEntity(entity);
 
 			log.info("Request: " + uri);
 			resp = getHttpClient().execute(request);
@@ -1212,7 +1219,8 @@ public class NetworkUtils {
 				nameValuePairs.add(new BasicNameValuePair("comment[body]",
 						comment));
 				nameValuePairs.add(new BasicNameValuePair(
-						"comment[commentable_type]", "Post"));
+						"comment[commentable_type]",
+						Comment.COMMENTABLE_TYPE_POST));
 				nameValuePairs.add(new BasicNameValuePair(
 						"comment[commentable_id]", String.valueOf(postId)));
 				request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
@@ -1224,7 +1232,8 @@ public class NetworkUtils {
 				nameValuePairs.add(new BasicNameValuePair("comment[body]",
 						comment));
 				nameValuePairs.add(new BasicNameValuePair(
-						"comment[commentable_type]", "Post"));
+						"comment[commentable_type]",
+						Comment.COMMENTABLE_TYPE_POST));
 				nameValuePairs.add(new BasicNameValuePair(
 						"comment[commentable_id]", String.valueOf(postId)));
 				request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
