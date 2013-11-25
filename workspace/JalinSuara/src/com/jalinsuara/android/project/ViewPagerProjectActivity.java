@@ -16,6 +16,12 @@ import com.jalinsuara.android.project.SubProjectListFragment.OnSubProjectItemCli
 import com.jalinsuara.android.project.subdistrict.SubDistrictListFragment;
 import com.jalinsuara.android.projects.model.SubProject;
 
+/**
+ * Show list of project
+ * 
+ * @author hartono
+ * 
+ */
 public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 		OnSubProjectItemClickListener {
 	private MyAdapter mAdapter;
