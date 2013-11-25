@@ -7,9 +7,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,6 +22,10 @@ import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.model.News;
+import com.jalinsuara.android.projects.model.District;
+import com.jalinsuara.android.projects.model.Province;
+import com.jalinsuara.android.projects.model.SubDistrict;
+import com.jalinsuara.android.projects.model.SubProject;
 
 /**
  * Share news activity
@@ -55,13 +62,23 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 	private Spinner mPostSubDistrictSpinner;
 
-	private Spinner mPostSocialMediaSpinner;
+	private Spinner mPostSubProjectSpinner;
 
 	private CheckBox mSaraCheckBox;
 
 	private CheckBox mResponsibleCheckBox;
 
 	private String mFilePath;
+
+	private ImageView mImagePreview;
+
+	private Province mProvince;
+
+	private District mDistrict;
+
+	private SubDistrict mSubDistrict;
+
+	private SubProject mSubProject;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +99,37 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 		mPostProvinceSpinner = (Spinner) findViewById(R.id.activity_share_post_propinsiSpinner);
 		mPostDistrictSpinner = (Spinner) findViewById(R.id.activity_share_post_kabupatenSpinner);
 		mPostSubDistrictSpinner = (Spinner) findViewById(R.id.activity_share_post_kecamatanSpinner);
-		mPostSocialMediaSpinner = (Spinner) findViewById(R.id.activity_share_post_jejaringSosialSpinner);
+		mPostSubProjectSpinner = (Spinner) findViewById(R.id.activity_share_post_subproject_spinner);
+
+		mPostProvinceSpinner.setVisibility(View.VISIBLE);
+		mPostDistrictSpinner.setVisibility(View.GONE);
+		mPostSubDistrictSpinner.setVisibility(View.GONE);
+		mPostSubProjectSpinner.setVisibility(View.GONE);
+
+		mPostProvinceSpinner
+				.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+					@Override
+					public void onItemSelected(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						Province province = (Province) mPostProvinceSpinner
+								.getItemAtPosition(arg2);
+						if (province.getId() != mProvince.getId()) {
+							loadDistrict(province);
+						}
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+						// TODO Auto-generated method stub
+
+					}
+				});
 
 		mSaraCheckBox = (CheckBox) findViewById(R.id.activity_share_post_saraCheckBox);
 		mResponsibleCheckBox = (CheckBox) findViewById(R.id.activity_share_post_responsibleCheckBox);
+
+		mImagePreview = (ImageView) findViewById(R.id.activity_share_post_image_preview_imageview);
 
 		mInsertPictureButton = (Button) findViewById(R.id.activity_share_post_sisipGambarButton);
 
@@ -100,16 +144,35 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 		});
 	}
 
+	protected void loadDistrict(Province province) {
+		// TODO Auto-generated method stub
+
+	}
+
+	protected void loadSubDistrict(District district) {
+		// TODO Auto-generated method stub
+
+	}
+
+	protected void loadSubProject(SubDistrict subDistrict) {
+		// TODO Auto-generated method stub
+
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == PICKFILE_RESULT_CODE) {
-			Uri uri = data.getData();
-			log.info( "File Uri: " + uri.toString());
-			// Get the path
-			File file =new File(uri.getPath());
-			log.info(  "File Path: " + file.toString());
-			mFilePath = file.toString();
+			if (data != null) {
+				Uri uri = data.getData();
+				log.info("File Uri: " + uri.toString());
+				// Get the path
+				File file = new File(uri.getPath());
+				log.info("File Path: " + file.toString());
+				mFilePath = file.toString();
 
+				mImagePreview.setVisibility(View.VISIBLE);
+				mImagePreview.setImageURI(uri);
+			}
 		}
 		// int targetW = mImageView.getWidth();
 		// int targetH = mImageView.getHeight();
@@ -156,6 +219,21 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 		}
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Load provinces data from server
+	 */
+	private void loadProvinces() {
+		AsyncTask<String, Integer, Integer> task = new AsyncTask<String, Integer, Integer>() {
+
+			@Override
+			protected Integer doInBackground(String... params) {
+				return 0;
+			}
+
+		};
+		task.execute();
 	}
 
 	/**

@@ -86,33 +86,35 @@
             android:layout_height="wrap_content"
             android:text="Sisipkan Gambar" />
 
+        <ImageView
+            android:id="@+id/activity_share_post_image_preview_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:visibility="gone"/>
+
         <Spinner
             android:id="@+id/activity_share_post_propinsiSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/propinsi_arrays"
-            android:prompt="@string/propinsi_prompt" />
+            />
 
         <Spinner
             android:id="@+id/activity_share_post_kabupatenSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/kabupaten_arrays"
-            android:prompt="@string/kabupaten_prompt" />
+             />
 
         <Spinner
             android:id="@+id/activity_share_post_kecamatanSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/kecamatan_arrays"
-            android:prompt="@string/kecamatan_prompt" />
+             />
 
         <Spinner
-            android:id="@+id/activity_share_post_jejaringSosialSpinner"
+            android:id="@+id/activity_share_post_subproject_spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/jejaring_arrays"
-            android:prompt="@string/jejaring_prompt" />
+            
+             />
 
         <CheckBox
             android:id="@+id/activity_share_post_saraCheckBox"
