@@ -403,7 +403,6 @@ public class NetworkUtils {
 		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
-
 			resp = getHttpClient().execute(request);
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
 
@@ -455,18 +454,19 @@ public class NetworkUtils {
 	 * @param page
 	 * @return null if error
 	 */
-	public static ArrayList<District> getDistricts(int page) {
+	public static ArrayList<District> getDistricts(long page) {
 		final HttpResponse resp;
 		String uri = null;
 
-		if (page <= 0) {
-			uri = BASE_URL + "/districts?page=1&" + PARAM_PER_PAGE + "="
-					+ DEFAULT_PER_PAGE;
-		} else {
-			uri = BASE_URL + "/districts?page=" + page + "&" + PARAM_PER_PAGE
-					+ "=" + DEFAULT_PER_PAGE;
-		}
-
+//		if (page <= 0) {
+//			uri = BASE_URL + "/districts?page=1&" + PARAM_PER_PAGE + "="
+//					+ DEFAULT_PER_PAGE;
+//		} else {
+//			uri = BASE_URL + "/districts?page=" + page + "&" + PARAM_PER_PAGE
+//					+ "=" + DEFAULT_PER_PAGE;
+//		}
+		uri = BASE_URL+"/district/"+page;
+				
 		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
@@ -603,17 +603,17 @@ public class NetworkUtils {
 	 * @param page
 	 * @return null if error
 	 */
-	public static ArrayList<SubDistrict> getSubdistricts(int page) {
+	public static ArrayList<SubDistrict> getSubdistricts(long page) {
 		final HttpResponse resp;
 		String uri = null;
-		if (page <= 0) {
-			uri = BASE_URL + "/subdistricts?page=1&" + PARAM_PER_PAGE + "="
-					+ DEFAULT_PER_PAGE;
-		} else {
-			uri = BASE_URL + "/subdistricts?page=" + page + "&"
-					+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
-		}
-
+//		if (page <= 0) {
+//			uri = BASE_URL + "/subdistricts?page=1&" + PARAM_PER_PAGE + "="
+//					+ DEFAULT_PER_PAGE;
+//		} else {
+//			uri = BASE_URL + "/subdistricts?page=" + page + "&"
+//					+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+//		}
+		uri = BASE_URL +"/subdistricts/"+page;
 		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
