@@ -1,11 +1,13 @@
 package com.jalinsuara.android.news;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -22,6 +24,7 @@ import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.model.News;
+import com.jalinsuara.android.project.province.ProvinceAdapter;
 import com.jalinsuara.android.projects.model.District;
 import com.jalinsuara.android.projects.model.Province;
 import com.jalinsuara.android.projects.model.SubDistrict;
@@ -83,10 +86,10 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		Log.d("-----","muncul");
 		setContentView(R.layout.activity_share_news);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+		
 		resetStatus();
 		setStatusShowContent();
 
@@ -142,6 +145,10 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 				startActivityForResult(intent, PICKFILE_RESULT_CODE);
 			}
 		});
+		
+		//load province
+		LoadProvinces province = new LoadProvinces();
+		province.execute();
 	}
 
 	protected void loadDistrict(Province province) {
@@ -224,18 +231,47 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	/**
 	 * Load provinces data from server
 	 */
-	private void loadProvinces() {
-		AsyncTask<String, Integer, Integer> task = new AsyncTask<String, Integer, Integer>() {
+	private class LoadProvinces extends AsyncTask<String, Integer, Integer> {
 
-			@Override
-			protected Integer doInBackground(String... params) {
-				return 0;
+		private final static int E_OK = 1;
+		private final static int E_ERROR = 2;
+		private ArrayList<Province> listProvince;
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			resetStatus();
+			setStatusProgress(getString(R.string.loading), false);
+		}
+
+		@Override
+		protected Integer doInBackground(String... params) {
+				listProvince = NetworkUtils.getProvinces();
+				if (listProvince != null) {
+					return E_OK;
+				}
+			return E_ERROR;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			super.onPostExecute(result);
+			if (!isFinishing()) {
+				if (result == E_OK) {
+					
+					ProvinceAdapter provinceAdapter = new ProvinceAdapter(getBaseContext(),listProvince);
+					
+					//finish();
+				} else {
+					// resetStatus();
+					// setStatusShowContent();
+					Toast.makeText(getBaseContext(), R.string.error,
+							Toast.LENGTH_SHORT).show();
+					//
+					// }
+				}
 			}
-
-		};
-		task.execute();
+		}
 	}
-
 	/**
 	 * On submit button click
 	 */
@@ -320,3 +356,4 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 		}
 	}
 }
+
