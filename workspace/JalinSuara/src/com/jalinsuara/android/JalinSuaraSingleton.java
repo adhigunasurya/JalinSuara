@@ -1,6 +1,7 @@
 package com.jalinsuara.android;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,14 +11,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.jalinsuara.android.news.model.News;
-import com.jalinsuara.android.search.SearchResult;
 import com.jalinsuara.android.projects.model.District;
 import com.jalinsuara.android.projects.model.Province;
+import com.jalinsuara.android.projects.model.SubDistrict;
 import com.jalinsuara.android.projects.model.SubProject;
+import com.jalinsuara.android.search.SearchResult;
 
 /**
  * Singleton used in the entire application
@@ -33,6 +32,7 @@ public class JalinSuaraSingleton {
 	private static final String SESSION = "session";
 
 	private static final String KEY_TOKEN = "token";
+
 	private static final String KEY_EMAIL = "email";
 
 	private static Logger log = LoggerFactory
@@ -110,6 +110,8 @@ public class JalinSuaraSingleton {
 	 */
 	private String mEmailUser;
 
+	private JalinSuaraCache mCache;
+
 	private JalinSuaraSingleton(Context context) {
 		log.info("JalinSuaraSingleton()");
 		setContext(context);
@@ -119,12 +121,15 @@ public class JalinSuaraSingleton {
 				Context.MODE_PRIVATE);
 		setToken(pref.getString(KEY_TOKEN, null));
 		setEmail(pref.getString(KEY_EMAIL, null));
-		log.info("Load email: "+getEmail());
-		log.info("Load token: "+getToken());
+		log.info("Load email: " + getEmail());
+		log.info("Load token: " + getToken());
 
 		// init news list
 		setNewsList(new ArrayList<News>());
 		setSubProjectList(new ArrayList<SubProject>());
+
+		mCache = new JalinSuaraCache();
+
 	}
 
 	public synchronized ArrayList<News> getNewsList() {
@@ -272,7 +277,7 @@ public class JalinSuaraSingleton {
 	 * @param email
 	 */
 	public void signIn(String token, String email) {
-		log.info("sign in "+token+", "+email);
+		log.info("sign in " + token + ", " + email);
 		setToken(token);
 		setEmail(email);
 		SharedPreferences pref = mContext.getSharedPreferences(SESSION,
@@ -283,4 +288,9 @@ public class JalinSuaraSingleton {
 		editor.commit();
 
 	}
+
+	public JalinSuaraCache getCache() {
+		return mCache;
+	}
+
 }

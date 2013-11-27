@@ -2,13 +2,15 @@ package com.jalinsuara.android.projects.model;
 
 import java.util.Date;
 
+import com.jalinsuara.android.Nameable;
+
 /**
  * Model for disctrict
  * 
  * @author tonoman3g
  * 
  */
-public class District {
+public class District extends Nameable{
 
 	private long id;
 

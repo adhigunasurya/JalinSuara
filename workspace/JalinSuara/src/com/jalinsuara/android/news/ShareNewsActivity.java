@@ -9,18 +9,24 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
+import com.jalinsuara.android.JalinSuaraCache;
 import com.jalinsuara.android.JalinSuaraSingleton;
+import com.jalinsuara.android.Nameable;
+import com.jalinsuara.android.NameableArrayAdapter;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.model.News;
@@ -40,6 +46,27 @@ import com.jalinsuara.android.projects.model.SubProject;
  * 
  */
 public class ShareNewsActivity extends BaseFragmentActivity {
+
+	/**
+	 * extra for province id, if this extra exists, we should load district..
+	 */
+	public static final String EXTRA_PROVINCE_ID = "province_id";
+
+	/**
+	 * extra for province id, if this extra exists, we should load subdistrict..
+	 */
+	public static final String EXTRA_DISTRICT_ID = "district+id";
+
+	/**
+	 * extra for province id, if this extra exists, we should load subproject
+	 */
+	public static final String EXTRA_SUB_DISTRICT_ID = "sub_district_id";
+
+	/**
+	 * extra for province id, if this extra exists, we just use this for post
+	 * parameter in share news API
+	 */
+	public static final String EXTRA_SUB_PROJECT_ID = "sub_project";
 
 	/**
 	 * Code for starting activity to pick picture
@@ -77,28 +104,61 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 	private ImageView mImagePreview;
 
+	/**
+	 * Selected province
+	 */
 	private Province mProvince;
 
+	/**
+	 * Selected district
+	 */
 	private District mDistrict;
 
+	/**
+	 * Selected subdistrict
+	 */
 	private SubDistrict mSubDistrict;
 
+	/**
+	 * Selected subproject
+	 */
 	private SubProject mSubProject;
-	
-	private ProvinceAdapter provinceAdapter;
-	
-	private DistrictAdapter districtAdapter;
-	
-	private SubDistrictAdapter subDistrictAdapter;
-	
+
+	/**
+	 * spinner adapter for provinces
+	 */
+	public ArrayAdapter<Nameable> mProvinceAdapter;
+
+	public ArrayList<Province> mProvinceList;
+
+	/**
+	 * spinner adapter for districts
+	 */
+	public ArrayAdapter<Nameable> mDistrictAdapter;
+
+	public ArrayList<District> mDistrictList;
+
+	/**
+	 * spinner adapter for subdistricts
+	 */
+	public ArrayAdapter<Nameable> mSubDistrictAdapter;
+
+	public ArrayList<SubDistrict> mSubDistrictList;
+
+	/**
+	 * spinner adapter for sub project
+	 */
+	public ArrayAdapter<Nameable> mSubProjectAdapter;
+
+	public ArrayList<SubProject> mSubProjectList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("-----","muncul");
+		Log.d("-----", "muncul");
 		setContentView(R.layout.activity_share_news);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		resetStatus();
 		setStatusShowContent();
 
@@ -125,39 +185,83 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 					public void onItemSelected(AdapterView<?> arg0, View arg1,
 							int arg2, long arg3) {
 						Province province = (Province) mPostProvinceSpinner
-								.getItemAtPosition(arg2);
-						if (province.getId() != mProvince.getId()) {
-							LoadDistrict district = new LoadDistrict();
-							district.execute(Long.toString(province.getId()));
+								.getSelectedItem();
+						if (province != null) {
+							if (mProvince != null) {
+								if (province.getId() != mProvince.getId()) {
+									LoadDistrict district = new LoadDistrict();
+									district.execute(Long.toString(province
+											.getId()));
+								}
+							} else {
+								LoadDistrict district = new LoadDistrict();
+								district.execute(Long.toString(province.getId()));
+							}
 						}
 					}
 
 					@Override
 					public void onNothingSelected(AdapterView<?> arg0) {
-						// TODO Auto-generated method stub
 
 					}
 				});
+
 		mPostDistrictSpinner
-		.setOnItemSelectedListener(new OnItemSelectedListener() {
+				.setOnItemSelectedListener(new OnItemSelectedListener() {
 
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				District district = (District) mPostDistrictSpinner
-						.getItemAtPosition(arg2);
-				if (district.getId() != mDistrict.getId()) {
-					LoadSubDistrict subDistrict = new LoadSubDistrict();
-					subDistrict.execute(Long.toString(district.getId()));
-				}
-			}
+					@Override
+					public void onItemSelected(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						District district = (District) mPostDistrictSpinner
+								.getSelectedItem();
+						if (district != null) {
+							if (mDistrict != null) {
+								if (district.getId() != mDistrict.getId()) {
+									LoadSubDistrict subDistrict = new LoadSubDistrict();
+									subDistrict.execute(Long.toString(district
+											.getId()));
+								}
+							} else {
+								LoadSubDistrict subDistrict = new LoadSubDistrict();
+								subDistrict.execute(Long.toString(district
+										.getId()));
+							}
+						}
+					}
 
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
 
-			}
-		});
+					}
+				});
+
+		mPostSubDistrictSpinner
+				.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+					@Override
+					public void onItemSelected(AdapterView<?> arg0, View arg1,
+							int arg2, long arg3) {
+						SubDistrict subdistrict = (SubDistrict) mPostSubDistrictSpinner
+								.getSelectedItem();
+						if (subdistrict != null) {
+							if (mSubDistrict != null) {
+								if (subdistrict.getId() != mSubDistrict.getId()) {
+									LoadSubProject task = new LoadSubProject();
+									task.execute(Long.toString(subdistrict
+											.getId()));
+								}
+							} else {
+								LoadSubProject task = new LoadSubProject();
+								task.execute(Long.toString(subdistrict.getId()));
+							}
+						}
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0) {
+
+					}
+				});
 		mSaraCheckBox = (CheckBox) findViewById(R.id.activity_share_post_saraCheckBox);
 		mResponsibleCheckBox = (CheckBox) findViewById(R.id.activity_share_post_responsibleCheckBox);
 
@@ -174,20 +278,18 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 				startActivityForResult(intent, PICKFILE_RESULT_CODE);
 			}
 		});
-		
-		
-		//load province
+
+		// load province
 		LoadProvinces province = new LoadProvinces();
 		province.execute();
-		
-		
+
 	}
 
 	private class LoadDistrict extends AsyncTask<String, Integer, Integer> {
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;
-		private ArrayList<District> listDistrict;
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -197,11 +299,22 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-				String provinceId = params[0];
-				listDistrict = NetworkUtils.getDistricts(Long.parseLong(params[0]));
-				if (listDistrict != null) {
-					return E_OK;
-				}
+			String provinceIdString = params[0];
+			long provinceId = Long.parseLong(provinceIdString);
+
+			JalinSuaraSingleton singleton = JalinSuaraSingleton
+					.getInstance(getBaseContext());
+			JalinSuaraCache cache = singleton.getCache();
+			if (cache.isDistrictsCached(provinceId)) {
+				mDistrictList = cache.getCachedDistricts(provinceId);
+			} else {
+				mDistrictList = NetworkUtils.getDistricts(provinceId, 0);
+				cache.putDistricts(provinceId, mDistrictList);
+			}
+
+			if (mDistrictList != null) {
+				return E_OK;
+			}
 			return E_ERROR;
 		}
 
@@ -210,17 +323,19 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
 				if (result == E_OK) {
-					
-					districtAdapter = new DistrictAdapter(getBaseContext(),listDistrict);
-					
-					//finish();
+
+					resetStatus();
+					setStatusShowContent();
+					mDistrictAdapter = new NameableArrayAdapter(
+							getBaseContext(), mDistrictList);
+					mPostDistrictSpinner.setAdapter(mDistrictAdapter);
+					mPostDistrictSpinner.setVisibility(View.VISIBLE);
+
 				} else {
-					// resetStatus();
-					// setStatusShowContent();
+					resetStatus();
+					setStatusError(getString(R.string.error));
 					Toast.makeText(getBaseContext(), R.string.error,
 							Toast.LENGTH_SHORT).show();
-					//
-					// }
 				}
 			}
 		}
@@ -230,7 +345,7 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;
-		private ArrayList<SubDistrict> listSubDistrict;
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -240,11 +355,22 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-				String provinceId = params[0];
-				listSubDistrict = NetworkUtils.getSubdistricts(Long.parseLong(params[0]));
-				if (listSubDistrict != null) {
-					return E_OK;
-				}
+			String districtIds = params[0];
+
+			long districtId = Long.parseLong(districtIds);
+
+			JalinSuaraSingleton singleton = JalinSuaraSingleton
+					.getInstance(getBaseContext());
+			JalinSuaraCache cache = singleton.getCache();
+			if (cache.isSubDistrictsCached(districtId)) {
+				mSubDistrictList = cache.getCachedSubDistricts(districtId);
+			} else {
+				mSubDistrictList = NetworkUtils.getSubdistricts(districtId, 0);
+				cache.putSubDistricts(districtId, mSubDistrictList);
+			}
+			if (mSubDistrictList != null) {
+				return E_OK;
+			}
 			return E_ERROR;
 		}
 
@@ -253,25 +379,86 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
 				if (result == E_OK) {
-					
-					subDistrictAdapter = new SubDistrictAdapter(getBaseContext(),listSubDistrict);
-					
-					//finish();
+
+					mSubDistrictAdapter = new NameableArrayAdapter(
+							getBaseContext(), mSubDistrictList);
+					mPostSubDistrictSpinner.setAdapter(mSubDistrictAdapter);
+					mPostSubDistrictSpinner.setVisibility(View.VISIBLE);
+
+					resetStatus();
+					setStatusShowContent();
+
 				} else {
-					// resetStatus();
-					// setStatusShowContent();
+					resetStatus();
+					setStatusError(getString(R.string.error));
 					Toast.makeText(getBaseContext(), R.string.error,
 							Toast.LENGTH_SHORT).show();
-					//
-					// }
 				}
 			}
 		}
 	}
 
-	protected void loadSubProject(SubDistrict subDistrict) {
-		// TODO Auto-generated method stub
-		
+	/**
+	 * Load subproject
+	 * 
+	 * @author tonoman3g
+	 * 
+	 */
+	private class LoadSubProject extends AsyncTask<String, Integer, Integer> {
+
+		private final static int E_OK = 1;
+		private final static int E_ERROR = 2;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			resetStatus();
+			setStatusProgress(getString(R.string.loading), false);
+		}
+
+		@Override
+		protected Integer doInBackground(String... params) {
+			String subDistrictIds = params[0];
+
+			long subDistrictId = Long.parseLong(subDistrictIds);
+
+			JalinSuaraSingleton singleton = JalinSuaraSingleton
+					.getInstance(getBaseContext());
+			JalinSuaraCache cache = singleton.getCache();
+			if (cache.isSubProjectsCached(subDistrictId)) {
+				mSubProjectList = cache.getCachedSubProjects(subDistrictId);
+			} else {
+				mSubProjectList = NetworkUtils.getSubProjects(subDistrictId, 0);
+				cache.putSubProjects(subDistrictId, mSubProjectList);
+			}
+			if (mSubProjectList != null) {
+				return E_OK;
+			}
+			return E_ERROR;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			super.onPostExecute(result);
+			if (!isFinishing()) {
+				if (result == E_OK) {
+
+					mSubProjectAdapter = new NameableArrayAdapter(
+							getBaseContext(), mSubProjectList);
+					mPostSubProjectSpinner.setAdapter(mSubProjectAdapter);
+					mPostSubProjectSpinner.setVisibility(View.VISIBLE);
+
+					resetStatus();
+					setStatusShowContent();
+
+				} else {
+					resetStatus();
+					setStatusError(getString(R.string.error));
+					Toast.makeText(getBaseContext(), R.string.error,
+							Toast.LENGTH_SHORT).show();
+				}
+			}
+		}
 	}
 
 	@Override
@@ -343,7 +530,7 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;
-		private ArrayList<Province> listProvince;
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -353,10 +540,22 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 		@Override
 		protected Integer doInBackground(String... params) {
-				listProvince = NetworkUtils.getProvinces();
-				if (listProvince != null) {
-					return E_OK;
+
+			JalinSuaraSingleton singleton = JalinSuaraSingleton
+					.getInstance(getBaseContext());
+			JalinSuaraCache cache = singleton.getCache();
+
+			if (cache.isProvincesCached()) {
+				mProvinceList = singleton.getCache().getCachedProvinces();
+			} else {
+				mProvinceList = NetworkUtils.getProvinces();
+				for (Province province : mProvinceList) {
+					cache.putProvince(province.getId(), province);
 				}
+			}
+			if (mProvinceList != null) {
+				return E_OK;
+			}
 			return E_ERROR;
 		}
 
@@ -365,21 +564,24 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
 				if (result == E_OK) {
-					
-					provinceAdapter = new ProvinceAdapter(getBaseContext(),listProvince);
-					
-					//finish();
+
+					mProvinceAdapter = new NameableArrayAdapter(
+							getBaseContext(), mProvinceList);
+					mPostProvinceSpinner.setAdapter(mProvinceAdapter);
+
+					resetStatus();
+					setStatusShowContent();
+
 				} else {
-					// resetStatus();
-					// setStatusShowContent();
+					resetStatus();
+					setStatusError(getString(R.string.error));
 					Toast.makeText(getBaseContext(), R.string.error,
 							Toast.LENGTH_SHORT).show();
-					//
-					// }
 				}
 			}
 		}
 	}
+
 	/**
 	 * On submit button click
 	 */
@@ -464,4 +666,3 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 		}
 	}
 }
-

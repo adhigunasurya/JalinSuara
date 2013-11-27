@@ -2,13 +2,15 @@ package com.jalinsuara.android.projects.model;
 
 import java.util.Date;
 
+import com.jalinsuara.android.Nameable;
+
 /**
  * Model for province
  * 
  * @author tonoman3g
  * 
  */
-public class Province {
+public class Province extends Nameable{
 
 	private long id;
 
@@ -19,6 +21,8 @@ public class Province {
 	private Date createdAt;
 
 	private Date updatedAt;
+	
+	private String name;
 
 	/**
 	 * @return the id
@@ -95,16 +99,23 @@ public class Province {
 		this.updatedAt = updatedAt;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Province [id=" + id + ", latitude=" + latitude + ", longitude="
 				+ longitude + ", createdAt=" + createdAt + ", updatedAt="
-				+ updatedAt + "]";
+				+ updatedAt + ", name=" + name + "]";
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

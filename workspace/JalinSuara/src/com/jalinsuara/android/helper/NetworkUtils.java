@@ -391,6 +391,78 @@ public class NetworkUtils {
 	}
 
 	/**
+	 * Get sub project from server
+	 * 
+	 * 
+	 * @param subdistrictId
+	 * @param page
+	 *            if page == -1 no parameter
+	 * @return null if error
+	 */
+	public static ArrayList<SubProject> getSubProjects(long subdistrictId,
+			int page) {
+		final HttpResponse resp;
+		String uri = null;
+		if (page <= 0) {
+			uri = BASE_URL + "/subdistricts/" + subdistrictId + "/activities";
+		} else {
+			uri = BASE_URL + "/subdistricts/" + subdistrictId
+					+ "/activities?page=" + page + "&" + PARAM_PER_PAGE + "="
+					+ DEFAULT_PER_PAGE;
+		}
+
+		log.info("Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+
+					log.info("Response retrieved");
+					ireader.close();
+
+					String response = sb.toString();
+
+					if (response.length() > 0) {
+						try {
+							Gson gson = getGson();
+							Type collectionType = new TypeToken<ArrayList<SubProject>>() {
+							}.getType();
+							ArrayList<SubProject> retval = gson.fromJson(
+									response, collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				log.error("Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
 	 * Retrieve all provinces
 	 * 
 	 * @return null if error
@@ -458,15 +530,15 @@ public class NetworkUtils {
 		final HttpResponse resp;
 		String uri = null;
 
-//		if (page <= 0) {
-//			uri = BASE_URL + "/districts?page=1&" + PARAM_PER_PAGE + "="
-//					+ DEFAULT_PER_PAGE;
-//		} else {
-//			uri = BASE_URL + "/districts?page=" + page + "&" + PARAM_PER_PAGE
-//					+ "=" + DEFAULT_PER_PAGE;
-//		}
-		uri = BASE_URL+"/district/"+page;
-				
+		if (page <= 0) {
+			uri = BASE_URL + "/districts?page=1&" + PARAM_PER_PAGE + "="
+					+ DEFAULT_PER_PAGE;
+		} else {
+			uri = BASE_URL + "/districts?page=" + page + "&" + PARAM_PER_PAGE
+					+ "=" + DEFAULT_PER_PAGE;
+		}
+		uri = BASE_URL + "/district/" + page;
+
 		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
@@ -534,8 +606,7 @@ public class NetworkUtils {
 			return null;
 		} else {
 			if (page <= 0) {
-				uri = BASE_URL + "/provinces/" + provinceId + "/districts"
-						+ "?page=1&" + PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+				uri = BASE_URL + "/provinces/" + provinceId + "/districts";
 			} else {
 				uri = BASE_URL + "/provinces/" + provinceId + "/districts"
 						+ "?page=" + page + "&" + PARAM_PER_PAGE + "="
@@ -606,14 +677,14 @@ public class NetworkUtils {
 	public static ArrayList<SubDistrict> getSubdistricts(long page) {
 		final HttpResponse resp;
 		String uri = null;
-//		if (page <= 0) {
-//			uri = BASE_URL + "/subdistricts?page=1&" + PARAM_PER_PAGE + "="
-//					+ DEFAULT_PER_PAGE;
-//		} else {
-//			uri = BASE_URL + "/subdistricts?page=" + page + "&"
-//					+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
-//		}
-		uri = BASE_URL +"/subdistricts/"+page;
+		// if (page <= 0) {
+		// uri = BASE_URL + "/subdistricts?page=1&" + PARAM_PER_PAGE + "="
+		// + DEFAULT_PER_PAGE;
+		// } else {
+		// uri = BASE_URL + "/subdistricts?page=" + page + "&"
+		// + PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+		// }
+		uri = BASE_URL + "/subdistricts/" + page;
 		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {
@@ -677,8 +748,7 @@ public class NetworkUtils {
 			return null;
 		} else {
 			if (page <= 0) {
-				uri = BASE_URL + "/districts/" + districtId + "/subdistricts"
-						+ "?page=1&" + PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+				uri = BASE_URL + "/districts/" + districtId + "/subdistricts";
 			} else {
 				uri = BASE_URL + "/districts/" + districtId + "/subdistricts"
 						+ "?page=" + page + "&" + PARAM_PER_PAGE + "="

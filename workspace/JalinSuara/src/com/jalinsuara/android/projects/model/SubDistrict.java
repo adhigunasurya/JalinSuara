@@ -2,13 +2,15 @@ package com.jalinsuara.android.projects.model;
 
 import java.util.Date;
 
+import com.jalinsuara.android.Nameable;
+
 /**
  * Model for subdisctrict
  * 
  * @author tonoman3g
  * 
  */
-public class SubDistrict {
+public class SubDistrict extends Nameable{
 
 	private long id;
 

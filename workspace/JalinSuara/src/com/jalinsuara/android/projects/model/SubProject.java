@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import com.google.gson.JsonObject;
+import com.jalinsuara.android.Nameable;
 
 /**
  * Model for sub project
@@ -11,7 +12,7 @@ import com.google.gson.JsonObject;
  * @author tonoman3g
  * 
  */
-public class SubProject {
+public class SubProject extends Nameable {
 
 	private long id;
 
