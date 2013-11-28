@@ -25,7 +25,8 @@
             android:id="@+id/activity_share_post_judul_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/activity_share_post_budget_textview"
@@ -37,7 +38,9 @@
             android:id="@+id/activity_share_post_budget_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" >
+            android:ems="10"
+            android:inputType="number"
+            android:singleLine="true" >
 
             <requestFocus />
         </EditText>
@@ -52,7 +55,9 @@
             android:id="@+id/activity_share_post_dimensi_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ems="10" />
+            android:ems="10"
+            android:inputType="number"
+            android:singleLine="true" />
 
         <TextView
             android:id="@+id/activity_share_post_manfaat_textview"
@@ -86,35 +91,38 @@
             android:layout_height="wrap_content"
             android:text="Sisipkan Gambar" />
 
-        <ImageView
-            android:id="@+id/activity_share_post_image_preview_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:visibility="gone"/>
-
         <Spinner
             android:id="@+id/activity_share_post_propinsiSpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <Spinner
             android:id="@+id/activity_share_post_kabupatenSpinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-             />
+            android:layout_height="wrap_content" />
 
         <Spinner
             android:id="@+id/activity_share_post_kecamatanSpinner"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/activity_share_post_postable_activity_checkbox"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-             />
+            android:hint="Centang ini untuk menambahkan cerita ke sub proyek"
+            android:text="Tambah cerita ke sub proyek" />
 
         <Spinner
             android:id="@+id/activity_share_post_subproject_spinner"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/activity_share_post_image_preview_imageview"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
-            
-             />
+            android:visibility="gone" />
 
         <CheckBox
             android:id="@+id/activity_share_post_saraCheckBox"

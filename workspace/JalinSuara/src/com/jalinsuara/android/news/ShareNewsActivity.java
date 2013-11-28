@@ -1,6 +1,5 @@
 package com.jalinsuara.android.news;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import android.content.Intent;
@@ -9,16 +8,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.view.MenuItem;
@@ -28,11 +27,10 @@ import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.Nameable;
 import com.jalinsuara.android.NameableArrayAdapter;
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.helper.FileUtils;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.model.News;
-import com.jalinsuara.android.project.district.DistrictAdapter;
-import com.jalinsuara.android.project.province.ProvinceAdapter;
-import com.jalinsuara.android.project.subdistrict.SubDistrictAdapter;
+import com.jalinsuara.android.news.model.ShareNewsParams;
 import com.jalinsuara.android.projects.model.District;
 import com.jalinsuara.android.projects.model.Province;
 import com.jalinsuara.android.projects.model.SubDistrict;
@@ -96,11 +94,13 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 	private Spinner mPostSubProjectSpinner;
 
+	private CheckBox mPostToActivityCheckBox;
+
 	private CheckBox mSaraCheckBox;
 
 	private CheckBox mResponsibleCheckBox;
 
-	private String mFilePath;
+	private Uri mFileImageUri;
 
 	private ImageView mImagePreview;
 
@@ -172,6 +172,12 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 		mPostDistrictSpinner = (Spinner) findViewById(R.id.activity_share_post_kabupatenSpinner);
 		mPostSubDistrictSpinner = (Spinner) findViewById(R.id.activity_share_post_kecamatanSpinner);
 		mPostSubProjectSpinner = (Spinner) findViewById(R.id.activity_share_post_subproject_spinner);
+
+		mPostToActivityCheckBox = (CheckBox) findViewById(R.id.activity_share_post_postable_activity_checkbox);
+		mSaraCheckBox = (CheckBox) findViewById(R.id.activity_share_post_saraCheckBox);
+		mResponsibleCheckBox = (CheckBox) findViewById(R.id.activity_share_post_responsibleCheckBox);
+		mImagePreview = (ImageView) findViewById(R.id.activity_share_post_image_preview_imageview);
+		mInsertPictureButton = (Button) findViewById(R.id.activity_share_post_sisipGambarButton);
 
 		mPostProvinceSpinner.setVisibility(View.VISIBLE);
 		mPostDistrictSpinner.setVisibility(View.GONE);
@@ -262,12 +268,6 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 					}
 				});
-		mSaraCheckBox = (CheckBox) findViewById(R.id.activity_share_post_saraCheckBox);
-		mResponsibleCheckBox = (CheckBox) findViewById(R.id.activity_share_post_responsibleCheckBox);
-
-		mImagePreview = (ImageView) findViewById(R.id.activity_share_post_image_preview_imageview);
-
-		mInsertPictureButton = (Button) findViewById(R.id.activity_share_post_sisipGambarButton);
 
 		mInsertPictureButton.setOnClickListener(new View.OnClickListener() {
 
@@ -278,6 +278,20 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 				startActivityForResult(intent, PICKFILE_RESULT_CODE);
 			}
 		});
+
+		mPostToActivityCheckBox
+				.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView,
+							boolean isChecked) {
+						if (isChecked) {
+							mPostSubProjectSpinner.setVisibility(View.VISIBLE);
+						} else {
+							mPostSubProjectSpinner.setVisibility(View.GONE);
+						}
+					}
+				});
 
 		// load province
 		LoadProvinces province = new LoadProvinces();
@@ -446,7 +460,12 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 					mSubProjectAdapter = new NameableArrayAdapter(
 							getBaseContext(), mSubProjectList);
 					mPostSubProjectSpinner.setAdapter(mSubProjectAdapter);
-					mPostSubProjectSpinner.setVisibility(View.VISIBLE);
+
+					if (mPostToActivityCheckBox.isChecked()) {
+						mPostSubProjectSpinner.setVisibility(View.VISIBLE);
+					} else {
+						mPostSubProjectSpinner.setVisibility(View.GONE);
+					}
 
 					resetStatus();
 					setStatusShowContent();
@@ -465,41 +484,11 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == PICKFILE_RESULT_CODE) {
 			if (data != null) {
-				Uri uri = data.getData();
-				log.info("File Uri: " + uri.toString());
-				// Get the path
-				File file = new File(uri.getPath());
-				log.info("File Path: " + file.toString());
-				mFilePath = file.toString();
-
+				mFileImageUri = data.getData();
 				mImagePreview.setVisibility(View.VISIBLE);
-				mImagePreview.setImageURI(uri);
+				mImagePreview.setImageURI(mFileImageUri);
 			}
 		}
-		// int targetW = mImageView.getWidth();
-		// int targetH = mImageView.getHeight();
-		//
-		// BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-		// bmOptions.inJustDecodeBounds = true;
-		// BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-		// int photoW = bmOptions.outWidth;
-		// int photoH = bmOptions.outHeight;
-		//
-		// int scaleFactor = 1;
-		// if ((targetW > 0) || (targetH > 0)) {
-		// scaleFactor = Math.min(photoW / targetW, photoH / targetH);
-		// }
-		//
-		// bmOptions.inJustDecodeBounds = false;
-		// bmOptions.inSampleSize = scaleFactor;
-		// bmOptions.inPurgeable = true;
-		//
-		// Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath,
-		// bmOptions);
-		//
-		// mImageView.setImageBitmap(bitmap);
-		// mImageView.setVisibility(View.VISIBLE);
-
 	}
 
 	@Override
@@ -588,8 +577,23 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	private void onSubmit() {
 		String title = mPostTitleEditText.getText().toString();
 		String description = mPostContentEditText.getText().toString();
-		String postable_type = News.POSTABLE_ACTIVITY;
-		String postable_id = "5";
+		String postable_type = "";
+		String postable_id = "";
+		String budget = mPostBudgetEditText.getText().toString();
+		String beneficiary = mPostManfaatEditText.getText().toString();
+		String dimensions = mPostDimensionEditText.getText().toString();
+
+		mSubDistrict = (SubDistrict) mPostSubDistrictSpinner.getSelectedItem();
+		mSubProject = (SubProject) mPostSubProjectSpinner.getSelectedItem();
+
+		if (mPostToActivityCheckBox.isChecked()) {
+			postable_type = News.POSTABLE_ACTIVITY;
+			postable_id = String.valueOf(mSubProject.getId());
+		} else {
+			postable_type = News.POSTABLE_SUB_DISTRICT;
+			postable_id = String.valueOf(mSubDistrict.getId());
+		}
+
 		// FIXME
 		String user_id = "5";
 		String auth_token = JalinSuaraSingleton.getInstance(this).getToken();
@@ -604,8 +608,21 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 
 			if (valid) {
 				ShareNewPost newpost = new ShareNewPost();
-				newpost.execute(title, description, postable_type, postable_id,
-						user_id, auth_token, mFilePath);
+				ShareNewsParams param = new ShareNewsParams();
+
+				param.setTitle(title);
+				param.setDescription(description);
+				param.setPostable_type(postable_type);
+				param.setPostable_id(postable_id);
+				param.setUser_id("0");
+				param.setAuth_token(auth_token);
+				param.setFile(FileUtils.getRealPathFromURI(getBaseContext(),
+						mFileImageUri));
+				param.setBudget(budget);
+				param.setBeneficiary(beneficiary);
+				param.setDimensions(dimensions);
+
+				newpost.execute(param);
 			} else {
 				Toast.makeText(this, "Isi semua fields", Toast.LENGTH_SHORT)
 						.show();
@@ -626,25 +643,25 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	 *         postable_id, auth_token,file
 	 * 
 	 */
-	private class ShareNewPost extends AsyncTask<String, Integer, Integer> {
+	private class ShareNewPost extends
+			AsyncTask<ShareNewsParams, Integer, Integer> {
 
 		private final static int E_OK = 1;
 		private final static int E_ERROR = 2;
 
 		@Override
-		protected Integer doInBackground(String... params) {
-			String title = params[0];
-			String description = params[1];
-			String postable_type = params[2];
-			String postable_id = params[3];
-			String user_id = params[4];
-			String auth_token = params[5];
-			String file = params[6];
+		protected void onPreExecute() {
+			super.onPreExecute();
+			resetStatus();
+			setStatusProgress(getString(R.string.loading), false);
+		}
 
-			if (params.length == 6) {
-				String retval = NetworkUtils.postShareNews(title, description,
-						postable_type, postable_id, auth_token, file);
+		@Override
+		protected Integer doInBackground(ShareNewsParams... params) {
+			ShareNewsParams param = params[0];
 
+			if (params != null) {
+				String retval = NetworkUtils.postShareNews(param);
 				if (retval != null) {
 					return E_OK;
 				}
@@ -657,6 +674,10 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
 				if (result == E_OK) {
+					resetStatus();
+					setStatusShowContent();
+					Toast.makeText(getBaseContext(), "Success",
+							Toast.LENGTH_SHORT).show();
 					finish();
 				} else {
 					resetStatus();
@@ -664,5 +685,7 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 				}
 			}
 		}
+
 	}
+
 }

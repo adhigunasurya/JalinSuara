@@ -47,6 +47,7 @@ import com.google.gson.reflect.TypeToken;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.news.model.Comment;
 import com.jalinsuara.android.news.model.News;
+import com.jalinsuara.android.news.model.ShareNewsParams;
 import com.jalinsuara.android.projects.model.District;
 import com.jalinsuara.android.projects.model.Province;
 import com.jalinsuara.android.projects.model.SubDistrict;
@@ -1077,9 +1078,7 @@ public class NetworkUtils {
 	 * @param auth_token
 	 * @return null if there is error
 	 */
-	public static String postShareNews(String title, String description,
-			String postable_type, String postable_id, String auth_token,
-			String image) {
+	public static String postShareNews(ShareNewsParams param) {
 		final HttpResponse resp;
 		String uri = null;
 
@@ -1091,24 +1090,37 @@ public class NetworkUtils {
 					HttpMultipartMode.BROWSER_COMPATIBLE);
 
 			// For File parameters
-			if (image != null) {
+			if (param.getFile() != null) {
+				log.info("file " + param.getFile());
+				String extension = FileUtils.getExtension(param.getFile());
 				String mimeType = MimeTypeMap.getSingleton()
-						.getMimeTypeFromExtension(image.toString());
-				File file = new File(image);
-				entity.addPart("post[picture]", new FileBody(((File) file),
-						mimeType));
+						.getMimeTypeFromExtension(extension);
+				log.info("mimetype: " + mimeType);
+				if (mimeType != null) {
+					File file = new File(param.getFile());
+					entity.addPart("post[picture]", new FileBody(((File) file),
+							mimeType));
+				}
 			}
 
 			// For usual String parameters
-			entity.addPart("post[title]", new StringBody(title));
-			entity.addPart("post[description]", new StringBody(description));
-			entity.addPart("post[postable_type]", new StringBody(postable_type));
-			entity.addPart("post[postable_id]", new StringBody(postable_id));
-			entity.addPart("auth_token", new StringBody(auth_token));
+			entity.addPart("post[title]", new StringBody(param.getTitle()));
+			entity.addPart("post[description]",
+					new StringBody(param.getDescription()));
+			entity.addPart("post[postable_type]",
+					new StringBody(param.getPostable_type()));
+			entity.addPart("post[postable_id]",
+					new StringBody(param.getPostable_id()));
+			entity.addPart("post[budget]", new StringBody(param.getBudget()));
+			entity.addPart("post[beneficiary]",
+					new StringBody(param.getBeneficiary()));
+			entity.addPart("post[dimensions]",
+					new StringBody(param.getDimensions()));
+			entity.addPart("auth_token", new StringBody(param.getAuth_token()));
 
 			request.setEntity(entity);
 
-			log.info("Request: " + uri);
+			log.info("Request: " + request.getRequestLine().toString());
 			resp = getHttpClient().execute(request);
 
 			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED) {
@@ -1129,22 +1141,10 @@ public class NetworkUtils {
 					log.info("Response :" + response);
 					if (response.length() > 0) {
 						try {
-							JsonParser parser = new JsonParser();
-							JsonElement resElmt = parser.parse(response);
-							if (resElmt.isJsonObject()) {
-								JsonObject obj = resElmt.getAsJsonObject();
-								boolean success = obj.get("success")
-										.getAsBoolean();
-
-								if (success) {
-									String message = obj.get("message")
-											.getAsString();
-									return message;
-								} else {
-									String message = obj.get("message")
-											.getAsString();
-									return message;
-								}
+							News news = getGson()
+									.fromJson(response, News.class);
+							if (news.getId() != 0) {
+								return "Success";
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
