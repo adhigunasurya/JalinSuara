@@ -168,16 +168,11 @@ public class ReplyCommentActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (!isFinishing()) {
 				if (result == E_OK) {
-
 					setResult(ACTIVITY_COMPLETE);
 					finish();
 				} else {
-					// resetStatus();
-					// setStatusShowContent();
 					Toast.makeText(getBaseContext(), R.string.error,
 							Toast.LENGTH_SHORT).show();
-					//
-					// }
 				}
 			}
 		}
