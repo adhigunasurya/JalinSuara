@@ -45,6 +45,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.jalinsuara.android.JalinSuaraSingleton;
+import com.jalinsuara.android.R;
 import com.jalinsuara.android.news.model.Comment;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.news.model.ShareNewsParams;
@@ -81,7 +82,7 @@ public class NetworkUtils {
 	public static final String PARAM_PASSWORD = "password";
 
 	/** Timeout (in ms) we specify for each http request */
-	public static final int HTTP_REQUEST_TIMEOUT_MS = 30 * 1000;
+	public static final int HTTP_REQUEST_TIMEOUT_MS = 2 * 60 * 1000;
 
 	/**
 	 * without this params, it still returns about 30 item in one page
@@ -213,6 +214,74 @@ public class NetworkUtils {
 			ex.printStackTrace();
 		}
 
+		return null;
+	}
+
+	/**
+	 * Get related news / post from a certain subproject / activity
+	 * 
+	 * @param subprojectId
+	 * @param page
+	 * @return
+	 */
+	public static ArrayList<News> getPosts(long subprojectId, int page) {
+		final HttpResponse resp;
+		String uri = null;
+		if (page <= 0) {
+			uri = BASE_URL + "/activities/" + subprojectId + "/posts";
+		} else {
+			uri = BASE_URL + "/activities/" + subprojectId + "/posts?page="
+					+ page + "&" + PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+		}
+
+		log.info("Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+
+					log.info("Response retrieved");
+					ireader.close();
+
+					String response = sb.toString();
+
+					if (response.length() > 0) {
+						try {
+							Gson gson = getGson();
+							Type collectionType = new TypeToken<ArrayList<News>>() {
+							}.getType();
+							ArrayList<News> retval = gson.fromJson(response,
+									collectionType);
+							return retval;
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+
+			} else {
+				log.error("Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
 
@@ -678,14 +747,14 @@ public class NetworkUtils {
 	public static ArrayList<SubDistrict> getSubdistricts(long page) {
 		final HttpResponse resp;
 		String uri = null;
-		// if (page <= 0) {
-		// uri = BASE_URL + "/subdistricts?page=1&" + PARAM_PER_PAGE + "="
-		// + DEFAULT_PER_PAGE;
-		// } else {
-		// uri = BASE_URL + "/subdistricts?page=" + page + "&"
-		// + PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
-		// }
-		uri = BASE_URL + "/subdistricts/" + page;
+
+		if (page <= 0) {
+			uri = BASE_URL + "/subdistricts";
+		} else {
+			uri = BASE_URL + "/subdistricts?page=" + page + "&"
+					+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+		}
+
 		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
 		try {

@@ -33,6 +33,8 @@
     <string name="close">Tutup</string>
     <string name="reply">Balas</string>
     <string name="loren_ipsum">Loren ipsum dolores</string>
+    
+    <string name="related_stories">Cerita terkait</string>
     <string name="sub_projects">Sub Proyek</string>
     <string name="share_news">Mulai berbagi</string>
     <string name="search">Cari</string>
@@ -118,5 +120,9 @@
     <string name="link_fb_jalin_suara">https://www.facebook.com/jalin.suara</string>
     <string name="link_fb_psf">https://www.facebook.com/PNPMsupport</string>
     <string name="link_twitter_pnpm_support">https://twitter.com/PNPM_Support/</string>
+    <string name="additional_information">Informasi Tambahan</string>
+    <string name="fund_information">Informasi Dana</string>
+    <string name="activity_information">Informasi Aktivitas</string>
+    
 
 </resources>

@@ -3,6 +3,7 @@ package com.jalinsuara.android.helpers.lazylist;
 import java.io.File;
 
 import android.content.Context;
+import com.jalinsuara.android.R;
 
 /**
  * File Cache written by fedorvlasov (open source) that will be used for caching the image in list item

@@ -1,5 +1,6 @@
 package com.jalinsuara.android.helper;
 
+import com.jalinsuara.android.R;
 import java.net.URI;
 
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;

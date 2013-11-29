@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import android.graphics.Bitmap;
 import android.util.Log;
+import com.jalinsuara.android.R;
 
 /**
  * Memory Cache written by fedorvlasov (open source) 

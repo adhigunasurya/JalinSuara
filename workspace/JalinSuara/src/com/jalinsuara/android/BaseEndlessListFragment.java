@@ -99,8 +99,7 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem,
-				int visibleItemCount, int totalItemCount) {
-			log.info("on scroll");
+				int visibleItemCount, int totalItemCount) {			
 
 			if (mFirst) {
 				log.info("first time : " + totalItemCount);

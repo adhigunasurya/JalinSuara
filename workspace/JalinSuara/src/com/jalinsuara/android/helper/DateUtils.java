@@ -1,6 +1,7 @@
 package com.jalinsuara.android.helper;
 
 import android.annotation.SuppressLint;
+import com.jalinsuara.android.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

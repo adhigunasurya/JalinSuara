@@ -4,3 +4,4 @@
  *
  */
 package com.jalinsuara.android.helpers.lazylist;
+import com.jalinsuara.android.R;

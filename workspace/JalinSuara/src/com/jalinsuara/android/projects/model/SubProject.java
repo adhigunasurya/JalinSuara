@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.google.gson.JsonObject;
 import com.jalinsuara.android.Nameable;
+import com.jalinsuara.android.R;
 
 /**
  * Model for sub project
@@ -55,6 +56,7 @@ public class SubProject extends Nameable {
 	private long subdistrictId;
 	private long categoryId;
 	private HashMap<String, String> dynamicAttributes;
+	private SubDistrict subdistrict;
 
 	/**
 	 * @return the name
@@ -401,18 +403,14 @@ public class SubProject extends Nameable {
 		this.dynamicAttributes = dynamicAttributes;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "SubProject [id=" + id + ", name=" + name + ", latitude="
 				+ latitude + ", longitude=" + longitude + ", createdAt="
 				+ createdAt + ", updatedAt=" + updatedAt + ", pictureFileName="
-				+ pictureFileName + ", pictureContentType="
-				+ pictureContentType + ", pictureFileSize=" + pictureFileSize
+				+ pictureFileName + ", pictureUrl=" + pictureUrl
+				+ ", pictureContentType=" + pictureContentType
+				+ ", pictureFileSize=" + pictureFileSize
 				+ ", pictureUpdatedAt=" + pictureUpdatedAt + ", gmaps=" + gmaps
 				+ ", description=" + description + ", projectLength="
 				+ projectLength + ", projectArea=" + projectArea
@@ -422,7 +420,8 @@ public class SubProject extends Nameable {
 				+ maleBeneficiary + ", femaleBeneficiary=" + femaleBeneficiary
 				+ ", poorBeneficiary=" + poorBeneficiary + ", subdistrictId="
 				+ subdistrictId + ", categoryId=" + categoryId
-				+ ", dynamicAttributes=" + dynamicAttributes + "]";
+				+ ", dynamicAttributes=" + dynamicAttributes + ", subdistrict="
+				+ subdistrict + "]";
 	}
 
 	public String getPictureUrl() {
@@ -431,6 +430,14 @@ public class SubProject extends Nameable {
 
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
+	}
+
+	public SubDistrict getSubdistrict() {
+		return subdistrict;
+	}
+
+	public void setSubdistrict(SubDistrict subdistrict) {
+		this.subdistrict = subdistrict;
 	}
 
 }

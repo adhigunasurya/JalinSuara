@@ -34,10 +34,7 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 		log.info("onActivityCreated");
 
 		resetStatus();
-		setStatusProgress(getResources().getString(R.string.loading), false);
-
-		LoadProject task = new LoadProject();
-		task.execute(1);
+		setStatusProgress(getResources().getString(R.string.loading), false);		
 
 		getListView().setOnScrollListener(new EndlessScrollListener() {
 			@Override

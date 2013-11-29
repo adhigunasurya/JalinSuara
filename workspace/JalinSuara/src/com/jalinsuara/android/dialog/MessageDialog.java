@@ -8,6 +8,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockDialogFragment;
+import com.jalinsuara.android.R;
 
 /**
  * <p>

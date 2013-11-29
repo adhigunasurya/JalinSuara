@@ -48,12 +48,14 @@
             android:id="@+id/fragment_news_description_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:text="@string/loren_ipsum" />
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/fragment_news_map_mapview"
             android:layout_width="200dp"
             android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
             android:focusableInTouchMode="true" />
     </LinearLayout>
 

@@ -3,6 +3,7 @@ package com.jalinsuara.android.helper;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
+import com.jalinsuara.android.R;
 
 /**
  * Layout param utils

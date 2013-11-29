@@ -1,5 +1,6 @@
 package com.jalinsuara.android.search;
 
+import com.jalinsuara.android.R;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;
 

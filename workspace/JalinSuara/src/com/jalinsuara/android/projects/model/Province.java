@@ -3,6 +3,7 @@ package com.jalinsuara.android.projects.model;
 import java.util.Date;
 
 import com.jalinsuara.android.Nameable;
+import com.jalinsuara.android.R;
 
 /**
  * Model for province

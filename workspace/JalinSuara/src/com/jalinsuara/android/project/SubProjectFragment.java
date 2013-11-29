@@ -6,6 +6,7 @@ import java.util.Set;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -16,28 +17,49 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
 import com.jalinsuara.android.projects.model.SubProject;
 
+/**
+ * Fragment to show sub project details
+ * 
+ * @author tonoman3g
+ * @author gabriellewp
+ * 
+ */
 public class SubProjectFragment extends BaseFragment {
 
-	private static final String TAG = null;
 	private SubProject mSubProject;
+
 	private ImageView mImageView;
+
 	private TextView mTitleTextView;
+
 	private TextView mSubTitle1;
+
 	private TextView mInformationTitle1;
+
 	private TextView mInformationContent1;
 	private TextView mInformationContent2;
 	private TextView mInformationContent4;
 	private TextView mInformationContent5;
 	private TextView mInformationContent6;
+
 	private TextView mInformationTitle2;
 	private TextView mInformationContent21;
 	private TextView mInformationContent22;
 	private TextView mInformationContent23;
 	private TextView mInformationContent24;
 	private TextView mInformationContent25;
+
 	private TextView mSubTitle2;
 	private TextView mSubTitle3;
+
+	/**
+	 * Layout for showing additional information
+	 */
 	private LinearLayout mAdditionalInformation;
+
+	/**
+	 * Dynamic text view for showing additional information
+	 */
 	private TextView mTextViewDynamic;
 
 	public SubProjectFragment(SubProject subproject) {
@@ -55,6 +77,7 @@ public class SubProjectFragment extends BaseFragment {
 		super.onActivityCreated(savedInstanceState);
 
 		if (mSubProject != null) {
+
 			mImageView = (ImageView) getView().findViewById(
 					R.id.fragment_sub_project_image_imageview);
 			mTitleTextView = (TextView) getView().findViewById(
@@ -100,8 +123,14 @@ public class SubProjectFragment extends BaseFragment {
 			mSubTitle3 = (TextView) getView()
 					.findViewById(
 							R.id.fragment_sub_project_sub_title_relatedstory_title_textview);
-			ImageLoader loader = new ImageLoader(getSherlockActivity());
-			// loader.DisplayImage(url, imageView);
+
+			// load images
+			if (mSubProject.getPictureUrl() != null
+					&& mSubProject.getPictureUrl().length() > 0) {
+				ImageLoader loader = new ImageLoader(getSherlockActivity());
+				loader.DisplayImage(mSubProject.getPictureUrl(), mImageView);
+			}
+
 			mTitleTextView.setText(mSubProject.getName());
 
 			if (mSubProject.getName() != null) {
@@ -127,6 +156,7 @@ public class SubProjectFragment extends BaseFragment {
 					+ mSubProject.getFemaleBeneficiary());
 			mInformationContent25.setText("Penerima Manfaat (Miskin): "
 					+ mSubProject.getPoorBeneficiary());
+
 			if (mSubProject.getDynamicAttributes() != null) {
 				mAdditionalInformation = (LinearLayout) getView()
 						.findViewById(
@@ -166,6 +196,7 @@ public class SubProjectFragment extends BaseFragment {
 
 			} else {
 				log.info("tak ada nilai dynamic attr");
+				mAdditionalInformation.setVisibility(View.GONE);
 			}
 
 			resetStatus();
@@ -174,6 +205,9 @@ public class SubProjectFragment extends BaseFragment {
 			resetStatus();
 			setStatusError(getString(R.string.error));
 		}
+	}
+
+	private class LoadRelatedStory {
 
 	}
 

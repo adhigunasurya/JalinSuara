@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -18,6 +21,12 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
 import com.jalinsuara.android.news.model.News;
 
+/**
+ * Fragment to show news detail
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class NewsFragment extends BaseFragment {
 
 	private News mNews;
@@ -28,7 +37,7 @@ public class NewsFragment extends BaseFragment {
 	private MapView mMapView;
 
 	public NewsFragment() {
-		
+
 	}
 
 	public NewsFragment(News news) {
@@ -53,44 +62,49 @@ public class NewsFragment extends BaseFragment {
 					R.id.fragment_news_description_textview);
 			mDateUpdatedView = (TextView) getView().findViewById(
 					R.id.fragment_news_date_textview);
-			mMapView = (MapView) getView().findViewById(
-					R.id.fragment_news_map_mapview);
 
 			if (mNews.getPictureUrl() != null
 					&& mNews.getPictureUrl().length() > 0) {
 				ImageLoader loader = new ImageLoader(getSherlockActivity());
 				loader.DisplayImage(mNews.getPictureUrl(), mImageView);
 			}
-			mMapView.onCreate(savedInstanceState);
+
 			mTitleTextView.setText(mNews.getTitle());
 			mDateUpdatedView.setText(com.jalinsuara.android.helper.DateUtils
 					.toStringDateOnly(mNews.getUpdatedAt()));
 			mDescriptionTextView.setText(Html.fromHtml(mNews.getDescription()));
 
 			if (mNews.getLatitude() != 0 && mNews.getLongitude() != 0) {
-				LatLng position = new LatLng(mNews.getLatitude(),
-						mNews.getLongitude());
-				if (mMapView.getMap() != null) {
-					try {
 
-						// force initialize
-						MapsInitializer.initialize(getActivity());
+				if (GooglePlayServicesUtil
+						.isGooglePlayServicesAvailable(getSherlockActivity()) == ConnectionResult.SUCCESS) {
+					mMapView = (MapView) getView().findViewById(
+							R.id.fragment_news_map_mapview);
+					mMapView.onCreate(savedInstanceState);
+					LatLng position = new LatLng(mNews.getLatitude(),
+							mNews.getLongitude());
+					if (mMapView.getMap() != null) {
+						try {
 
-						// move camera
-						mMapView.getMap()
-								.moveCamera(
-										CameraUpdateFactory.newLatLngZoom(
-												position, 10));
+							// force initialize
+							MapsInitializer.initialize(getActivity());
 
-						// mark the map
-						Marker marker = mMapView.getMap().addMarker(
-								new MarkerOptions().position(position));
+							// move camera
+							mMapView.getMap().moveCamera(
+									CameraUpdateFactory.newLatLngZoom(position,
+											10));
 
-					} catch (GooglePlayServicesNotAvailableException impossible) {
-						impossible.printStackTrace();
-						mMapView.setVisibility(View.GONE);
+							// mark the map
+							Marker marker = mMapView.getMap().addMarker(
+									new MarkerOptions().position(position));
+
+						} catch (GooglePlayServicesNotAvailableException impossible) {
+							impossible.printStackTrace();
+							if (mMapView != null) {
+								mMapView.setVisibility(View.GONE);
+							}
+						}
 					}
-
 				}
 			}
 

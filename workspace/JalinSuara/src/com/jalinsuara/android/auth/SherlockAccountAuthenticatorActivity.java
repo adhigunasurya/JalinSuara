@@ -25,6 +25,7 @@ import android.accounts.AccountManager;
 import android.os.Bundle;
 
 import com.actionbarsherlock.app.SherlockActivity;
+import com.jalinsuara.android.R;
 
 /**
  * Base class for implementing an Activity that is used to help implement an

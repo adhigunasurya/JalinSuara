@@ -3,3 +3,4 @@
  *
  */
 package com.jalinsuara.android.dialog;
+import com.jalinsuara.android.R;

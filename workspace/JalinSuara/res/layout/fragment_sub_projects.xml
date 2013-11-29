@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Informasi Aktivitas" />
+                android:text="@string/activity_information" />
 
             <TextView
                 android:id="@+id/fragment_sub_project_information_content_maleproposalquantity_textview"
@@ -100,7 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Informasi Dana" />
+                android:text="@string/fund_information" />
 
             <TextView
                 android:id="@+id/fragment_sub_project_information_content_BLM_textview"
@@ -157,9 +157,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Informasi Tambahan" />
+                android:text="@string/additional_information" />
         </LinearLayout>
-		<LinearLayout
+
+        <LinearLayout
             android:id="@+id/fragment_sub_project_relatedstory_layout"
             style="@style/BoxInner"
             android:layout_width="match_parent"
@@ -173,9 +174,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Cerita Terkait" />
+                android:text="@string/related_stories" />
         </LinearLayout>
-
     </LinearLayout>
 
 </ScrollView>

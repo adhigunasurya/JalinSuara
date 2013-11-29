@@ -3,3 +3,4 @@
  *
  */
 package com.jalinsuara.android.auth;
+import com.jalinsuara.android.R;

@@ -3,3 +3,4 @@
  *
  */
 package com.jalinsuara.android.search;
+import com.jalinsuara.android.R;

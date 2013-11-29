@@ -16,3 +16,6 @@ http://jalinsuara.web.id/id/subdistricts/6717 kayu tanam
 post data
 
 Response :{"activity_id":null,"beneficiary":null,"budget":null,"created_at":"2013-11-28T01:26:49Z","description":"Pembangunan halte di rawa buntu","dimension":null,"gmaps":null,"id":20,"latitude":null,"longitude":null,"picture_content_type":null,"picture_file_name":null,"picture_file_size":null,"picture_updated_at":null,"postable_id":6717,"postable_type":"Subdistrict","status":null,"title":"Halte Rawa Buntu","updated_at":"2013-11-28T01:26:49Z","user_id":7}
+
+
+

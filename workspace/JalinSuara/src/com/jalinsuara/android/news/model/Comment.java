@@ -1,5 +1,6 @@
 package com.jalinsuara.android.news.model;
 
+import com.jalinsuara.android.R;
 import java.util.Date;
 
 /**
