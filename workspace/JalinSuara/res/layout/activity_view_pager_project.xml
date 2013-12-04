@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:background="#CCE24E35"
+            android:background="@color/pressed_jalinsuara_actionbar"
             android:paddingBottom="4dp"
             android:paddingTop="4dp"
             android:textColor="#fff" />

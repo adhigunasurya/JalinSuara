@@ -34,7 +34,7 @@
             style="@style/BoxInner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shadow_green"
+            android:background="@drawable/shadow_jalin_suara"
             android:orientation="vertical" >
 
             <TextView
@@ -91,7 +91,7 @@
             style="@style/BoxInner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shadow_green"
+            android:background="@drawable/shadow_jalin_suara"
             android:orientation="vertical" >
 
             <TextView
@@ -148,7 +148,7 @@
             style="@style/BoxInner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shadow_green"
+            android:background="@drawable/shadow_jalin_suara"
             android:orientation="vertical" >
 
             <TextView
@@ -165,7 +165,7 @@
             style="@style/BoxInner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shadow_green"
+            android:background="@drawable/shadow_jalin_suara"
             android:orientation="vertical" >
 
             <TextView
@@ -177,5 +177,4 @@
                 android:text="@string/related_stories" />
         </LinearLayout>
     </LinearLayout>
-
-</ScrollView>
+</ScrollView>

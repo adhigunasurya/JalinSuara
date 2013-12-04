@@ -5,10 +5,10 @@
 
     <ImageView
         android:id="@+id/list_item_news_imageview"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"        
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="6dp"
+        android:layout_marginRight="2dp"
         android:contentDescription="Image description"
         android:src="@drawable/pnpm_picture_square" />
 
@@ -51,8 +51,8 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxLines="3"
-        android:visibility="gone"        
         android:textColor="#372c24"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:visibility="gone" />
 
 </RelativeLayout>

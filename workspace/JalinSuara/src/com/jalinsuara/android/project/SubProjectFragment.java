@@ -211,34 +211,37 @@ public class SubProjectFragment extends BaseFragment {
 	 * Populate related stories to view
 	 */
 	private void populateRelatedStories() {
-		mRelatedStoriesLayout.setVisibility(View.VISIBLE);
+		if (mRelatedStoriesList.size() > 0) {
+			mRelatedStoriesLayout.setVisibility(View.VISIBLE);
 
-		for (Iterator<News> i = mRelatedStoriesList.iterator(); i.hasNext();) {
-			TextView tv = new TextView(getSherlockActivity());
+			for (Iterator<News> i = mRelatedStoriesList.iterator(); i.hasNext();) {
+				TextView tv = new TextView(getSherlockActivity());
 
-			News news = i.next();
+				News news = i.next();
 
-			LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
-					LayoutParams.WRAP_CONTENT);
+				LayoutParams params = new LayoutParams(
+						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
-			Resources r = getSherlockActivity().getResources();
-			int px = (int) TypedValue.applyDimension(
-					TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics());
+				Resources r = getSherlockActivity().getResources();
+				int px = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics());
 
-			int px2 = (int) TypedValue.applyDimension(
-					TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
+				int px2 = (int) TypedValue.applyDimension(
+						TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
 
-			if (!i.hasNext()) {
-				params.setMargins(px, 0, 0, px);
-			} else {
-				params.setMargins(px, 0, 0, px2);
+				if (!i.hasNext()) {
+					params.setMargins(px, 0, 0, px);
+				} else {
+					params.setMargins(px, 0, 0, px2);
+				}
+
+				tv.setLayoutParams(params);
+				tv.setText(news.getTitle());
+
+				mRelatedStoriesLayout.addView(tv);
 			}
-
-			tv.setLayoutParams(params);
-			tv.setText(news.getTitle());
-
-			mRelatedStoriesLayout.addView(tv);
 		}
+
 	}
 
 	/**
@@ -246,7 +249,8 @@ public class SubProjectFragment extends BaseFragment {
 	 */
 	private void initDynamicAttributes() {
 
-		if (mSubProject.getDynamicAttributes() != null) {
+		if (mSubProject.getDynamicAttributes() != null
+				&& mSubProject.getDynamicAttributes().size() > 0) {
 
 			Set keys = mSubProject.getDynamicAttributes().keySet();
 			for (Iterator i = keys.iterator(); i.hasNext();) {

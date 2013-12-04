@@ -72,7 +72,7 @@ public class CommentAdapter extends BaseAdapter {
 
 		dateTextview.setText(DateUtils.toStringDateOnly(object.getCreatedAt()));
 		convertView.setTag(object.getId());
-		
+
 		if (object.getGuestName() == null) {
 			if (object.getCommenterName() != null) {
 				usernameTextview.setText(object.getCommenterName());

@@ -282,7 +282,7 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
+		super.onSaveInstanceState(outState);		
 		outState.putInt(CURRENT_PAGE, listener.getCurrentPage());
 	}
 

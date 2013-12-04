@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import com.actionbarsherlock.view.MenuItem;
+
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -27,6 +29,9 @@ public class LicenseActivity extends BaseFragmentActivity {
 		mLicenseTextView = (TextView) findViewById(R.id.activity_license_textview);
 		resetStatus();
 		setStatusProgress(getString(R.string.loading), false);
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
 		// reading apache license
 		AssetManager assetManager = getAssets();
@@ -59,5 +64,14 @@ public class LicenseActivity extends BaseFragmentActivity {
 			setStatusError(getString(R.string.error));
 		}
 
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			finish();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }
