@@ -19,6 +19,7 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 	private OnSubProjectItemClickListener mListener;
 
 	public SubProjectListFragment(OnSubProjectItemClickListener listener) {
+		log.info("SubProjectListFragment()");
 		mListener = listener;
 	}
 
@@ -33,16 +34,37 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 
 		log.info("onActivityCreated");
 
-		resetStatus();
-		setStatusProgress(getResources().getString(R.string.loading), false);		
+		if (savedInstanceState == null) {
+			resetStatus();
+			setStatusProgress(getResources().getString(R.string.loading), false);
+			listener = new EndlessScrollListener() {
+				@Override
+				public void load(int page) {
+					LoadProject task = new LoadProject();
+					task.execute(page, getCurrentPage());
+				}
+			};
+			getListView().setOnScrollListener(listener);
+		} else {
+			if (mAdapter != null) {
+				log.info("adapter size " + mAdapter.getCount());
 
-		getListView().setOnScrollListener(new EndlessScrollListener() {
-			@Override
-			public void load(int page) {
-				LoadProject task = new LoadProject();
-				task.execute(page);
+				int currentPage = savedInstanceState.getInt(CURRENT_PAGE);
+
+				listener = new EndlessScrollListener(currentPage) {
+					@Override
+					public void load(int page) {
+						LoadProject task = new LoadProject();
+						task.execute(page, getCurrentPage());
+					}
+				};
+				getListView().setOnScrollListener(listener);
+
+				setListAdapter(mAdapter);
+				resetStatus();
+				setStatusShowContent();
 			}
-		});
+		}
 	}
 
 	@Override

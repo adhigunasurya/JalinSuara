@@ -1,15 +1,16 @@
 package com.jalinsuara.android.project;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.actionbarsherlock.view.MenuItem;
-import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.project.SubProjectListFragment.OnSubProjectItemClickListener;
@@ -46,9 +47,17 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 		setStatusShowContent();
 	}
 
-	public class MyAdapter extends FragmentPagerAdapter {
+	public class MyAdapter extends FragmentStatePagerAdapter {
+
+		private Logger log = LoggerFactory.getLogger(this.getClass()
+				.getSimpleName());
+
+		private final String[] TITLE = { "Aktivitas", "Provinsi", "Distrik",
+				"Subdistrik" };
+
 		public MyAdapter(FragmentManager fm) {
 			super(fm);
+			log.info("MyAdapter");
 		}
 
 		@Override
@@ -58,9 +67,11 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 
 		@Override
 		public Fragment getItem(int arg0) {
+			log.info("getItem " + arg0);
 			switch (arg0) {
 			case 0: {
 				if (mSubProjectListFragment == null) {
+					log.info("instantiate fragment");
 					mSubProjectListFragment = new SubProjectListFragment(
 							ViewPagerProjectActivity.this);
 				}
@@ -78,6 +89,11 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 			}
 			}
 			return new SubProjectListFragment(null);
+		}
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return TITLE[position];
 		}
 	}
 

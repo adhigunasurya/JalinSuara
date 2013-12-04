@@ -57,16 +57,20 @@ public abstract class BaseListFragment extends SherlockListFragment {
 	/**
 	 * Progress for determinate progress bar
 	 */
-	protected int mProgress = 0;
-
-	
+	protected int mProgress = 0;	
 
 	public abstract int getLayoutId();
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		log.info("onCreate() , savedInstanceState:" + savedInstanceState);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		log.info("onCreateView()");
 		FrameLayout layout = (FrameLayout) inflater.inflate(
 				R.layout.layout_template_fragment_progress_error_1, container,
 				false);
@@ -269,6 +273,14 @@ public abstract class BaseListFragment extends SherlockListFragment {
 	public void setLastUpdatedNow() {
 		mLastUpdatedDate = System.currentTimeMillis();
 	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		log.info("onSaveInstanceState()");
+		outState.putString("outstate", "value");
+	}
+		
 
 	
 }

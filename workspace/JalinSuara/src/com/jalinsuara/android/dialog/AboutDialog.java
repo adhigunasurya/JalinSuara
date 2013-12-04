@@ -92,14 +92,16 @@ public class AboutDialog extends AlertDialog {
 		setTitle(R.string.action_about);
 		setIcon(R.drawable.ic_about);
 		setCancelable(true);
-		setButton(BUTTON_POSITIVE, context.getText(R.string.close),
-				new OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						AboutDialog.this.cancel();
-					}
-				});
+		
+		// no need to use close button in this dialog
+		// setButton(BUTTON_POSITIVE, context.getText(R.string.close),
+		// new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		// AboutDialog.this.cancel();
+		// }
+		// });
 	}
 
 	public static String getVersion(Context context) {
