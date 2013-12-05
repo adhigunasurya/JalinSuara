@@ -2,15 +2,20 @@ package com.jalinsuara.android.project;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseEndlessListFragment;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
+import com.jalinsuara.android.news.ShareNewsActivity;
 import com.jalinsuara.android.projects.model.SubProject;
 
 /**
@@ -49,6 +54,8 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 
 		log.info("onActivityCreated");
 
+		setHasOptionsMenu(true);
+		
 		if (getArguments() != null) {
 			mSubDistrictId = getArguments().getLong(EXTRA_SUB_DISTRICT_ID, -1);
 		}
@@ -91,6 +98,23 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 		super.onListItemClick(l, v, position, id);
 		SubProject subproject = (SubProject) mAdapter.getItem(position);
 		mListener.onSubProjectItemClickListener(subproject, position);
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_subproject_list, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_share_news) {
+			Intent intent = new Intent(getSherlockActivity(),
+					ShareNewsActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private class LoadProject extends LoadItemTask<SubProject> {

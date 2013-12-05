@@ -53,7 +53,7 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 	/**
 	 * extra for province id, if this extra exists, we should load subdistrict..
 	 */
-	public static final String EXTRA_DISTRICT_ID = "district+id";
+	public static final String EXTRA_DISTRICT_ID = "district_id";
 
 	/**
 	 * extra for province id, if this extra exists, we should load subproject

@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:layout_weight="1"
-        layout="@layout/layout_left_panel"        
+        layout="@layout/layout_left_panel"
         android:text="Pane 2" />
 
     <FrameLayout

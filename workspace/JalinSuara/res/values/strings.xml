@@ -11,6 +11,7 @@
     <string name="action_submit">Kirim</string>
     <string name="action_reply">Balas</string>
     <string name="action_comment">Lihat Komentar</string>
+    <string name="action_share_news">Tambah Cerita</string>
     <string name="action_search">Cari</string>
     <string name="action_profile">Profil</string>
     <string name="action_sign_out">Sign Out</string>
@@ -33,9 +34,9 @@
     <string name="close">Tutup</string>
     <string name="reply">Balas</string>
     <string name="loren_ipsum">Loren ipsum dolores</string>
-    
     <string name="related_stories">Cerita terkait</string>
     <string name="sub_projects">Sub Proyek</string>
+    <string name="pnpm_data">Data PNPM</string>
     <string name="share_news">Mulai berbagi</string>
     <string name="search">Cari</string>
     <string name="login">Login</string>
@@ -49,6 +50,7 @@
     <string name="title_project_list">Daftar Proyek</string>
     <string name="title_district_list">Daftar Distrik</string>
     <string name="title_sub_district_list">Daftar Sub Distrik</string>
+    <string name="title_pnpm_data">Data PNPM</string>
     <string name="title_news">Cerita</string>
     <string name="title_share_news">Berbagi Cerita</string>
     <string name="title_maps">Peta</string>
@@ -125,6 +127,5 @@
     <string name="additional_information">Informasi Tambahan</string>
     <string name="fund_information">Informasi Dana</string>
     <string name="activity_information">Informasi Aktivitas</string>
-    
 
 </resources>

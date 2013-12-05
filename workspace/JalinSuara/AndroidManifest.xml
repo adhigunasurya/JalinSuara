@@ -69,7 +69,7 @@
         <!-- projects -->
         <activity
             android:name="com.jalinsuara.android.project.ViewPagerProjectActivity"
-            android:label="@string/title_news" >
+            android:label="@string/title_pnpm_data" >
         </activity>
         <activity
             android:name="com.jalinsuara.android.project.SubProjectActivity"

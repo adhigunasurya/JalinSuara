@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Set;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,11 +16,15 @@ import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
+import com.jalinsuara.android.news.ShareNewsActivity;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;
 
@@ -91,7 +96,9 @@ public class SubProjectFragment extends BaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
+		
+		setHasOptionsMenu(true);
+		
 		if (mSubProject != null) {
 
 			mImageView = (ImageView) getView().findViewById(
@@ -286,6 +293,23 @@ public class SubProjectFragment extends BaseFragment {
 			log.info("tak ada nilai dynamic attr");
 			mAdditionalInformationLayout.setVisibility(View.GONE);
 		}
+	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.fragment_subproject, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_share_news) {
+			Intent intent = new Intent(getSherlockActivity(),
+					ShareNewsActivity.class);
+			startActivity(intent);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	/**
