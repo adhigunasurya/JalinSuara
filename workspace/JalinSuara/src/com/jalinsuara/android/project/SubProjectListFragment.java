@@ -38,6 +38,10 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 	 */
 	private long mSubDistrictId = -1;
 
+	public SubProjectListFragment() {
+
+	}
+	
 	public SubProjectListFragment(OnSubProjectItemClickListener listener) {
 		log.info("SubProjectListFragment()");
 		mListener = listener;
@@ -55,7 +59,7 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 		log.info("onActivityCreated");
 
 		setHasOptionsMenu(true);
-		
+
 		if (getArguments() != null) {
 			mSubDistrictId = getArguments().getLong(EXTRA_SUB_DISTRICT_ID, -1);
 		}
@@ -99,7 +103,7 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 		SubProject subproject = (SubProject) mAdapter.getItem(position);
 		mListener.onSubProjectItemClickListener(subproject, position);
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_subproject_list, menu);
@@ -107,10 +111,23 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 	}
 
 	@Override
+	public void onPrepareOptionsMenu(Menu menu) {
+
+		super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.action_share_news) {
 			Intent intent = new Intent(getSherlockActivity(),
 					ShareNewsActivity.class);
+			if (getSherlockActivity() instanceof ViewPagerProjectActivity) {
+
+			} else {
+				intent.putExtra(ShareNewsActivity.EXTRA_TRIGGERED_IN_TYPE,
+						ShareNewsActivity.TYPE_SUB_PROJECT_LIST);
+				intent.putExtra(ShareNewsActivity.EXTRA_ID, mSubDistrictId);
+			}
 			startActivity(intent);
 			return true;
 		}

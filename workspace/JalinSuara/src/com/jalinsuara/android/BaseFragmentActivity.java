@@ -258,6 +258,16 @@ public abstract class BaseFragmentActivity extends SherlockFragmentActivity {
 	}
 
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		if (JalinSuaraSingleton.getInstance(this).isAuthenticated()) {
+			showMenuItem(true, menu, R.id.action_share_news);
+		} else {
+			showMenuItem(false, menu, R.id.action_share_news);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
 		log.info("onResume()");

@@ -18,6 +18,7 @@ import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.ShareNewsActivity;
+import com.jalinsuara.android.project.ViewPagerProjectActivity;
 import com.jalinsuara.android.projects.model.Province;
 import com.jalinsuara.android.projects.model.SubProject;
 
@@ -32,6 +33,10 @@ public class ProvinceListFragment extends BaseEndlessListFragment {
 	private ProvinceAdapter mAdapter = null;
 	private OnProvinceItemClickListener mListener;
 
+	public ProvinceListFragment() {
+
+	}
+	
 	public ProvinceListFragment(OnProvinceItemClickListener listener) {
 		log.info("ProvinceListFragment()");
 		mListener = listener;
@@ -109,7 +114,15 @@ public class ProvinceListFragment extends BaseEndlessListFragment {
 		if (item.getItemId() == R.id.action_share_news) {
 			Intent intent = new Intent(getSherlockActivity(),
 					ShareNewsActivity.class);
+			
+			if (getSherlockActivity() instanceof ViewPagerProjectActivity) {
+
+			} else {
+				intent.putExtra(ShareNewsActivity.EXTRA_TRIGGERED_IN_TYPE,
+						ShareNewsActivity.TYPE_PROVINCE_LIST);
+			}
 			startActivity(intent);
+			
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

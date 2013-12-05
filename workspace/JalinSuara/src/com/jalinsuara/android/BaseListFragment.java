@@ -7,13 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.actionbarsherlock.view.Menu;
 
 /**
  * Base Fragment used in entire application
@@ -280,6 +279,7 @@ public abstract class BaseListFragment extends SherlockListFragment {
 		log.info("onSaveInstanceState()");
 		outState.putString("outstate", "value");
 	}
+		
 		
 
 	

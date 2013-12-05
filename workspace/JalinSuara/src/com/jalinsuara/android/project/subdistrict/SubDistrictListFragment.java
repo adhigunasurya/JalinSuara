@@ -17,6 +17,7 @@ import com.jalinsuara.android.BaseEndlessListFragment;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.ShareNewsActivity;
+import com.jalinsuara.android.project.ViewPagerProjectActivity;
 import com.jalinsuara.android.project.district.DistrictAdapter;
 import com.jalinsuara.android.project.district.DistrictListFragment.OnDistrictItemClickListener;
 import com.jalinsuara.android.projects.model.District;
@@ -40,7 +41,11 @@ public class SubDistrictListFragment extends BaseEndlessListFragment {
 
 	public ArrayList<SubDistrict> mList;
 
-	protected long mSubDistrictId = -1;
+	protected long mDistrictId = -1;
+	
+	public SubDistrictListFragment() {
+
+	}
 
 	public SubDistrictListFragment(OnSubDistrictItemClickListener listener) {
 		log.info("DistrictListFragment()");
@@ -61,8 +66,8 @@ public class SubDistrictListFragment extends BaseEndlessListFragment {
 		setHasOptionsMenu(true);
 
 		if (getArguments() != null) {
-			mSubDistrictId = getArguments().getLong(EXTRA_DISTRICT_ID, -1);
-			log.info("subDistrictId " + mSubDistrictId);
+			mDistrictId = getArguments().getLong(EXTRA_DISTRICT_ID, -1);
+			log.info("subDistrictId " + mDistrictId);
 		}
 
 		if (savedInstanceState == null) {
@@ -74,7 +79,7 @@ public class SubDistrictListFragment extends BaseEndlessListFragment {
 				@Override
 				public void load(int page) {
 					LoadSubDistrict task = new LoadSubDistrict();
-					task.execute(page, getCurrentPage(), mSubDistrictId);
+					task.execute(page, getCurrentPage(), mDistrictId);
 
 				}
 			};
@@ -89,7 +94,7 @@ public class SubDistrictListFragment extends BaseEndlessListFragment {
 					@Override
 					public void load(int page) {
 						LoadSubDistrict task = new LoadSubDistrict();
-						task.execute(page, getCurrentPage(), mSubDistrictId);
+						task.execute(page, getCurrentPage(), mDistrictId);
 					}
 				};
 				getListView().setOnScrollListener(listener);
@@ -119,6 +124,15 @@ public class SubDistrictListFragment extends BaseEndlessListFragment {
 		if (item.getItemId() == R.id.action_share_news) {
 			Intent intent = new Intent(getSherlockActivity(),
 					ShareNewsActivity.class);
+
+			if (getSherlockActivity() instanceof ViewPagerProjectActivity) {
+
+			} else {
+				intent.putExtra(ShareNewsActivity.EXTRA_TRIGGERED_IN_TYPE,
+						ShareNewsActivity.TYPE_SUB_DISTRICT_LIST);
+				intent.putExtra(ShareNewsActivity.EXTRA_ID, mDistrictId);
+			}
+
 			startActivity(intent);
 			return true;
 		}

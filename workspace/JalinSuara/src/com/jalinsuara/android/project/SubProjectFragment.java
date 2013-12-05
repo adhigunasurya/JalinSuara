@@ -83,6 +83,10 @@ public class SubProjectFragment extends BaseFragment {
 	 */
 	private LinearLayout mRelatedStoriesLayout;
 
+	public SubProjectFragment() {
+
+	}
+	
 	public SubProjectFragment(SubProject subproject) {
 		mSubProject = subproject;
 		log.info("project: " + mSubProject);
@@ -96,9 +100,9 @@ public class SubProjectFragment extends BaseFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		
+
 		setHasOptionsMenu(true);
-		
+
 		if (mSubProject != null) {
 
 			mImageView = (ImageView) getView().findViewById(
@@ -294,7 +298,7 @@ public class SubProjectFragment extends BaseFragment {
 			mAdditionalInformationLayout.setVisibility(View.GONE);
 		}
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_subproject, menu);
@@ -306,6 +310,9 @@ public class SubProjectFragment extends BaseFragment {
 		if (item.getItemId() == R.id.action_share_news) {
 			Intent intent = new Intent(getSherlockActivity(),
 					ShareNewsActivity.class);
+			intent.putExtra(ShareNewsActivity.EXTRA_TRIGGERED_IN_TYPE,
+					ShareNewsActivity.TYPE_SUB_PROJECT_DETAIL);
+			intent.putExtra(ShareNewsActivity.EXTRA_ID, mSubProject.getId());
 			startActivity(intent);
 			return true;
 		}

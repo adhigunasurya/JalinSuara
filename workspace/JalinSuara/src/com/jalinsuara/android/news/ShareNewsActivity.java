@@ -45,26 +45,46 @@ import com.jalinsuara.android.projects.model.SubProject;
  */
 public class ShareNewsActivity extends BaseFragmentActivity {
 
-	/**
-	 * extra for province id, if this extra exists, we should load district..
-	 */
-	public static final String EXTRA_PROVINCE_ID = "province_id";
+	// all view pager -> trigger type = none
+	//
+	// specific activity
+	// district list, share news based on province id, province hide, load
+	// district with province id.
+	// subdistrict list, province + district hide, load subdistrict with
+	// district id.
+	// subproject list, province+district+subdistrict hide, load subproject with
+	// subdistrict id.
 
 	/**
-	 * extra for province id, if this extra exists, we should load subdistrict..
+	 * Share news activity is triggered in a certain fragment.
+	 * <p>
+	 * Province, District, SubDistrict, SubProject
 	 */
-	public static final String EXTRA_DISTRICT_ID = "district_id";
+	public final static String EXTRA_TRIGGERED_IN_TYPE = "triggered_in_type";
+
+	public final static String EXTRA_ID = "id";
+
+	public final static int TYPE_NONE = 0;
+
+	public final static int TYPE_PROVINCE_LIST = 1;
+
+	public final static int TYPE_DISTRICT_LIST = 2;
+
+	public final static int TYPE_SUB_DISTRICT_LIST = 3;
+
+	public final static int TYPE_SUB_PROJECT_LIST = 4;
+
+	public final static int TYPE_SUB_PROJECT_DETAIL = 5;
 
 	/**
-	 * extra for province id, if this extra exists, we should load subproject
+	 * Trigger type
 	 */
-	public static final String EXTRA_SUB_DISTRICT_ID = "sub_district_id";
+	protected int mTriggerType = TYPE_NONE;
 
 	/**
-	 * extra for province id, if this extra exists, we just use this for post
-	 * parameter in share news API
+	 * Trigger id
 	 */
-	public static final String EXTRA_SUB_PROJECT_ID = "sub_project";
+	protected long mTriggerId;
 
 	/**
 	 * Code for starting activity to pick picture
@@ -179,11 +199,6 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 		mImagePreview = (ImageView) findViewById(R.id.activity_share_post_image_preview_imageview);
 		mInsertPictureButton = (Button) findViewById(R.id.activity_share_post_sisipGambarButton);
 
-		mPostProvinceSpinner.setVisibility(View.VISIBLE);
-		mPostDistrictSpinner.setVisibility(View.GONE);
-		mPostSubDistrictSpinner.setVisibility(View.GONE);
-		mPostSubProjectSpinner.setVisibility(View.GONE);
-
 		mPostProvinceSpinner
 				.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -293,9 +308,78 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 					}
 				});
 
-		// load province
-		LoadProvinces province = new LoadProvinces();
-		province.execute();
+		mTriggerType = getIntent().getIntExtra(EXTRA_TRIGGERED_IN_TYPE,
+				TYPE_NONE);
+		mTriggerId = getIntent().getLongExtra(EXTRA_ID, -1);
+
+		log.info("trigger type " + mTriggerType);
+		log.info("trigger id " + mTriggerId);
+
+		switch (mTriggerType) {
+		case TYPE_NONE: {
+			mPostProvinceSpinner.setVisibility(View.VISIBLE);
+			mPostDistrictSpinner.setVisibility(View.GONE);
+			mPostSubDistrictSpinner.setVisibility(View.GONE);
+			mPostSubProjectSpinner.setVisibility(View.GONE);
+
+			// load all province
+			LoadProvinces province = new LoadProvinces();
+			province.execute();
+			break;
+		}
+		case TYPE_PROVINCE_LIST: {
+			mPostProvinceSpinner.setVisibility(View.VISIBLE);
+			mPostDistrictSpinner.setVisibility(View.GONE);
+			mPostSubDistrictSpinner.setVisibility(View.GONE);
+			mPostSubProjectSpinner.setVisibility(View.GONE);
+
+			LoadProvinces province = new LoadProvinces();
+			province.execute();
+			break;
+		}
+		case TYPE_DISTRICT_LIST: {
+			mPostProvinceSpinner.setVisibility(View.GONE);
+			mPostDistrictSpinner.setVisibility(View.VISIBLE);
+			mPostSubDistrictSpinner.setVisibility(View.GONE);
+			mPostSubProjectSpinner.setVisibility(View.GONE);
+
+			LoadDistrict task = new LoadDistrict();
+			task.execute(String.valueOf(mTriggerId));
+			break;
+		}
+		case TYPE_SUB_DISTRICT_LIST: {
+			mPostProvinceSpinner.setVisibility(View.GONE);
+			mPostDistrictSpinner.setVisibility(View.GONE);
+			mPostSubDistrictSpinner.setVisibility(View.VISIBLE);
+			mPostSubProjectSpinner.setVisibility(View.GONE);
+
+			LoadSubDistrict task = new LoadSubDistrict();
+			task.execute(String.valueOf(mTriggerId));
+			break;
+		}
+		case TYPE_SUB_PROJECT_LIST: {
+			mPostProvinceSpinner.setVisibility(View.GONE);
+			mPostDistrictSpinner.setVisibility(View.GONE);
+			mPostSubDistrictSpinner.setVisibility(View.GONE);
+			mPostSubProjectSpinner.setVisibility(View.VISIBLE);
+			mPostToActivityCheckBox.setVisibility(View.GONE);
+
+			LoadSubProject task = new LoadSubProject();
+			task.execute(String.valueOf(mTriggerId));
+			break;
+		}
+		case TYPE_SUB_PROJECT_DETAIL: {
+			mPostProvinceSpinner.setVisibility(View.GONE);
+			mPostDistrictSpinner.setVisibility(View.GONE);
+			mPostSubDistrictSpinner.setVisibility(View.GONE);
+			mPostSubProjectSpinner.setVisibility(View.GONE);
+			mPostToActivityCheckBox.setVisibility(View.GONE);
+
+			resetStatus();
+			setStatusShowContent();
+			break;
+		}
+		}
 
 	}
 
@@ -461,10 +545,14 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 							getBaseContext(), mSubProjectList);
 					mPostSubProjectSpinner.setAdapter(mSubProjectAdapter);
 
-					if (mPostToActivityCheckBox.isChecked()) {
-						mPostSubProjectSpinner.setVisibility(View.VISIBLE);
-					} else {
-						mPostSubProjectSpinner.setVisibility(View.GONE);
+					if (mTriggerType != TYPE_SUB_PROJECT_DETAIL
+							&& mTriggerType != TYPE_SUB_PROJECT_LIST) {
+						if (mPostToActivityCheckBox.isChecked()) {
+							mPostSubProjectSpinner.setVisibility(View.VISIBLE);
+						} else {
+							mPostSubProjectSpinner.setVisibility(View.GONE);
+
+						}
 					}
 
 					resetStatus();
@@ -586,14 +674,25 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 		mSubDistrict = (SubDistrict) mPostSubDistrictSpinner.getSelectedItem();
 		mSubProject = (SubProject) mPostSubProjectSpinner.getSelectedItem();
 
-		if (mPostToActivityCheckBox.isChecked()) {
+		if (mTriggerType != TYPE_SUB_PROJECT_DETAIL
+				&& mTriggerType != TYPE_SUB_PROJECT_LIST) {
+			if (mPostToActivityCheckBox.isChecked()) {
+				postable_type = News.POSTABLE_ACTIVITY;
+				postable_id = String.valueOf(mSubProject.getId());
+			} else {
+				postable_type = News.POSTABLE_SUB_DISTRICT;
+				postable_id = String.valueOf(mSubDistrict.getId());
+			}
+		} else if (mTriggerType == TYPE_SUB_PROJECT_LIST) {
 			postable_type = News.POSTABLE_ACTIVITY;
 			postable_id = String.valueOf(mSubProject.getId());
 		} else {
-			postable_type = News.POSTABLE_SUB_DISTRICT;
-			postable_id = String.valueOf(mSubDistrict.getId());
+			postable_type = News.POSTABLE_ACTIVITY;
+			postable_id = String.valueOf(mTriggerId);
 		}
 
+		log.info("Postable type : " + postable_type + ", id:" + postable_id);
+		
 		// FIXME
 		String user_id = "5";
 		String auth_token = JalinSuaraSingleton.getInstance(this).getToken();
@@ -622,7 +721,7 @@ public class ShareNewsActivity extends BaseFragmentActivity {
 				param.setBeneficiary(beneficiary);
 				param.setDimensions(dimensions);
 
-				newpost.execute(param);
+				 newpost.execute(param);
 			} else {
 				Toast.makeText(this, "Isi semua fields", Toast.LENGTH_SHORT)
 						.show();
