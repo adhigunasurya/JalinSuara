@@ -27,7 +27,7 @@ import com.jalinsuara.android.projects.model.SubDistrict;
  */
 public class SubDistrictListFragment extends BaseEndlessListFragment {
 
-	public final static String EXTRA_SUB_DISTRICT_ID = "district_id";
+	public final static String EXTRA_DISTRICT_ID = "district_id";
 
 	private SubDistrictAdapter mAdapter = null;
 
@@ -44,7 +44,7 @@ public class SubDistrictListFragment extends BaseEndlessListFragment {
 
 	@Override
 	public int getLayoutId() {
-		return R.layout.fragment_sub_districts_list;
+		return R.layout.fragment_subdistricts_list;
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class SubDistrictListFragment extends BaseEndlessListFragment {
 		log.info("onActivityCreated");
 
 		if (getArguments() != null) {
-			mSubDistrictId = getArguments().getLong(EXTRA_SUB_DISTRICT_ID, -1);
+			mSubDistrictId = getArguments().getLong(EXTRA_DISTRICT_ID, -1);
 			log.info("subDistrictId " + mSubDistrictId);
 		}
 

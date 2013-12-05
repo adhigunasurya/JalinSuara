@@ -47,7 +47,7 @@ public class SubDistrictAdapter extends BaseAdapter {
 			LayoutInflater inflater = (LayoutInflater) parent.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			convertView = inflater.inflate(R.layout.list_item_sub_district,
+			convertView = inflater.inflate(R.layout.list_item_subdistrict,
 					null);
 
 		}

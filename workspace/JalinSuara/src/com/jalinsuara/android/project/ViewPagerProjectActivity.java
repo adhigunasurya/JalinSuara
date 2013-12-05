@@ -14,10 +14,12 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.project.SubProjectListFragment.OnSubProjectItemClickListener;
+import com.jalinsuara.android.project.district.DistrictListActivity;
 import com.jalinsuara.android.project.district.DistrictListFragment;
 import com.jalinsuara.android.project.district.DistrictListFragment.OnDistrictItemClickListener;
 import com.jalinsuara.android.project.province.ProvinceListFragment;
 import com.jalinsuara.android.project.province.ProvinceListFragment.OnProvinceItemClickListener;
+import com.jalinsuara.android.project.subdistrict.SubDistrictListActivity;
 import com.jalinsuara.android.project.subdistrict.SubDistrictListFragment;
 import com.jalinsuara.android.project.subdistrict.SubDistrictListFragment.OnSubDistrictItemClickListener;
 import com.jalinsuara.android.projects.model.District;
@@ -147,18 +149,28 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 	@Override
 	public void onProvinceItemClickListener(Province province, int position) {
 
+		Intent intent = new Intent(this, DistrictListActivity.class);
+		intent.putExtra(DistrictListFragment.EXTRA_PROVINCE_ID,
+				province.getId());
+		startActivity(intent);
 	}
 
 	@Override
 	public void onDistrictItemClickListener(District district, int position) {
-		// TODO Auto-generated method stub
 
+		Intent intent = new Intent(this, SubDistrictListActivity.class);
+		intent.putExtra(SubDistrictListFragment.EXTRA_DISTRICT_ID,
+				district.getId());
+		startActivity(intent);
 	}
 
 	@Override
 	public void onSubDistrictItemClickListener(SubDistrict subdistrict,
 			int position) {
-		// TODO Auto-generated method stub
 
+		Intent intent = new Intent(this, SubProjectListActivity.class);
+		intent.putExtra(SubProjectListFragment.EXTRA_SUB_DISTRICT_ID,
+				subdistrict.getId());
+		startActivity(intent);
 	}
 }

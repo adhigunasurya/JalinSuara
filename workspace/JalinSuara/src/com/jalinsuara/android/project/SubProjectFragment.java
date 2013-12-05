@@ -85,7 +85,7 @@ public class SubProjectFragment extends BaseFragment {
 
 	@Override
 	public int getLayoutId() {
-		return R.layout.fragment_sub_projects;
+		return R.layout.fragment_subprojects;
 	}
 
 	@Override

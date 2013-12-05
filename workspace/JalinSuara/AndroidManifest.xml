@@ -79,6 +79,15 @@
             android:name="com.jalinsuara.android.project.SubProjectListActivity"
             android:label="@string/title_project_list" >
         </activity>
+        <activity
+            android:name="com.jalinsuara.android.project.district.DistrictListActivity"
+            android:label="@string/title_district_list" >
+        </activity>
+        <activity
+            android:name="com.jalinsuara.android.project.subdistrict.SubDistrictListActivity"
+            android:label="@string/title_sub_district_list" >
+        </activity>
+
         <!-- home -->
         <activity
             android:name="com.jalinsuara.android.home.DashboardActivity"

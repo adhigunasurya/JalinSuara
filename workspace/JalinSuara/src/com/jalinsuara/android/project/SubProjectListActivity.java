@@ -7,6 +7,7 @@ import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.news.NewsListFragment.OnNewsItemClickListener;
 import com.jalinsuara.android.project.SubProjectListFragment.OnSubProjectItemClickListener;
+import com.jalinsuara.android.project.subdistrict.SubDistrictListFragment;
 import com.jalinsuara.android.projects.model.SubProject;
 import com.actionbarsherlock.view.MenuItem;
 
@@ -27,6 +28,14 @@ public class SubProjectListActivity extends BaseFragmentActivity implements
 		setStatusProgress(getResources().getString(R.string.loading), false);
 
 		mListFragment = new SubProjectListFragment(this);
+		Bundle bundle = new Bundle();		
+		long id = getIntent().getLongExtra(
+				SubProjectListFragment.EXTRA_SUB_DISTRICT_ID, -1);
+		
+		if (id != -1) {
+			bundle.putLong(SubProjectListFragment.EXTRA_SUB_DISTRICT_ID, id);
+		}
+		mListFragment.setArguments(bundle);
 
 		getSupportFragmentManager()
 				.beginTransaction()

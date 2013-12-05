@@ -6,26 +6,27 @@ import android.os.Bundle;
 import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
-import com.jalinsuara.android.project.SubProjectActivity;
-import com.jalinsuara.android.project.SubProjectListFragment;
-import com.jalinsuara.android.project.SubProjectListFragment.OnSubProjectItemClickListener;
-import com.jalinsuara.android.projects.model.SubProject;
+import com.jalinsuara.android.project.district.DistrictListFragment.OnDistrictItemClickListener;
+import com.jalinsuara.android.project.subdistrict.SubDistrictListActivity;
+import com.jalinsuara.android.project.subdistrict.SubDistrictListFragment;
+import com.jalinsuara.android.projects.model.District;
 
 /**
  * Show list of district
+ * 
  * @author hartono
- *
+ * 
  */
 public class DistrictListActivity extends BaseFragmentActivity implements
-		OnSubProjectItemClickListener {
-	
+		OnDistrictItemClickListener {
+
 	private boolean mMultiPane;
-	private SubProjectListFragment mListFragment;
+	private DistrictListFragment mListFragment;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
-		setContentView(R.layout.activity_subproject_list);
+		setContentView(R.layout.activity_district_list);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -33,14 +34,23 @@ public class DistrictListActivity extends BaseFragmentActivity implements
 		resetStatus();
 		setStatusProgress(getResources().getString(R.string.loading), false);
 
-		mListFragment = new SubProjectListFragment(this);
+		mListFragment = new DistrictListFragment(this);
+		
+		Bundle bundle = new Bundle();		
+		long id = getIntent().getLongExtra(
+				DistrictListFragment.EXTRA_PROVINCE_ID, -1);
+		
+		if (id != -1) {
+			bundle.putLong(DistrictListFragment.EXTRA_PROVINCE_ID, id);
+		}
+		mListFragment.setArguments(bundle);
 
 		getSupportFragmentManager()
 				.beginTransaction()
-				.replace(R.id.activity_subproject_list_list_fragment,
+				.replace(R.id.activity_district_list_list_fragment,
 						mListFragment).commit();
 
-		if (findViewById(R.id.activity_subproject_detail_fragment) == null) {
+		if (findViewById(R.id.activity_district_detail_fragment) == null) {
 			setMultiPane(false);
 
 		} else {
@@ -61,16 +71,15 @@ public class DistrictListActivity extends BaseFragmentActivity implements
 	}
 
 	@Override
-	public void onSubProjectItemClickListener(SubProject subproject,
-			int position) {
+	public void onDistrictItemClickListener(District district, int position) {
 		if (mMultiPane) {
 
 		} else {
-			Intent intent = new Intent(this, SubProjectActivity.class);
-			intent.putExtra(SubProjectActivity.EXTRA_ID, subproject.getId());
+			Intent intent = new Intent(this, SubDistrictListActivity.class);
+			intent.putExtra(SubDistrictListFragment.EXTRA_DISTRICT_ID,
+					district.getId());
 			startActivity(intent);
 		}
-
 	}
 
 	@Override

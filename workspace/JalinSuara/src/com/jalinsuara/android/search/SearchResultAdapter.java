@@ -51,7 +51,7 @@ public class SearchResultAdapter extends BaseAdapter {
 			if (object.isNews()) {
 				convertView = inflater.inflate(R.layout.list_item_news, null);
 			} else {
-				convertView = inflater.inflate(R.layout.list_item_sub_project,
+				convertView = inflater.inflate(R.layout.list_item_subproject,
 						null);
 			}
 
@@ -65,7 +65,7 @@ public class SearchResultAdapter extends BaseAdapter {
 							null);
 				} else {
 					convertView = inflater.inflate(
-							R.layout.list_item_sub_project, null);
+							R.layout.list_item_subproject, null);
 				}
 			}
 		}

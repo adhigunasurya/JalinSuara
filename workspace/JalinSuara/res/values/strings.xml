@@ -47,6 +47,8 @@
     <string name="title_about">Tentang Aplikasi</string>
     <string name="title_news_list">Daftar Cerita</string>
     <string name="title_project_list">Daftar Proyek</string>
+    <string name="title_district_list">Daftar Distrik</string>
+    <string name="title_sub_district_list">Daftar Sub Distrik</string>
     <string name="title_news">Cerita</string>
     <string name="title_share_news">Berbagi Cerita</string>
     <string name="title_maps">Peta</string>

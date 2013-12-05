@@ -681,7 +681,7 @@ public class NetworkUtils {
 			} else {
 				uri = BASE_URL + "/provinces/" + provinceId + "/districts"
 						+ "?page=" + page + "&" + PARAM_PER_PAGE + "="
-						+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+						+ DEFAULT_PER_PAGE;
 			}
 		}
 
@@ -823,7 +823,7 @@ public class NetworkUtils {
 			} else {
 				uri = BASE_URL + "/districts/" + districtId + "/subdistricts"
 						+ "?page=" + page + "&" + PARAM_PER_PAGE + "="
-						+ PARAM_PER_PAGE + "=" + DEFAULT_PER_PAGE;
+						+ DEFAULT_PER_PAGE;
 			}
 
 		}

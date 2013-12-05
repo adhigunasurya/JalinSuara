@@ -40,7 +40,7 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 
 	@Override
 	public int getLayoutId() {
-		return R.layout.fragment_sub_projects_list;
+		return R.layout.fragment_subprojects_list;
 	}
 
 	@Override

@@ -48,7 +48,7 @@ public class SubProjectAdapter extends BaseAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 			convertView = inflater
-					.inflate(R.layout.list_item_sub_project, null);
+					.inflate(R.layout.list_item_subproject, null);
 
 		}
 
