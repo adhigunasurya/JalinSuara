@@ -47,8 +47,7 @@ public class SubProjectAdapter extends BaseAdapter {
 			LayoutInflater inflater = (LayoutInflater) parent.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			convertView = inflater
-					.inflate(R.layout.list_item_subproject, null);
+			convertView = inflater.inflate(R.layout.list_item_subproject, null);
 
 		}
 
@@ -57,7 +56,11 @@ public class SubProjectAdapter extends BaseAdapter {
 		TextView deskripsiProyek = ((TextView) convertView
 				.findViewById(R.id.list_item_sub_project_title_textview));
 
-		namaKecamatan.setText(object.getSubdistrict().getName());
+		if (object.getSubdistrict() != null) {
+			namaKecamatan.setText(object.getSubdistrict().getName());
+		} else {
+			namaKecamatan.setText("");
+		}
 		deskripsiProyek.setText(object.getName());
 
 		return convertView;

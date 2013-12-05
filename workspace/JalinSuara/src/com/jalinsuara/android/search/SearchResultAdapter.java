@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jalinsuara.android.R;
@@ -78,18 +79,31 @@ public class SearchResultAdapter extends BaseAdapter {
 					.findViewById(R.id.list_item_news_content_textview));
 			TextView dateTextView = ((TextView) convertView
 					.findViewById(R.id.list_item_news_date_textview));
+			ImageView imageView = (ImageView) convertView
+					.findViewById(R.id.list_item_news_imageview);
+
+			if (object.getNews().getPictureUrl() != null
+					&& object.getNews().getPictureUrl().length() > 0) {
+				mImageLoader.DisplayImage(object.getNews().getPictureUrl(),
+						imageView);
+			}
 
 			dateTextView.setText(DateUtils.toStringDateOnly(object.getNews()
 					.getUpdatedAt()));
 			titleTextview.setText(object.getNews().getTitle());
-//			descriptionTextview.setText(Html.fromHtml(object.getNews()
-//					.getDescription()));
+
 		} else {
 			TextView titleTextview = ((TextView) convertView
 					.findViewById(R.id.list_item_sub_project_title_textview));
-//			TextView descriptionTextview = ((TextView) convertView
-//					.findViewById(R.id.list_item_sub_project_content_textview));
+			TextView namaKecamatan = ((TextView) convertView
+					.findViewById(R.id.list_item_sub_project_kecamatan_textview));
 
+			if (object.getProjects().getSubdistrict() != null) {
+				namaKecamatan.setText(object.getProjects().getSubdistrict()
+						.getName());
+			} else {
+				namaKecamatan.setText("");
+			}
 			titleTextview.setText(object.getProjects().getName());
 		}
 

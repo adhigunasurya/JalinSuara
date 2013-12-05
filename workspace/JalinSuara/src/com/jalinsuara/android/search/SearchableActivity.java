@@ -19,6 +19,12 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.NewsActivity;
 
+/**
+ * Searchable and search result activity
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class SearchableActivity extends BaseEndlessListFragmentActivity {
 
 	private SearchResultAdapter mAdapter;
@@ -35,6 +41,9 @@ public class SearchableActivity extends BaseEndlessListFragmentActivity {
 		mListView = (ListView) findViewById(android.R.id.list);
 		mStatusTextView = (TextView) findViewById(R.id.activity_search_result_status_textview);
 		mEmptyTextView = (TextView) findViewById(android.R.id.empty);
+
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 
 		log.info("onCreate()");
 
@@ -97,6 +106,9 @@ public class SearchableActivity extends BaseEndlessListFragmentActivity {
 		case R.id.action_search:
 			onSearchRequested();
 			return true;
+		case android.R.id.home:
+			finish();
+			return true;
 		default:
 
 			return false;
@@ -104,6 +116,12 @@ public class SearchableActivity extends BaseEndlessListFragmentActivity {
 
 	}
 
+	/**
+	 * Call Search API
+	 * 
+	 * @author tonoman3g
+	 * 
+	 */
 	private class SearchTask extends AsyncTask<String, Integer, Integer> {
 
 		Context mContext;

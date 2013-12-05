@@ -70,9 +70,15 @@ public class NewsFragment extends BaseFragment {
 			}
 
 			mTitleTextView.setText(mNews.getTitle());
-			mDateUpdatedView.setText(com.jalinsuara.android.helper.DateUtils
-					.toStringDateOnly(mNews.getUpdatedAt()));
-			mDescriptionTextView.setText(Html.fromHtml(mNews.getDescription()));
+			if (mNews.getUpdatedAt() != null) {
+				mDateUpdatedView
+						.setText(com.jalinsuara.android.helper.DateUtils
+								.toStringDateOnly(mNews.getUpdatedAt()));
+			}
+			if (mNews.getDescription() != null) {
+				mDescriptionTextView.setText(Html.fromHtml(mNews
+						.getDescription()));
+			}
 
 			if (mNews.getLatitude() != 0 && mNews.getLongitude() != 0) {
 
