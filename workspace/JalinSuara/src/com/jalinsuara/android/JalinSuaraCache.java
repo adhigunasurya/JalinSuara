@@ -3,6 +3,7 @@ package com.jalinsuara.android;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.District;
 import com.jalinsuara.android.projects.model.Province;
 import com.jalinsuara.android.projects.model.SubDistrict;
@@ -37,6 +38,11 @@ public class JalinSuaraCache {
 	 */
 	private HashMap<Long, ArrayList<SubProject>> mSubProjectCacheMap;
 
+	/**
+	 * News cache
+	 */
+	private HashMap<Long, News> mNewsCache;
+
 	public JalinSuaraCache() {
 		initCache();
 	}
@@ -64,6 +70,10 @@ public class JalinSuaraCache {
 		return mProvincesCacheMap.get(key);
 	}
 
+	public News getNews(long key) {
+		return mNewsCache.get(key);
+	}
+
 	/**
 	 * init cache
 	 */
@@ -72,6 +82,7 @@ public class JalinSuaraCache {
 		mDistrictCacheMap = new HashMap<Long, ArrayList<District>>();
 		mSubDistrictCacheMap = new HashMap<Long, ArrayList<SubDistrict>>();
 		mSubProjectCacheMap = new HashMap<Long, ArrayList<SubProject>>();
+		mNewsCache = new HashMap<Long, News>();
 	}
 
 	/**
@@ -90,6 +101,10 @@ public class JalinSuaraCache {
 
 	public boolean isProvincesCached() {
 		return mProvincesCacheMap.size() > 0;
+	}
+
+	public boolean isNewsCached() {
+		return mNewsCache.size() > 0;
 	}
 
 	/**
@@ -128,6 +143,10 @@ public class JalinSuaraCache {
 		mProvincesCacheMap.put(key, province);
 	}
 
+	public void putNews(long key, News news) {
+		mNewsCache.put(key, news);
+	}
+
 	public void putSubDistricts(long key, ArrayList<SubDistrict> SubDistricts) {
 		mSubDistrictCacheMap.put(key, SubDistricts);
 	}
@@ -142,6 +161,10 @@ public class JalinSuaraCache {
 
 	public Province removeProvince(long key) {
 		return mProvincesCacheMap.remove(key);
+	}
+
+	public News removeNews(long key) {
+		return mNewsCache.remove(key);
 	}
 
 	public boolean removeSubDistricts(long key) {

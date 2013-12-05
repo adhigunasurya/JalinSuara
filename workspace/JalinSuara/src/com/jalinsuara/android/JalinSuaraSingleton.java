@@ -166,35 +166,31 @@ public class JalinSuaraSingleton {
 	 * @return
 	 */
 	public synchronized News findNewsById(long id) {
-		if (mNewsList == null) {
-			if (mRecentSearchResultList == null) {
-				return null;
-			} else {
-				for (SearchResult result : mRecentSearchResultList) {
-					if (result.isNews()) {
-						if (result.getNews().getId() == id) {
-							return result.getNews();
-						}
+		if (mRecentSearchResultList != null) {
+			for (SearchResult result : mRecentSearchResultList) {
+				if (result.isNews()) {
+					if (result.getNews().getId() == id) {
+						return result.getNews();
 					}
 				}
-				return null;
 			}
+
 		}
-		for (News news : mNewsList) {
-			if (news.getId() == id) {
-				return news;
-			}
-		}
-		if (mRecentSearchResultList == null) {
-			return null;
-		}
-		for (SearchResult result : mRecentSearchResultList) {
-			if (result.isNews()) {
-				if (result.getNews().getId() == id) {
-					return result.getNews();
+
+		if (mNewsList != null) {
+			for (News news : mNewsList) {
+				if (news.getId() == id) {
+					return news;
 				}
 			}
 		}
+
+		if (mCache != null) {
+			if (mCache.isNewsCached()) {
+				return mCache.getNews(id);
+			}
+		}
+
 		return null;
 	}
 

@@ -13,10 +13,20 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.model.News;
 
+/**
+ * Show list of news
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class NewsListFragment extends BaseEndlessListFragment {
 
 	private NewsAdapter mAdapter;
 	private OnNewsItemClickListener mListener;
+
+	public NewsListFragment() {
+
+	}
 
 	public NewsListFragment(OnNewsItemClickListener listener) {
 		mListener = listener;

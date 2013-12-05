@@ -10,9 +10,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -20,10 +20,12 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragment;
+import com.jalinsuara.android.JalinSuaraCache;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
+import com.jalinsuara.android.news.NewsActivity;
 import com.jalinsuara.android.news.ShareNewsActivity;
 import com.jalinsuara.android.news.model.News;
 import com.jalinsuara.android.projects.model.SubProject;
@@ -86,7 +88,7 @@ public class SubProjectFragment extends BaseFragment {
 	public SubProjectFragment() {
 
 	}
-	
+
 	public SubProjectFragment(SubProject subproject) {
 		mSubProject = subproject;
 		log.info("project: " + mSubProject);
@@ -225,30 +227,48 @@ public class SubProjectFragment extends BaseFragment {
 		if (mRelatedStoriesList.size() > 0) {
 			mRelatedStoriesLayout.setVisibility(View.VISIBLE);
 
+			JalinSuaraCache cache = JalinSuaraSingleton.getInstance(
+					getSherlockActivity()).getCache();
+
 			for (Iterator<News> i = mRelatedStoriesList.iterator(); i.hasNext();) {
 				TextView tv = new TextView(getSherlockActivity());
 
-				News news = i.next();
+				final News news = i.next();
 
 				LayoutParams params = new LayoutParams(
 						LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 
 				Resources r = getSherlockActivity().getResources();
 				int px = (int) TypedValue.applyDimension(
-						TypedValue.COMPLEX_UNIT_DIP, 10, r.getDisplayMetrics());
+						TypedValue.COMPLEX_UNIT_DIP, 20, r.getDisplayMetrics());
 
 				int px2 = (int) TypedValue.applyDimension(
 						TypedValue.COMPLEX_UNIT_DIP, 2, r.getDisplayMetrics());
 
 				if (!i.hasNext()) {
 					params.setMargins(px, 0, 0, px);
+					
 				} else {
 					params.setMargins(px, 0, 0, px2);
 				}
 
 				tv.setLayoutParams(params);
 				tv.setText(news.getTitle());
+				tv.setBackgroundResource(R.drawable.list_selector_holo_light);
+				tv.setClickable(true);
+				tv.setOnClickListener(new OnClickListener() {
 
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getSherlockActivity(),
+								NewsActivity.class);
+						intent.putExtra(NewsActivity.EXTRA_ID, news.getId());
+						startActivity(intent);
+
+					}
+				});
+
+				cache.putNews(news.getId(), news);
 				mRelatedStoriesLayout.addView(tv);
 			}
 		}

@@ -10,6 +10,12 @@ import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.news.model.News;
 
+/**
+ * Show news
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class NewsActivity extends BaseFragmentActivity {
 
 	public final static String EXTRA_ID = "news_id";
