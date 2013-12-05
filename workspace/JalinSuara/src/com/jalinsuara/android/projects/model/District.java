@@ -26,6 +26,8 @@ public class District extends Nameable{
 	private Date createdAt;
 
 	private Date updatedAt;
+	
+	private Province province;
 
 	/**
 	 * @return the id
@@ -132,17 +134,20 @@ public class District extends Nameable{
 		this.updatedAt = updatedAt;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Districts [id=" + id + ", name=" + name + ", provinceId="
+		return "District [id=" + id + ", name=" + name + ", provinceId="
 				+ provinceId + ", latitude=" + latitude + ", longitude="
 				+ longitude + ", createdAt=" + createdAt + ", updatedAt="
-				+ updatedAt + "]";
+				+ updatedAt + ", province=" + province + "]";
+	}
+
+	public Province getProvince() {
+		return province;
+	}
+
+	public void setProvince(Province province) {
+		this.province = province;
 	}
 
 }

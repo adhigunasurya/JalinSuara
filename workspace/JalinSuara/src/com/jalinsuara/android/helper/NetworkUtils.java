@@ -540,7 +540,9 @@ public class NetworkUtils {
 	public static ArrayList<Province> getProvinces() {
 		final HttpResponse resp;
 		String uri = null;
-		uri = BASE_URL + "/provinces";
+
+		// assumming this will return all provinces in Indonesia
+		uri = BASE_URL + "/provinces?page=1&per_page=100";
 
 		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);
@@ -607,7 +609,6 @@ public class NetworkUtils {
 			uri = BASE_URL + "/districts?page=" + page + "&" + PARAM_PER_PAGE
 					+ "=" + DEFAULT_PER_PAGE;
 		}
-		uri = BASE_URL + "/district/" + page;
 
 		log.info("Request: " + uri);
 		final HttpGet request = new HttpGet(uri);

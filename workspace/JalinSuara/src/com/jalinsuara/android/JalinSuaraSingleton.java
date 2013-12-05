@@ -126,7 +126,10 @@ public class JalinSuaraSingleton {
 
 		// init news list
 		setNewsList(new ArrayList<News>());
+
 		setSubProjectList(new ArrayList<SubProject>());
+
+		setProvincesList(new ArrayList<Province>());
 
 		mCache = new JalinSuaraCache();
 

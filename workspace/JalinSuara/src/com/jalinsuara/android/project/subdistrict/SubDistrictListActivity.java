@@ -2,6 +2,6 @@ package com.jalinsuara.android.project.subdistrict;
 
 import com.jalinsuara.android.R;
 
-public class SubDistrictActivity {
+public class SubDistrictListActivity {
 
 }

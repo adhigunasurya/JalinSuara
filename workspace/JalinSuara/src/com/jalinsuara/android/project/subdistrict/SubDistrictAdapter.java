@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
@@ -46,20 +47,23 @@ public class SubDistrictAdapter extends BaseAdapter {
 			LayoutInflater inflater = (LayoutInflater) parent.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-			convertView = inflater.inflate(R.layout.list_item_news, null);
+			convertView = inflater.inflate(R.layout.list_item_sub_district,
+					null);
 
 		}
 
-//		TextView titleTextview = ((TextView) convertView
-//				.findViewById(R.id.list_item_news_title_textview));
-//		TextView descriptionTextview = ((TextView) convertView
-//				.findViewById(R.id.list_item_news_content_textview));
-//		
-//		convertView.setTag(object.getId());
-//		titleTextview.setText(object.getTitle());
-//		descriptionTextview.setText(Html.fromHtml(object.getDescription()));
-		
-		
+		TextView titleTextview = ((TextView) convertView
+				.findViewById(R.id.list_item_subdistrict_name_textview));
+		TextView districtTextview = ((TextView) convertView
+				.findViewById(R.id.list_item_subdistrict_district_textview));
+
+		convertView.setTag(object.getId());
+		titleTextview.setText(object.getName());
+		if (object.getDistrict() != null) {
+			districtTextview.setText(object.getDistrict().getName());
+		} else {
+			districtTextview.setText("");
+		}
 
 		return convertView;
 	}

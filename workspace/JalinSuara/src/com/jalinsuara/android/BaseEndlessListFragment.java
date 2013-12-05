@@ -1,7 +1,5 @@
 package com.jalinsuara.android;
 
-import static com.jalinsuara.android.BaseEndlessListFragment.CURRENT_PAGE;
-
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -9,22 +7,11 @@ import org.slf4j.LoggerFactory;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-
-import com.actionbarsherlock.app.SherlockListFragment;
-import com.jalinsuara.android.helper.NetworkUtils;
-import com.jalinsuara.android.project.SubProjectAdapter;
-import com.jalinsuara.android.projects.model.SubProject;
 
 /**
  * Base List Fragment used for endless scroll list entire application
@@ -33,7 +20,12 @@ import com.jalinsuara.android.projects.model.SubProject;
  * 
  */
 public abstract class BaseEndlessListFragment extends BaseListFragment {
+
 	public static final String CURRENT_PAGE = "current_page";
+
+	/**
+	 * endless scroll listener
+	 */
 	protected EndlessScrollListener listener;
 
 	protected boolean mAdapterSet = false;
@@ -191,6 +183,7 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 				int pageToLoad = (Integer) params[0];
 				int currPage = (Integer) params[1];
 				if (currPage >= pageToLoad) {
+					log.info("no changes");
 					return E_OK_NO_CHANGES;
 				}
 			}
@@ -203,7 +196,9 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 					if (retval != null && retval.size() > 0) {
 						getList().clear();
 						getList().addAll(retval);
+						log.info("load " + retval.size() + " data");
 					} else if (retval == null) {
+						log.error("no response from server");
 						return E_ERROR;
 					}
 				} else {
@@ -222,6 +217,7 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 					}
 				}
 			} else {
+				log.error("activity null");
 				return E_ERROR;
 			}
 			return E_OK;
@@ -271,6 +267,7 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 				} else if (result == E_OK_NO_CHANGES) {
 
 				} else {
+					log.error("there is error");
 					loading = false;
 					resetStatus();
 					setStatusError(getString(R.string.error));
@@ -282,7 +279,7 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);		
+		super.onSaveInstanceState(outState);
 		outState.putInt(CURRENT_PAGE, listener.getCurrentPage());
 	}
 

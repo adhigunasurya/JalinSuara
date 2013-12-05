@@ -28,6 +28,8 @@ public class SubDistrict extends Nameable{
 	private Date updatedAt;
 
 	private boolean gmaps;
+	
+	private District district;
 
 	/**
 	 * @return the id
@@ -149,17 +151,21 @@ public class SubDistrict extends Nameable{
 		this.gmaps = gmaps;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "SubDistrict [id=" + id + ", name=" + name + ", districtId="
 				+ districtId + ", latitude=" + latitude + ", longitude="
 				+ longitude + ", createdAt=" + createdAt + ", updatedAt="
-				+ updatedAt + ", gmaps=" + gmaps + "]";
+				+ updatedAt + ", gmaps=" + gmaps + ", district=" + district
+				+ "]";
+	}
+
+	public District getDistrict() {
+		return district;
+	}
+
+	public void setDistrict(District district) {
+		this.district = district;
 	}
 
 }

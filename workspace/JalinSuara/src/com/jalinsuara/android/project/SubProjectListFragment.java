@@ -13,10 +13,25 @@ import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.projects.model.SubProject;
 
+/**
+ * Show list of subproject
+ * 
+ * @author hartono
+ * 
+ */
 public class SubProjectListFragment extends BaseEndlessListFragment {
+
+	public final static String EXTRA_SUB_DISTRICT_ID = "subdistrict_id";
 
 	private SubProjectAdapter mAdapter = null;
 	private OnSubProjectItemClickListener mListener;
+
+	/**
+	 * subdistrict id, if the value is -1, load all project,
+	 * <p>
+	 * else load subproject specific to subdistrict id
+	 */
+	private long mSubDistrictId = -1;
 
 	public SubProjectListFragment(OnSubProjectItemClickListener listener) {
 		log.info("SubProjectListFragment()");
@@ -34,6 +49,10 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 
 		log.info("onActivityCreated");
 
+		if (getArguments() != null) {
+			mSubDistrictId = getArguments().getLong(EXTRA_SUB_DISTRICT_ID, -1);
+		}
+
 		if (savedInstanceState == null) {
 			resetStatus();
 			setStatusProgress(getResources().getString(R.string.loading), false);
@@ -41,7 +60,7 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 				@Override
 				public void load(int page) {
 					LoadProject task = new LoadProject();
-					task.execute(page, getCurrentPage());
+					task.execute(page, getCurrentPage(), mSubDistrictId);
 				}
 			};
 			getListView().setOnScrollListener(listener);
@@ -55,7 +74,7 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 					@Override
 					public void load(int page) {
 						LoadProject task = new LoadProject();
-						task.execute(page, getCurrentPage());
+						task.execute(page, getCurrentPage(), mSubDistrictId);
 					}
 				};
 				getListView().setOnScrollListener(listener);
@@ -85,8 +104,16 @@ public class SubProjectListFragment extends BaseEndlessListFragment {
 
 		@Override
 		public ArrayList<SubProject> loadFromNetwork(Object[] params) {
-			ArrayList<SubProject> lSubProjects = (ArrayList<SubProject>) NetworkUtils
-					.getSubProjects((Integer) params[0]);
+			long subDistrictId = (Long) params[2];
+			ArrayList<SubProject> lSubProjects = null;
+
+			if (subDistrictId == -1) {
+				lSubProjects = (ArrayList<SubProject>) NetworkUtils
+						.getSubProjects((Integer) params[0]);
+			} else {
+				lSubProjects = (ArrayList<SubProject>) NetworkUtils
+						.getSubProjects(subDistrictId, (Integer) params[0]);
+			}
 			return lSubProjects;
 		}
 

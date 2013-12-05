@@ -14,7 +14,15 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.project.SubProjectListFragment.OnSubProjectItemClickListener;
+import com.jalinsuara.android.project.district.DistrictListFragment;
+import com.jalinsuara.android.project.district.DistrictListFragment.OnDistrictItemClickListener;
+import com.jalinsuara.android.project.province.ProvinceListFragment;
+import com.jalinsuara.android.project.province.ProvinceListFragment.OnProvinceItemClickListener;
 import com.jalinsuara.android.project.subdistrict.SubDistrictListFragment;
+import com.jalinsuara.android.project.subdistrict.SubDistrictListFragment.OnSubDistrictItemClickListener;
+import com.jalinsuara.android.projects.model.District;
+import com.jalinsuara.android.projects.model.Province;
+import com.jalinsuara.android.projects.model.SubDistrict;
 import com.jalinsuara.android.projects.model.SubProject;
 
 /**
@@ -24,10 +32,14 @@ import com.jalinsuara.android.projects.model.SubProject;
  * 
  */
 public class ViewPagerProjectActivity extends BaseFragmentActivity implements
-		OnSubProjectItemClickListener {
+		OnSubProjectItemClickListener, OnProvinceItemClickListener,
+		OnDistrictItemClickListener, OnSubDistrictItemClickListener {
 	private MyAdapter mAdapter;
 	private ViewPager mPager;
 	private SubProjectListFragment mSubProjectListFragment;
+	public ProvinceListFragment mProvinceListFragment;
+	public DistrictListFragment mDistrictListFragment;
+	public SubDistrictListFragment mSubDistrictListFragment;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,14 +90,28 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 				return mSubProjectListFragment;
 			}
 			case 1: {
-				// return new SubProvinceListFragment();
+				if (mProvinceListFragment == null) {
+					log.info("instantiate fragment");
+					mProvinceListFragment = new ProvinceListFragment(
+							ViewPagerProjectActivity.this);
+				}
+				return mProvinceListFragment;
 			}
 			case 2: {
-				// return new SubDistrictListFragment();
+				if (mDistrictListFragment == null) {
+					log.info("instantiate fragment");
+					mDistrictListFragment = new DistrictListFragment(
+							ViewPagerProjectActivity.this);
+				}
+				return mDistrictListFragment;
 			}
 			case 3: {
-				// return new Sub
-				return new SubDistrictListFragment();
+				if (mSubDistrictListFragment == null) {
+					log.info("instantiate fragment");
+					mSubDistrictListFragment = new SubDistrictListFragment(
+							ViewPagerProjectActivity.this);
+				}
+				return mSubDistrictListFragment;
 			}
 			}
 			return new SubProjectListFragment(null);
@@ -116,5 +142,23 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 		}
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onProvinceItemClickListener(Province province, int position) {
+
+	}
+
+	@Override
+	public void onDistrictItemClickListener(District district, int position) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onSubDistrictItemClickListener(SubDistrict subdistrict,
+			int position) {
+		// TODO Auto-generated method stub
+
 	}
 }
