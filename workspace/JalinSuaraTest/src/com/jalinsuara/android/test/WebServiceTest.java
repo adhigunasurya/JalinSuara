@@ -14,6 +14,13 @@ import com.jalinsuara.android.projects.model.SubDistrict;
 import com.jalinsuara.android.projects.model.SubProject;
 import com.jalinsuara.android.search.SearchResult;
 
+/**
+ * 
+ * API Web Services Test
+ * 
+ * @author tonoman3g
+ * 
+ */
 public class WebServiceTest extends TestCase {
 
 	private static String TAG = WebServiceTest.class.getSimpleName();
