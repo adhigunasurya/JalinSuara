@@ -133,6 +133,8 @@ public class JalinSuaraSingleton {
 
 		mCache = new JalinSuaraCache();
 
+		setRecentSearchResultList(new ArrayList<SearchResult>());
+
 	}
 
 	public synchronized ArrayList<News> getNewsList() {

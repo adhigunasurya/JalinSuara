@@ -20,6 +20,7 @@ import android.widget.AbsListView.OnScrollListener;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.jalinsuara.android.BaseEndlessListFragment.EndlessScrollListener;
 
 /**
  * Base Activity used in the entire application
@@ -30,13 +31,20 @@ import com.actionbarsherlock.view.MenuItem;
 public abstract class BaseEndlessListFragmentActivity extends
 		BaseFragmentActivity {
 
+	public static final String CURRENT_PAGE = "current_page";
+
+	/**
+	 * endless scroll listener
+	 */
+	protected EndlessScrollListener listener;
+
 	protected TextView mEmptyTextView;
 	protected boolean mAdapterSet = false;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
-		
+
 	}
 
 	/**
@@ -87,18 +95,28 @@ public abstract class BaseEndlessListFragmentActivity extends
 	 */
 	public class EndlessScrollListener implements OnScrollListener {
 
-		protected int currentPage = 0;
+		private Logger log = LoggerFactory.getLogger(this.getClass()
+				.getSimpleName());
+
+		private int currentPage = 0;
+
 		private int previousTotal = 0;
+
 		private boolean mFirst = true;
 
 		public EndlessScrollListener() {
+			log.info("EndlessScrollListener()");
+			this.setCurrentPage(0);
+		}
 
+		public EndlessScrollListener(int currentPage) {
+			log.info("EndlessScrollListener() " + currentPage);
+			this.setCurrentPage(currentPage);
 		}
 
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
-			log.info("on scroll");
 
 			if (mFirst) {
 				log.info("first time : " + totalItemCount);
@@ -108,17 +126,18 @@ public abstract class BaseEndlessListFragmentActivity extends
 
 			if (isLoading()) {
 				if (totalItemCount > previousTotal) {
-					log.info("increase page");
+					log.info("increase page from " + getCurrentPage() + " to "
+							+ (getCurrentPage() + 1));
 					setLoading(false);
 					previousTotal = totalItemCount;
-					currentPage++;
+					setCurrentPage(getCurrentPage() + 1);
 				}
 			}
 			if (!isLoading()
 					&& (firstVisibleItem + visibleItemCount) == totalItemCount) {
 				// load the next page
-				log.info("load next page " + (currentPage + 1));
-				load(currentPage + 1);
+				log.info("load next page " + (getCurrentPage() + 1));
+				load(getCurrentPage() + 1);
 				setLoading(loading);
 			}
 		}
@@ -136,6 +155,14 @@ public abstract class BaseEndlessListFragmentActivity extends
 		public void onScrollStateChanged(AbsListView view, int scrollState) {
 		}
 
+		public int getCurrentPage() {
+			return currentPage;
+		}
+
+		public void setCurrentPage(int currentPage) {
+			this.currentPage = currentPage;
+		}
+
 	}
 
 	/**
@@ -144,6 +171,7 @@ public abstract class BaseEndlessListFragmentActivity extends
 	 * @author tonoman3g
 	 * 
 	 * @param <T>
+	 *            1st element is page to load , 2nd element is current page
 	 */
 	public abstract class LoadItemTask<T> extends
 			AsyncTask<Object, Integer, Integer> {
@@ -161,16 +189,26 @@ public abstract class BaseEndlessListFragmentActivity extends
 
 		@Override
 		protected Integer doInBackground(Object... params) {
+			if (params.length > 1) {
+				int pageToLoad = (Integer) params[0];
+				int currPage = (Integer) params[1];
+				if (currPage >= pageToLoad) {
+					log.info("no changes");
+					return E_OK_NO_CHANGES;
+				}
+			}
 			loading = true;
 			ArrayList<T> retval = loadFromNetwork(params);
 
-			if (getBaseContext() != null) {
+			if (!isFinishing()) {
 				if (getAdapter() == null) {
 					onFirstLoad();
 					if (retval != null && retval.size() > 0) {
 						getList().clear();
-						getList().addAll(retval);						
+						getList().addAll(retval);
+						log.info("load " + retval.size() + " data");
 					} else if (retval == null) {
+						log.error("no response from server");
 						return E_ERROR;
 					}
 				} else {
@@ -189,6 +227,7 @@ public abstract class BaseEndlessListFragmentActivity extends
 					}
 				}
 			} else {
+				log.error("activity null");
 				return E_ERROR;
 			}
 			return E_OK;
@@ -199,6 +238,11 @@ public abstract class BaseEndlessListFragmentActivity extends
 		 */
 		public abstract void onFirstLoad();
 
+		/**
+		 * @param params
+		 *            , params[0] = page to load, params[1] = current page
+		 * @return
+		 */
 		public abstract ArrayList<T> loadFromNetwork(Object[] params);
 
 		public abstract ArrayList<T> getList();
@@ -210,7 +254,7 @@ public abstract class BaseEndlessListFragmentActivity extends
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
-			if (getBaseContext() != null) {
+			if (!isFinishing()) {
 				setProgressBarIndeterminateVisibility(false);
 
 				if (result == E_OK) {
@@ -218,13 +262,6 @@ public abstract class BaseEndlessListFragmentActivity extends
 					if (!isAdapterSet()) {
 						setAdapterSet(true);
 						getListView().setAdapter(getAdapter());
-						if (mEmptyTextView != null) {
-							if (getAdapter().getCount() > 0) {
-								mEmptyTextView.setVisibility(View.GONE);
-							} else {
-								mEmptyTextView.setVisibility(View.VISIBLE);
-							}
-						}
 					} else {
 						getListView().setSelectionFromTop(mLastScrollY, 0);
 					}
@@ -239,6 +276,7 @@ public abstract class BaseEndlessListFragmentActivity extends
 				} else if (result == E_OK_NO_CHANGES) {
 
 				} else {
+					log.error("there is error");
 					loading = false;
 					resetStatus();
 					setStatusError(getString(R.string.error));
@@ -246,5 +284,11 @@ public abstract class BaseEndlessListFragmentActivity extends
 			}
 		}
 
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(CURRENT_PAGE, listener.getCurrentPage());
 	}
 }

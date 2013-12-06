@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -65,13 +66,6 @@ public class SearchableActivity extends BaseEndlessListFragmentActivity {
 			}
 		});
 
-		mListView.setOnScrollListener(new EndlessScrollListener() {
-			@Override
-			public void load(int page) {
-				SearchTask task = new SearchTask(getBaseContext());
-				task.execute(mQuery, String.valueOf(page));
-			}
-		});
 	}
 
 	@Override
@@ -94,8 +88,15 @@ public class SearchableActivity extends BaseEndlessListFragmentActivity {
 				getString(R.string.searching_for, new Object[] { query }),
 				false);
 		mQuery = query;
-		SearchTask task = new SearchTask(this);
-		task.execute(query, String.valueOf(1));
+
+		listener = new EndlessScrollListener() {
+			@Override
+			public void load(int page) {
+				SearchTask task = new SearchTask(getBaseContext());
+				task.execute(page, getCurrentPage(), mQuery);
+			}
+		};
+		mListView.setOnScrollListener(listener);
 
 	}
 
@@ -122,7 +123,7 @@ public class SearchableActivity extends BaseEndlessListFragmentActivity {
 	 * @author tonoman3g
 	 * 
 	 */
-	private class SearchTask extends AsyncTask<String, Integer, Integer> {
+	private class SearchTask extends LoadItemTask<SearchResult> {
 
 		Context mContext;
 		String query;
@@ -131,62 +132,58 @@ public class SearchableActivity extends BaseEndlessListFragmentActivity {
 			mContext = context;
 		}
 
-		private final static int E_OK = 1;
-		private final static int E_ERROR = 2;
-
-		@Override
-		protected Integer doInBackground(String... params) {
-			query = params[0];
-			ArrayList<SearchResult> result = NetworkUtils.getSearch(params[0],
-					Integer.parseInt(params[1]));
-			JalinSuaraSingleton.getInstance(mContext)
-					.setRecentSearchResultList(result);
-			if (mContext != null) {
-
-				mAdapter = new SearchResultAdapter(mContext, result);
-				if (mAdapter != null) {
-					return E_OK;
-				} else {
-					return E_ERROR;
-				}
-			}
-
-			return E_ERROR;
-		}
-
 		@Override
 		protected void onPostExecute(Integer result) {
 			super.onPostExecute(result);
 			if (mContext != null && !isFinishing()) {
-				if (result == E_OK) {
-					if (mAdapter != null) {
-						mListView.setAdapter(mAdapter);
-					}
-					int count = mAdapter.getCount();
-					if (count > 0) {
-						String countString = getResources().getQuantityString(
-								R.plurals.search_results, count,
-								new Object[] { count, query });
-						mStatusTextView.setText(countString);
-						mEmptyTextView.setVisibility(View.GONE);
+				int count = mAdapter.getCount();
+				if (count > 0) {
+					String countString = getResources().getQuantityString(
+							R.plurals.search_results, count,
+							new Object[] { count, query });
+					mStatusTextView.setText(countString);
+					mEmptyTextView.setVisibility(View.GONE);
 
-					} else {
-						mEmptyTextView.setText(getString(
-								R.string.search_no_result,
-								new Object[] { query }));
-						mStatusTextView.setVisibility(View.GONE);
-					}
-					resetStatus();
-					setStatusShowContent();
 				} else {
-					resetStatus();
-					setStatusError(getString(R.string.error));
+					mEmptyTextView.setText(getString(R.string.search_no_result,
+							new Object[] { query }));
+					mStatusTextView.setVisibility(View.GONE);
 				}
-			} else {
 				resetStatus();
-				setStatusError(getString(R.string.error));
-
+				setStatusShowContent();
 			}
+		}
+
+		@Override
+		public void onFirstLoad() {
+			mAdapter = new SearchResultAdapter(mContext, JalinSuaraSingleton
+					.getInstance(mContext).getRecentSearchResultList());
+		}
+
+		@Override
+		public ArrayList<SearchResult> loadFromNetwork(Object[] params) {
+			int page = (Integer) params[1];
+			query = (String) params[2];
+			ArrayList<SearchResult> result = NetworkUtils
+					.getSearch(query, page);
+
+			return result;
+		}
+
+		@Override
+		public ArrayList<SearchResult> getList() {
+			return JalinSuaraSingleton.getInstance(mContext)
+					.getRecentSearchResultList();
+		}
+
+		@Override
+		public BaseAdapter getAdapter() {
+			return mAdapter;
+		}
+
+		@Override
+		public ListView getListView() {
+			return mListView;
 		}
 	}
 

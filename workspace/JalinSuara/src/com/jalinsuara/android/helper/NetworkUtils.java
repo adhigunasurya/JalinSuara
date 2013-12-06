@@ -333,7 +333,7 @@ public class NetworkUtils {
 						line = ireader.readLine();
 					}
 
-					log.info("Response: " + sb.toString());
+					log.info("Response received");
 					ireader.close();
 
 					String response = sb.toString();
@@ -367,11 +367,11 @@ public class NetworkUtils {
 													objString, News.class);
 											retvalElmt.setNews(news);
 										}
-										retval.add(retvalElmt);
+										retval.add(retvalElmt);										
 									}
 								}
 							}
-
+							log.info("Result : "+retval.size());
 							return retval;
 						} catch (Exception ex) {
 							ex.printStackTrace();
