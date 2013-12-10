@@ -55,22 +55,7 @@ public class WebServiceTest extends TestCase {
 		}
 
 	}
-
-	public void testGetSearch() {
-		ArrayList<SearchResult> list = NetworkUtils.getSearch("air", 1);
-		assertTrue(list != null);
-		if (list != null) {
-			assertTrue(list.size() > 0);
-		}
-
-		if (list != null) {
-			for (SearchResult item : list) {
-				Log.i(TAG, item.toString());
-			}
-
-		}
-	}
-
+	
 	public void testGetComment() {
 		ArrayList<Comment> list = NetworkUtils.getComment(15, 1);
 		assertTrue(list != null);
