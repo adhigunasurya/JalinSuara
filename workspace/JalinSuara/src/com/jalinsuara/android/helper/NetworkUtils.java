@@ -216,6 +216,66 @@ public class NetworkUtils {
 
 		return null;
 	}
+	
+	/**
+	 * Get post from server
+	 * 
+	 * @param page
+	 * @return null if error
+	 */
+	public static News getPosts(long id) {
+		final HttpResponse resp;
+		String uri = BASE_URL + "/posts/"+id;		
+
+		log.info("Request: " + uri);
+		final HttpGet request = new HttpGet(uri);
+		try {
+			resp = getHttpClient().execute(request);
+
+			if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+				InputStream istream = (resp.getEntity() != null) ? resp
+						.getEntity().getContent() : null;
+				if (istream != null) {
+					BufferedReader ireader = new BufferedReader(
+							new InputStreamReader(istream));
+					String line = ireader.readLine();
+					StringBuilder sb = new StringBuilder();
+
+					while (line != null) {
+						sb.append(line);
+						line = ireader.readLine();
+					}
+
+					if (sb.length() <= 30) {
+						log.info("Response: " + sb.toString());
+					} else {
+						log.info("Response: " + sb.toString().substring(0, 29));
+					}
+					ireader.close();
+
+					String response = sb.toString();
+
+					if (response.length() > 0) {
+						try {							
+							News retval = getGson().fromJson(
+									response, News.class);
+							return retval;
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+						return null;
+					}
+				}
+			} else {
+				log.error("Error: " + resp.getStatusLine());
+				return null;
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
+	}
 
 	/**
 	 * Get related news / post from a certain subproject / activity

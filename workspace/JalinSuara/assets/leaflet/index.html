@@ -49,6 +49,8 @@ html, body, #map {
 				var posts = [{{posts}}];
 				for (post in posts){							
 					var marker = L.marker([posts[post].lat, posts[post].lon]);
+					var popup = "<b><a href='jalinsuara://posts/"+posts[post].id+"'>"+posts[post].title+"</a></b>";
+					marker.bindPopup(popup);
 					markers.addLayer(marker);
 					bounds[i]=[posts[post].lat, posts[post].lon];
 					i = i+1;

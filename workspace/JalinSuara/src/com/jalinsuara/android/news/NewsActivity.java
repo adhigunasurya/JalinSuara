@@ -1,6 +1,10 @@
 package com.jalinsuara.android.news;
 
+import java.util.List;
+
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.actionbarsherlock.view.Menu;
@@ -8,6 +12,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jalinsuara.android.BaseFragmentActivity;
 import com.jalinsuara.android.JalinSuaraSingleton;
 import com.jalinsuara.android.R;
+import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.news.model.News;
 
 /**
@@ -32,9 +37,65 @@ public class NewsActivity extends BaseFragmentActivity {
 
 		resetStatus();
 		setStatusProgress(getString(R.string.loading), false);
-		long id = getIntent().getLongExtra(EXTRA_ID, -1);
+
+		long id = -1;
+
+		if (getIntent().getData() != null) {
+			Uri data = getIntent().getData();
+			String scheme = data.getScheme(); // "jalinsuara"
+			String host = data.getHost(); // "posts"
+			List<String> params = data.getPathSegments();
+			String idString = params.get(0); // "id"
+			id = Long.parseLong(idString);
+			log.info("scheme:" + scheme + ", host:" + host + ", params:"
+					+ params);
+		} else {
+			id = getIntent().getLongExtra(EXTRA_ID, -1);
+		}
 		if (id != -1) {
 			mNews = JalinSuaraSingleton.getInstance(this).findNewsById(id);
+			if (mNews != null) {
+				
+			} else {
+				AsyncTask<Long, Integer, Integer> task = new AsyncTask<Long, Integer, Integer>() {
+
+					@Override
+					protected void onPreExecute() {
+						super.onPreExecute();
+						resetStatus();
+						setStatusProgress(getString(R.string.loading), false);
+					}
+
+					@Override
+					protected Integer doInBackground(Long... params) {
+						mNews = NetworkUtils.getPosts(params[0]);
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Integer result) {
+						if (mNews != null) {
+							mNewsFragment = new NewsFragment(mNews);
+							getSupportFragmentManager()
+									.beginTransaction()
+									.replace(
+											R.id.activity_news_detail_fragment,
+											mNewsFragment).commit();
+
+							setTitle(mNews.getTitle());
+
+							resetStatus();
+							setStatusShowContent();
+						} else {
+							resetStatus();
+							setStatusError(getString(R.string.error));
+						}
+					}
+
+				};
+				task.execute(id);
+			}
+
 			if (mNews != null) {
 				mNewsFragment = new NewsFragment(mNews);
 				getSupportFragmentManager()
@@ -46,14 +107,12 @@ public class NewsActivity extends BaseFragmentActivity {
 
 				resetStatus();
 				setStatusShowContent();
-			} else {
-				resetStatus();
-				setStatusError(getString(R.string.error));
 			}
 		} else {
 			resetStatus();
 			setStatusError(getString(R.string.error));
 		}
+
 	}
 
 	@Override
@@ -78,4 +137,5 @@ public class NewsActivity extends BaseFragmentActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 }

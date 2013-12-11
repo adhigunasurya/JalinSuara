@@ -53,6 +53,8 @@ public class ShowMapActivity extends BaseFragmentActivity {
 
 				return true;
 			}
+			
+			
 		});
 
 		WebSettings webSettings = mWebView.getSettings();
@@ -137,10 +139,10 @@ public class ShowMapActivity extends BaseFragmentActivity {
 					if (news.getLatitude() != 0 && news.getLongitude() != 0) {
 						if (i == 0) {
 							sb.append("{\"lat\":" + news.getLatitude());
-							sb.append(",\"lon\":" + news.getLongitude() + "}");
+							sb.append(",\"lon\":" + news.getLongitude() + ", \"title\":\""+news.getTitle()+"\" "+", \"id\":\""+news.getId()+"\" "+"}");
 						} else {
 							sb.append(",{\"lat\":" + news.getLatitude());
-							sb.append(",\"lon\":" + news.getLongitude() + "}");
+							sb.append(",\"lon\":" + news.getLongitude() + ", \"title\":\""+news.getTitle()+"\" "+", \"id\":\""+news.getId()+"\" "+"}");
 						}
 					}
 					i++;

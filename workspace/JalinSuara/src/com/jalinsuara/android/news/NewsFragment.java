@@ -34,7 +34,6 @@ public class NewsFragment extends BaseFragment {
 	private TextView mDateUpdatedView;
 	private TextView mTitleTextView;
 	private TextView mDescriptionTextView;
-	private MapView mMapView;
 
 	public NewsFragment() {
 
@@ -80,40 +79,6 @@ public class NewsFragment extends BaseFragment {
 						.getDescription()));
 			}
 
-			if (mNews.getLatitude() != 0 && mNews.getLongitude() != 0) {
-
-				if (GooglePlayServicesUtil
-						.isGooglePlayServicesAvailable(getSherlockActivity()) == ConnectionResult.SUCCESS) {
-					mMapView = (MapView) getView().findViewById(
-							R.id.fragment_news_map_mapview);
-					mMapView.onCreate(savedInstanceState);
-					LatLng position = new LatLng(mNews.getLatitude(),
-							mNews.getLongitude());
-					if (mMapView.getMap() != null) {
-						try {
-
-							// force initialize
-							MapsInitializer.initialize(getActivity());
-
-							// move camera
-							mMapView.getMap().moveCamera(
-									CameraUpdateFactory.newLatLngZoom(position,
-											10));
-
-							// mark the map
-							Marker marker = mMapView.getMap().addMarker(
-									new MarkerOptions().position(position));
-
-						} catch (GooglePlayServicesNotAvailableException impossible) {
-							impossible.printStackTrace();
-							if (mMapView != null) {
-								mMapView.setVisibility(View.GONE);
-							}
-						}
-					}
-				}
-			}
-
 			resetStatus();
 			setStatusShowContent();
 		} else {
@@ -125,34 +90,22 @@ public class NewsFragment extends BaseFragment {
 
 	@Override
 	public void onPause() {
-		super.onPause();
-		if (mMapView != null) {
-			mMapView.onPause();
-		}
+		super.onPause();		
 	}
 
 	@Override
 	public void onResume() {
-		super.onResume();
-		if (mMapView != null) {
-			mMapView.onResume();
-		}
+		super.onResume();		
 	}
 
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
-		if (mMapView != null) {
-			mMapView.onDestroy();
-		}
+		super.onDestroy();		
 	}
 
 	@Override
 	public void onLowMemory() {
-		super.onLowMemory();
-		if (mMapView != null) {
-			mMapView.onLowMemory();
-		}
+		super.onLowMemory();		
 	}
 
 }
