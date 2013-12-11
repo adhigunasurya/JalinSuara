@@ -12,8 +12,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />    
-    
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <uses-sdk
@@ -54,6 +53,16 @@
         <activity
             android:name="com.jalinsuara.android.news.NewsActivity"
             android:label="@string/title_news" >
+            <intent-filter>
+                <data android:scheme="jalinsuara"  android:host="posts" >
+                </data>
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <action android:name="android.intent.action.VIEW" >
+                </action>
+            </intent-filter>
         </activity>
         <activity
             android:name="com.jalinsuara.android.news.NewsListActivity"
