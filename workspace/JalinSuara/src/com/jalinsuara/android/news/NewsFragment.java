@@ -147,7 +147,7 @@ public class NewsFragment extends BaseFragment {
 	private String readAsset(String fileName) {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					getAssets().open(fileName), "UTF-8"));
+					getActivity().getAssets().open(fileName), "UTF-8"));
 			// do reading, usually loop until end of file reading
 			StringBuilder sb = new StringBuilder();
 			String mLine = reader.readLine();

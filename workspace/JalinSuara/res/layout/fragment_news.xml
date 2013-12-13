@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:text="@string/loren_ipsum" />
-			<WebView
+		<WebView
         	android:id="@+id/activity_show_map_web_view_fragment_news"
         	android:layout_width="match_parent"
         	android:layout_height="match_parent" />

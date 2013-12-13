@@ -65,8 +65,8 @@ public class ShowMapActivity extends BaseFragmentActivity {
 		webSettings.setBuiltInZoomControls(true);
 		webSettings.setDisplayZoomControls(false);
 		
-		//LoadNews task = new LoadNews();
-		LoadOneNews task = new LoadOneNews();
+		LoadNews task = new LoadNews();
+		//LoadOneNews task = new LoadOneNews();
 		task.execute();
 
 	}
