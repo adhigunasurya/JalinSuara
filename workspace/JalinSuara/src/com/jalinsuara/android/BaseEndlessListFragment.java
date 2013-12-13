@@ -280,7 +280,33 @@ public abstract class BaseEndlessListFragment extends BaseListFragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		
+		// orientation changed , listener null
 		outState.putInt(CURRENT_PAGE, listener.getCurrentPage());
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		log.info("onCreate()");
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		log.info("onPause()");
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		log.info("onResume()");
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		log.info("onDestroy()");
 	}
 
 }

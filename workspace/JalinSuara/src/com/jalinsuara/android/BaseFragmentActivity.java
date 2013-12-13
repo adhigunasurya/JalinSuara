@@ -252,6 +252,7 @@ public abstract class BaseFragmentActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
+		log.info("onCreate()");
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setProgressBarIndeterminate(true);
 		setProgressBarIndeterminateVisibility(true);
@@ -283,6 +284,12 @@ public abstract class BaseFragmentActivity extends SherlockFragmentActivity {
 		log.info("onPause()");
 		setPaused(true);
 
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		log.info("onDestroy()");
 	}
 
 	/**
