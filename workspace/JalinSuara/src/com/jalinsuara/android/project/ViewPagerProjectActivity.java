@@ -48,6 +48,7 @@ public class ViewPagerProjectActivity extends BaseFragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_view_pager_project);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
