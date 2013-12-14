@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	
+	
+	<script src="leaflet/js/leaflet.js"></script>	 
+	<script src="leaflet/js/leaflet.markercluster.js"></script>
+	
+	<script src="leaflet/js/jquery.min.js"></script>
+	
+	<link rel="stylesheet" href="leaflet/css/leaflet.css" />
+	<!--[if lte IE 8]>
+	 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.ie.css" />
+	<![endif]-->
+	<link rel="stylesheet" href="leaflet/css/MarkerCluster.css" />
+	<link rel="stylesheet" href="leaflet/css/MarkerCluster.Default.css" />
+	
+	
+		 
+	<style>
+	 body {
+    padding: 0;
+    margin: 0;
+}
+html, body, #map {
+    height: 300px;
+}
+	</style>
+	
+	
+	<script>
+		$(document).ready(function(){
+		
+		
+				var map = L.map('map',{
+					'dragging':false,
+					'touchZoom':false,
+					 'scrollWheelZoom':false,
+					 'doubleClickZoom':false,
+					 'boxZoom':false,
+					 'tap':false,
+					 'zoomControl':false
+					}
+					).setView([6.1750, 106.8283], 7);			
+				L.tileLayer('http://{s}.tile.cloudmade.com/6e6e029f140943bf932368519b7f92fd/997/256/{z}/{x}/{y}.png', {					
+					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',    
+					maxZoom: 7
+				}).addTo(map);
+				
+				var bounds = new Array();
+				var markers = new L.MarkerClusterGroup();
+				var i = 0;
+				
+				var posts = [{{posts}}];
+				for (post in posts){							
+					var marker = L.marker([posts[post].lat, posts[post].lon]);					
+					markers.addLayer(marker);
+					bounds[i]=[posts[post].lat, posts[post].lon];
+					i = i+1;
+				}
+				map.addLayer(markers);
+				map.fitBounds(bounds);
+				
+				
+			console.log("Hello ganteng");			
+			});
+	</script>
+	 
+</head>
+<body>	
+	<div id="map"></div>
+</body>
+</html>

@@ -1,10 +1,13 @@
 package com.jalinsuara.android.news;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -13,25 +16,12 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.jalinsuara.android.BaseFragment;
 import com.jalinsuara.android.R;
 import com.jalinsuara.android.helper.NetworkUtils;
 import com.jalinsuara.android.helpers.lazylist.ImageLoader;
 import com.jalinsuara.android.news.model.News;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 /**
  * Fragment to show news detail
  * 
@@ -46,6 +36,7 @@ public class NewsFragment extends BaseFragment {
 	private TextView mTitleTextView;
 	private TextView mDescriptionTextView;
 	private WebView mWebView;
+
 	public NewsFragment() {
 
 	}
@@ -96,8 +87,9 @@ public class NewsFragment extends BaseFragment {
 			resetStatus();
 			setStatusError(getString(R.string.error));
 		}
-		
-		mWebView = (WebView)getView().findViewById(R.id.activity_show_map_web_view_fragment_news);
+
+		mWebView = (WebView) getView()
+				.findViewById(R.id.fragment_news_web_view);
 		mWebView.setWebChromeClient(new WebChromeClient() {
 
 			public boolean onConsoleMessage(ConsoleMessage cm) {
@@ -106,45 +98,40 @@ public class NewsFragment extends BaseFragment {
 
 				return true;
 			}
-			
-			
+
 		});
 		WebSettings webSettings = mWebView.getSettings();
 		webSettings.setJavaScriptEnabled(true);
 		webSettings.setRenderPriority(RenderPriority.HIGH);
 		webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// multi-touch zoom
-		webSettings.setBuiltInZoomControls(true);
+		webSettings.setBuiltInZoomControls(false);
 		webSettings.setDisplayZoomControls(false);
-		
-		//LoadOneNews 
-		LoadOneNews task = new LoadOneNews();
-		task.execute();
+		webSettings.setSupportZoom(false);
+		webSettings.setSupportMultipleWindows(false);
 		
 		
+		
 
+		if (mNews != null) {
+			String data = readAsset("leaflet/news_detail.html");
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("{\"lat\":" + mNews.getLatitude());
+			sb.append(",\"lon\":" + mNews.getLongitude() + ", \"title\":\""
+					+ mNews.getTitle() + "\" " + ", \"id\":\"" + mNews.getId()
+					+ "\" " + "}");
+//			log.info("lat lon :"+sb.toString());			
+
+			data = data.replace("{{posts}}", sb.toString());
+			log.info("data:"+data);
+			mWebView.loadDataWithBaseURL("file:///android_asset/", data,
+					"text/html", "utf-8", "");
+		}
 	}
 
-	@Override
-	public void onPause() {
-		super.onPause();		
-	}
-
-	@Override
-	public void onResume() {
-		super.onResume();		
-	}
-
-	@Override
-	public void onDestroy() {
-		super.onDestroy();		
-	}
-
-	@Override
-	public void onLowMemory() {
-		super.onLowMemory();		
-	}
-	private String readAsset(String fileName) {
+	public String readAsset(String fileName) {
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					getActivity().getAssets().open(fileName), "UTF-8"));
@@ -165,6 +152,7 @@ public class NewsFragment extends BaseFragment {
 		}
 		return "";
 	}
+
 	/**
 	 * Load A News
 	 * 
@@ -191,37 +179,39 @@ public class NewsFragment extends BaseFragment {
 			super.onPostExecute(result);
 			if (mNews != null) {
 				String data = readAsset("leaflet/index.html");
-				
 
 				StringBuilder sb = new StringBuilder();
 				int i = 0;
-	
-					if (mNews.getLatitude() != 0 && mNews.getLongitude() != 0) {
-						if (i == 0) {
-							sb.append("{\"lat\":" + mNews.getLatitude());
-							sb.append(",\"lon\":" + mNews.getLongitude() + ", \"title\":\""+mNews.getTitle()+"\" "+", \"id\":\""+mNews.getId()+"\" "+"}");
-						} else {
-							sb.append(",{\"lat\":" + mNews.getLatitude());
-							sb.append(",\"lon\":" + mNews.getLongitude() + ", \"title\":\""+mNews.getTitle()+"\" "+", \"id\":\""+mNews.getId()+"\" "+"}");
-						}
+
+				if (mNews.getLatitude() != 0 && mNews.getLongitude() != 0) {
+					if (i == 0) {
+						sb.append("{\"lat\":" + mNews.getLatitude());
+						sb.append(",\"lon\":" + mNews.getLongitude()
+								+ ", \"title\":\"" + mNews.getTitle() + "\" "
+								+ ", \"id\":\"" + mNews.getId() + "\" " + "}");
+					} else {
+						sb.append(",{\"lat\":" + mNews.getLatitude());
+						sb.append(",\"lon\":" + mNews.getLongitude()
+								+ ", \"title\":\"" + mNews.getTitle() + "\" "
+								+ ", \"id\":\"" + mNews.getId() + "\" " + "}");
 					}
-					i++;
-				
+				}
+				i++;
 
 				if (i > 0) {
-					log.info("markers: "+sb.toString());
+					log.info("markers: " + sb.toString());
 					data = data.replace("{{posts}}", sb.toString());
 				} else {
 					data = data.replace("{{posts}}", "");
-										
+
 				}
-				log.info("html "+data);
+				log.info("html " + data);
 
 				mWebView.loadDataWithBaseURL("file:///android_asset/", data,
 						"text/html", "utf-8", "");
 				// or
 				// mWebView.loadUrl("file:///android_asset/leaflet/test.html");
-				
+
 				resetStatus();
 				setStatusShowContent();
 			}

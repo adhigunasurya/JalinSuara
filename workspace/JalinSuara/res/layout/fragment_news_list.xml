@@ -18,9 +18,6 @@
         android:id="@android:id/empty"
         style="@style/EmptyTextListView"
         android:text="@string/empty" />
-	<WebView
-        android:id="@+id/activity_show_map_web_view_fragment_news"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
     
 </FrameLayout>
