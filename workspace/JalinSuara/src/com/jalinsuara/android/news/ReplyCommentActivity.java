@@ -33,6 +33,7 @@ public class ReplyCommentActivity extends BaseFragmentActivity {
 	public static final int ACTIVITY_REQUEST = 0;
 
 	public static final int ACTIVITY_COMPLETE = 1;
+	public static final int ACTIVITY_FAILED= -11;
 
 	private EditText mCommentEditText;
 
@@ -173,6 +174,8 @@ public class ReplyCommentActivity extends BaseFragmentActivity {
 				} else {
 					Toast.makeText(getBaseContext(), R.string.error,
 							Toast.LENGTH_SHORT).show();
+					setResult(ACTIVITY_FAILED);
+					finish();
 				}
 			}
 		}

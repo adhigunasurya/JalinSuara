@@ -67,14 +67,16 @@ public class CommentActivity extends BaseEndlessListFragmentActivity {
 			resetStatus();
 			setStatusError(getString(R.string.error));
 		}
-
-		mListView.setOnScrollListener(new EndlessScrollListener() {
+		
+		listener = new EndlessScrollListener() {
 			@Override
 			public void load(int page) {
 				LoadComments task = new LoadComments();
 				task.execute(page);
 			}
-		});
+		};
+		
+		mListView.setOnScrollListener(listener);
 	}
 	
 	@Override

@@ -53,8 +53,7 @@ public class ShowMapActivity extends BaseFragmentActivity {
 
 				return true;
 			}
-			
-			
+
 		});
 
 		WebSettings webSettings = mWebView.getSettings();
@@ -132,7 +131,6 @@ public class ShowMapActivity extends BaseFragmentActivity {
 			super.onPostExecute(result);
 			if (mList != null) {
 				String data = readAsset("leaflet/index.html");
-				
 
 				StringBuilder sb = new StringBuilder();
 				int i = 0;
@@ -140,29 +138,34 @@ public class ShowMapActivity extends BaseFragmentActivity {
 					if (news.getLatitude() != 0 && news.getLongitude() != 0) {
 						if (i == 0) {
 							sb.append("{\"lat\":" + news.getLatitude());
-							sb.append(",\"lon\":" + news.getLongitude() + ", \"title\":\""+news.getTitle()+"\" "+", \"id\":\""+news.getId()+"\" "+"}");
+							sb.append(",\"lon\":" + news.getLongitude()
+									+ ", \"title\":\"" + news.getTitle()
+									+ "\" " + ", \"id\":\"" + news.getId()
+									+ "\" " + "}");
 						} else {
 							sb.append(",{\"lat\":" + news.getLatitude());
-							sb.append(",\"lon\":" + news.getLongitude() + ", \"title\":\""+news.getTitle()+"\" "+", \"id\":\""+news.getId()+"\" "+"}");
+							sb.append(",\"lon\":" + news.getLongitude()
+									+ ", \"title\":\"" + news.getTitle()
+									+ "\" " + ", \"id\":\"" + news.getId()
+									+ "\" " + "}");
 						}
 					}
 					i++;
 				}
 
 				if (i > 0) {
-					log.info("markers: "+sb.toString());
+					log.info("markers: " + sb.toString());
 					data = data.replace("{{posts}}", sb.toString());
 				} else {
 					data = data.replace("{{posts}}", "");
-										
+
 				}
-				log.info("html "+data);
 
 				mWebView.loadDataWithBaseURL("file:///android_asset/", data,
 						"text/html", "utf-8", "");
 				// or
 				// mWebView.loadUrl("file:///android_asset/leaflet/test.html");
-				
+
 				resetStatus();
 				setStatusShowContent();
 			}

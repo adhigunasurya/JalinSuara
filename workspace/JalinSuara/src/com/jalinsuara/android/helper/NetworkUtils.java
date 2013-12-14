@@ -1439,7 +1439,10 @@ public class NetworkUtils {
 			}
 
 			if (request.getEntity() != null) {
+				log.info("Request: "+request.getRequestLine().toString());
+				log.info("entity: "+nameValuePairs.toString());
 				resp = getHttpClient().execute(request);
+				log.info("Response: "+resp.getStatusLine().toString());
 				if (resp.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED) {
 					InputStream istream = (resp.getEntity() != null) ? resp
 							.getEntity().getContent() : null;
