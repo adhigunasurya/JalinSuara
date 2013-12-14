@@ -105,6 +105,7 @@ public class NewsFragment extends BaseFragment {
 		webSettings.setRenderPriority(RenderPriority.HIGH);
 		webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
 		// multi-touch zoom
+
 		webSettings.setBuiltInZoomControls(false);
 		webSettings.setDisplayZoomControls(false);
 		webSettings.setSupportZoom(false);
