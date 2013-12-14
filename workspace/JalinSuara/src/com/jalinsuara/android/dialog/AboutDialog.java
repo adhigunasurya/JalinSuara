@@ -2,7 +2,6 @@ package com.jalinsuara.android.dialog;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Color;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.jalinsuara.android.LicenseActivity;
 import com.jalinsuara.android.R;
 
@@ -68,10 +66,10 @@ public class AboutDialog extends AlertDialog {
 
 			@Override
 			public void onClick(View v) {
-				GoogleMapLegalDialog dialog = new GoogleMapLegalDialog(
-						GooglePlayServicesUtil
-								.getOpenSourceSoftwareLicenseInfo(context));
-				dialog.show(fm, context.getString(R.string.legal_notice));
+//				GoogleMapLegalDialog dialog = new GoogleMapLegalDialog(
+//						GooglePlayServicesUtil
+//								.getOpenSourceSoftwareLicenseInfo(context));
+//				dialog.show(fm, context.getString(R.string.legal_notice));
 
 			}
 		});
