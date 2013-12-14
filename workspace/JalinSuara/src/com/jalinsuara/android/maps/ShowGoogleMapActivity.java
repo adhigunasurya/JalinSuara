@@ -14,11 +14,12 @@ import com.jalinsuara.android.R;
 
 /**
  * 
- * Show maps activity
+ * Show maps activity, it use google map api. 
  * 
  * @author tonoman3g
  * 
  */
+@Deprecated
 public class ShowGoogleMapActivity extends BaseFragmentActivity {
 
 	private GoogleMap map;

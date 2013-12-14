@@ -262,6 +262,11 @@ public abstract class BaseEndlessListFragmentActivity extends
 					if (!isAdapterSet()) {
 						setAdapterSet(true);
 						getListView().setAdapter(getAdapter());
+						if (getAdapter().getCount() > 0) {
+							if (mEmptyTextView != null) {
+								mEmptyTextView.setVisibility(View.GONE);
+							}
+						}
 					} else {
 						getListView().setSelectionFromTop(mLastScrollY, 0);
 					}
@@ -289,6 +294,10 @@ public abstract class BaseEndlessListFragmentActivity extends
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt(CURRENT_PAGE, listener.getCurrentPage());
+		if (listener != null) {
+			outState.putInt(CURRENT_PAGE, listener.getCurrentPage());
+		} else {
+			outState.putInt(CURRENT_PAGE, 0);
+		}
 	}
 }
