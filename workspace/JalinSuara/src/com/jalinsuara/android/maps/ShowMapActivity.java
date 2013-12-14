@@ -35,7 +35,7 @@ public class ShowMapActivity extends BaseFragmentActivity {
 	private WebView mWebView;
 
 	private ArrayList<News> mList = new ArrayList<News>();
-
+	private News mNews = new News();
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -63,8 +63,9 @@ public class ShowMapActivity extends BaseFragmentActivity {
 		// multi-touch zoom
 		webSettings.setBuiltInZoomControls(true);
 		webSettings.setDisplayZoomControls(false);
-
+		
 		LoadNews task = new LoadNews();
+		//LoadOneNews task = new LoadOneNews();
 		task.execute();
 
 	}
@@ -165,6 +166,70 @@ public class ShowMapActivity extends BaseFragmentActivity {
 				// or
 				// mWebView.loadUrl("file:///android_asset/leaflet/test.html");
 
+				resetStatus();
+				setStatusShowContent();
+			}
+		}
+
+	}
+	
+	/**
+	 * Load A News
+	 * 
+	 * @author tonoman3g
+	 * 
+	 */
+	private class LoadOneNews extends AsyncTask<Object, Integer, Integer> {
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			resetStatus();
+			setStatusProgress(getString(R.string.loading), false);
+		}
+
+		@Override
+		protected Integer doInBackground(Object... params) {
+			mNews = NetworkUtils.getPosts(0).get(0);
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Integer result) {
+			super.onPostExecute(result);
+			if (mNews != null) {
+				String data = readAsset("leaflet/index.html");
+				
+
+				StringBuilder sb = new StringBuilder();
+				int i = 0;
+	
+					if (mNews.getLatitude() != 0 && mNews.getLongitude() != 0) {
+						if (i == 0) {
+							sb.append("{\"lat\":" + mNews.getLatitude());
+							sb.append(",\"lon\":" + mNews.getLongitude() + ", \"title\":\""+mNews.getTitle()+"\" "+", \"id\":\""+mNews.getId()+"\" "+"}");
+						} else {
+							sb.append(",{\"lat\":" + mNews.getLatitude());
+							sb.append(",\"lon\":" + mNews.getLongitude() + ", \"title\":\""+mNews.getTitle()+"\" "+", \"id\":\""+mNews.getId()+"\" "+"}");
+						}
+					}
+					i++;
+				
+
+				if (i > 0) {
+					log.info("markers: "+sb.toString());
+					data = data.replace("{{posts}}", sb.toString());
+				} else {
+					data = data.replace("{{posts}}", "");
+										
+				}
+				log.info("html "+data);
+
+				mWebView.loadDataWithBaseURL("file:///android_asset/", data,
+						"text/html", "utf-8", "");
+				// or
+				// mWebView.loadUrl("file:///android_asset/leaflet/test.html");
+				
 				resetStatus();
 				setStatusShowContent();
 			}
