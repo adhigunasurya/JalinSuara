@@ -63,7 +63,7 @@ public class SubDistrictAdapter extends BaseAdapter {
 				StringBuilder sb= new StringBuilder();
 				if (object.getDistrict().getProvince()!=null){
 					sb.append(object.getDistrict().getProvince().getName());
-					sb.append("-");
+					sb.append(" - ");
 				}								
 			
 			sb.append(object.getDistrict().getName());

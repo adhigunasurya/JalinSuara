@@ -1244,7 +1244,7 @@ public class NetworkUtils {
 			entity.addPart("post[budget]", new StringBody(param.getBudget()));
 			entity.addPart("post[beneficiary]",
 					new StringBody(param.getBeneficiary()));
-			entity.addPart("post[dimensions]",
+			entity.addPart("post[dimension]",
 					new StringBody(param.getDimensions()));
 			entity.addPart("auth_token", new StringBody(param.getAuth_token()));
 

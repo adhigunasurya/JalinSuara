@@ -61,10 +61,10 @@ public class SubProjectAdapter extends BaseAdapter {
 			if (object.getSubdistrict().getDistrict()!=null){
 				if (object.getSubdistrict().getDistrict().getProvince()!=null){
 					sb.append(object.getSubdistrict().getDistrict().getProvince().getName());
-					sb.append("-");
+					sb.append(" - ");
 				}				
 				sb.append(object.getSubdistrict().getDistrict().getName());
-				sb.append("-");
+				sb.append(" - ");
 			}
 			sb.append(object.getSubdistrict().getName());
 			namaKecamatan.setText(sb.toString());
