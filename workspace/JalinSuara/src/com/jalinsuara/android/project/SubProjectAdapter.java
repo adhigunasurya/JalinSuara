@@ -57,7 +57,17 @@ public class SubProjectAdapter extends BaseAdapter {
 				.findViewById(R.id.list_item_sub_project_title_textview));
 
 		if (object.getSubdistrict() != null) {
-			namaKecamatan.setText(object.getSubdistrict().getName());
+			StringBuilder sb =new StringBuilder();
+			if (object.getSubdistrict().getDistrict()!=null){
+				if (object.getSubdistrict().getDistrict().getProvince()!=null){
+					sb.append(object.getSubdistrict().getDistrict().getProvince().getName());
+					sb.append("-");
+				}				
+				sb.append(object.getSubdistrict().getDistrict().getName());
+				sb.append("-");
+			}
+			sb.append(object.getSubdistrict().getName());
+			namaKecamatan.setText(sb.toString());
 		} else {
 			namaKecamatan.setText("");
 		}

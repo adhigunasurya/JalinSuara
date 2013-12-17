@@ -60,7 +60,14 @@ public class SubDistrictAdapter extends BaseAdapter {
 		convertView.setTag(object.getId());
 		titleTextview.setText(object.getName());
 		if (object.getDistrict() != null) {
-			districtTextview.setText(object.getDistrict().getName());
+				StringBuilder sb= new StringBuilder();
+				if (object.getDistrict().getProvince()!=null){
+					sb.append(object.getDistrict().getProvince().getName());
+					sb.append("-");
+				}								
+			
+			sb.append(object.getDistrict().getName());
+			districtTextview.setText(sb.toString());
 		} else {
 			districtTextview.setText("");
 		}
